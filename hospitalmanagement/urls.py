@@ -110,11 +110,7 @@ urlpatterns +=[
 ]
 
 ###########################
-urlpatterns +=[
-    path('add-doctor',views.ADD,name='add'),
 
-
-]
 
 
 #Developed By : sumit kumar

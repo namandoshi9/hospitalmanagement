@@ -256,6 +256,7 @@ def admin_add_doctor_view(request):
 
 
 
+
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def admin_approve_doctor_view(request):
@@ -850,23 +851,6 @@ def contactus_view(request):
 
 ##########
 
-def ADD(request):
-    if request.method=="POST":
-        name=request.POST.get('name')
-        email=request.POST.get('email')
-        address=request.POST.get('address')
-        phone=request.POST.get('phone')
-        
-        doc = Doctor(
-            user=name,
-            email=email,
-            address=address,
-            mobile=phone,
-        )
-        doc.save()
-        return redirect('admin-doctor')
-    return render(request,'admin_doctor.html')
-    
 
 
 
