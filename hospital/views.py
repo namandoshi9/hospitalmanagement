@@ -176,11 +176,13 @@ def admin_dashboard_view(request):
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def admin_doctor_view(request):
-    doc=Doctor.objects.all()
-    context={
-        'doc':doc,
+    doctors=models.Doctor.objects.all().filter(status=True).order_by('-id')
+    doctorcount=models.Doctor.objects.all().filter(status=True).count()
+    mydict={
+    'doctors':doctors,
+    'doctorcount':doctorcount
     }
-    return render(request,'hospital/admin_doctor.html',context)
+    return render(request,'hospital/admin_doctor.html',context=mydict)
 
 
 
@@ -194,12 +196,20 @@ def admin_view_doctor_view(request):
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
-def delete_doctor_from_hospital_view(request,pk):
+def delete_doctor_from_hospital_view(request,pk,redirect_to=None):
     doctor=models.Doctor.objects.get(id=pk)
     user=models.User.objects.get(id=doctor.user_id)
-    user.delete()
-    doctor.delete()
-    return redirect('admin-view-doctor')
+    dtype = request.GET.get('delete_doctor')
+    if dtype == 'from_dash':
+        user.delete()
+        doctor.delete()
+        return redirect('admin-doctor')
+    elif dtype=='from_view':
+        user.delete()
+        doctor.delete()
+        return redirect('admin-view-doctor')
+    else:
+        return redirect('admin-doctor')
 
 
 
@@ -296,7 +306,13 @@ def admin_view_doctor_specialisation_view(request):
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def admin_patient_view(request):
-    return render(request,'hospital/admin_patient.html')
+    patients=models.Patient.objects.all().filter(status=True).order_by('-id')
+    patientscount=models.Patient.objects.all().filter(status=True).count()
+    mydict={
+    'patients':patients,
+    'patientscount':patientscount
+    }
+    return render(request,'hospital/admin_patient.html',context=mydict)
 
 
 

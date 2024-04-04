@@ -25,7 +25,14 @@
 written By : sumit kumar
 facebook : fb.com/sumit.luv
 -->
+
 <div class="container">
+  <div class="d-flex justify-content-end mb-3">
+    <!-- Button to add a new patient -->
+    <a href="/admin-add-doctor" class="btn btn-primary">Add doctor</a>
+    <a href="{% url 'admin-doctor' %}" class="btn btn-primary">Back</a>
+  </div>
+  
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h6 class="panel-title">Doctors</h6>
@@ -45,19 +52,26 @@ facebook : fb.com/sumit.luv
       </thead>
       {% for d in doctors %}
       <tr>
-
         <td> {{d.get_name}}</td>
         <td> <img src="{% static d.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
         <td>{{d.mobile}}</td>
         <td>{{d.address}}</td>
         <td>{{d.department}}</td>
         <td><a class="btn btn-primary btn-xs" href="{% url 'update-doctor' d.id  %}"><span class="glyphicon glyphicon-edit"></span></a></td>
-        <td><a class="btn btn-danger btn-xs" href="{% url 'delete-doctor-from-hospital' d.id  %}"><span class="glyphicon glyphicon-trash"></span></a></td>
+        <td>
+          <form action="{% url 'delete-doctor-from-hospital' d.id  %}">
+            <input type="hidden" name="delete_doctor" value="from_view"/>
+            <button type="submit">D</button>
+            </form>
+        </td>
       </tr>
       {% endfor %}
     </table>
   </div>
 </div>
+
+
+
 <!--
 developed By : sumit kumar
 facebook : fb.com/sumit.luv

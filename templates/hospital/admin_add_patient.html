@@ -52,6 +52,9 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container register-form">
+    <div class="d-flex justify-content-end mb-3">
+      <a href="/admin-patient" class="btn btn-primary">Back</a>
+    </div>
     <div class="form">
       <div class="note">
         <p>Admit Patient To Hospital</p>
