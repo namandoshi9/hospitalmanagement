@@ -37,6 +37,7 @@ urlpatterns = [
     path('adminlogin', LoginView.as_view(template_name='hospital/adminlogin.html')),
     path('doctorlogin', LoginView.as_view(template_name='hospital/doctorlogin.html')),
     path('patientlogin', LoginView.as_view(template_name='hospital/patientlogin.html')),
+    path('compounderlogin', LoginView.as_view(template_name='hospital/compounderlogin.html')),
 
 
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
@@ -75,6 +76,15 @@ urlpatterns = [
     path('admin-approve-appointment', views.admin_approve_appointment_view,name='admin-approve-appointment'),
     path('approve-appointment/<int:pk>', views.approve_appointment_view,name='approve-appointment'),
     path('reject-appointment/<int:pk>', views.reject_appointment_view,name='reject-appointment'),
+
+
+    path('admin-compunder', views.admin_compunder_view,name='admin-compunder'),
+    path('admin-add-compunder', views.admin_add_compounder_view,name='admin-add-compunder'),
+    path('admin-view-compounder', views.admin_view_compounder_view,name='admin-view-compounder'),
+
+    path('admin-medicine', views.admin_medicine_view,name='admin-medicine'),
+    path('admin-add-medicine', views.admin_add_medicine_view,name='admin-add-medicine'),
+    path('admin-view-medicine', views.admin_view_medicine_view,name='admin-view-medicine'),
 ]
 
 
@@ -84,13 +94,33 @@ urlpatterns +=[
     path('search', views.search_view,name='search'),
 
     path('doctor-patient', views.doctor_patient_view,name='doctor-patient'),
-    path('doctor-view-patient', views.doctor_view_patient_view,name='doctor-view-patient'),
+    path('doctor-add-patient', views.doctor_add_patient_view,name='doctor-add-patient'),
+    path('doctor-view-patient', views.doctor_view_patient,name='doctor-view-patient'),
     path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
+    path('doctor-update-patient/<int:pk>', views.update_patient_view_doctor,name='doctor-update-patient'),
+    path('delete-patient-from-doctor/<int:pk>', views.delete_patient_from_doctor_view,name='delete-patient-from-doctor'),
 
     path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
+    path('doctor-add-appointment', views.doctor_add_appointment_view,name='doctor-add-appointment'),
     path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
     path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
-    path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
+    path('delete-appointment/<int:pk>', views.delete_appointment_from_doctor_view,name='delete-appointment'),
+    path('update-appointment/<int:pk>', views.update_appointment_view,name='update-appointment'),
+
+
+    path('doctor-medicine', views.doctor_medicine_view,name='doctor-medicine'),
+    path('doctor-add-medicine', views.doctor_add_medicine_view,name='doctor-add-medicine'),
+    path('doctor-view-medicine', views.doctor_view_medicine_view,name='doctor-view-medicine'),
+    path('delete-medicine-from-doctor/<int:pk>', views.delete_medicine_from_doctor_view,name='delete-medicine-from-doctor'),
+    path('update-medicine/<int:pk>', views.update_medicine_view,name='update-medicine'),
+    
+    
+    
+    path('doctor-compounder', views.doctor_compounder_view,name='doctor-compounder'),
+    path('doctor-add-compounder', views.doctor_add_compounder,name='doctor-add-compounder'),
+    path('doctor-view-compounder', views.doctor_view_compounder_view,name='doctor-view-compounder'),
+    path('doctor-update-compounder/<int:pk>', views.update_compounder_view_doctor,name='doctor-update-compounder'),
+   
 ]
 
 
@@ -108,6 +138,30 @@ urlpatterns +=[
     path('patient-discharge', views.patient_discharge_view,name='patient-discharge'),
 
 ]
+
+
+
+#---------FOR Compunder RELATED URLS-------------------------------------
+# urlpatterns +=[
+#     path('doctor-dashboard', views.doctor_dashboard_view,name='doctor-dashboard'),
+#     path('search', views.search_view,name='search'),
+
+#     path('doctor-patient', views.doctor_patient_view,name='doctor-patient'),
+#     path('doctor-add-patient', views.doctor_add_patient_view,name='doctor-add-patient'),
+#     path('doctor-view-patient', views.doctor_view_patient_view,name='doctor-view-patient'),
+#     path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
+
+#     path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
+#     path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
+#     path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
+#     path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
+
+#     path('doctor-medicine', views.doctor_medicine_view,name='doctor-medicine'),
+#     path('doctor-add-medicine', views.doctor_add_medicine_view,name='doctor-add-medicine'),
+# ]
+
+
+
 
 ###########################
 

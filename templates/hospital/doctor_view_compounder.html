@@ -40,10 +40,6 @@
     }
   </style>
 </head>
-<!--
-written By : sumit kumar
-facebook : fb.com/sumit.luv
--->
 
 <div class="container">
 
@@ -57,8 +53,8 @@ facebook : fb.com/sumit.luv
       </div>
     </div>
     <div class="col-md-4">
-      <a href="/doctor-add-patient" class="btn btn-primary">Add Patient</a>
-      <a href="/doctor-patient" class="btn btn-primary">Back</a>
+      <a href="/doctor-add-compounder" class="btn btn-primary">Add Compounder</a>
+      <a href="/doctor-compounder" class="btn btn-primary">Back</a>
     </div>
   </div>
 
@@ -72,7 +68,6 @@ facebook : fb.com/sumit.luv
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Symptoms</th>
                   <th>Mobile</th>
                   <th>Address</th>
                   <th>Update</th>
@@ -80,18 +75,17 @@ facebook : fb.com/sumit.luv
                 </tr>
               </thead>
               <tbody>
-                {% for p in patients %}
+                {% for compounder in compounders %}
                 <tr>
-                  <td>{{ p.first_name }} {{ p.last_name }}</td>
-                  <td>{{ p.symptoms }}</td>
-                  <td>{{ p.mobile }}</td>
-                  <td>{{ p.address }}</td>
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
+                  <td>{{ compounder.first_name }} {{ compounder.last_name }}</td>
+                  <td>{{ compounder.mobile }}</td>
+                  <td>{{ compounder.address }}</td>
+                  <td><a class="btn btn-primary btn-xs" href=""><span
                         class="glyphicon glyphicon-edit"></span></a></td>
                   <td>
-                    <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post">
+                    <form action="" method="post">
                       {% csrf_token %}
-                      <input type="hidden" name="delete_patient" value="from_view" />
+                      <input type="hidden" name="delete_compounder" value="from_view" />
                       <button type="submit" class="btn btn-danger btn-xs"><span
                           class="glyphicon glyphicon-trash"></span></button>
                     </form>

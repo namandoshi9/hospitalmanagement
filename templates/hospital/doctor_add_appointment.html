@@ -1,7 +1,6 @@
-{% extends 'hospital/admin_base.html' %}
+{% extends 'hospital/doctor_base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-
 <head>
   <style media="screen">
     a:link {
@@ -11,7 +10,7 @@
     .note {
       text-align: center;
       height: 80px;
-      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+      background-color: #007bff;
       color: #fff;
       font-weight: bold;
       line-height: 80px;
@@ -40,6 +39,12 @@
     .menu {
       top: 50px;
     }
+
+    .msg {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
   </style>
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -48,50 +53,46 @@
 
 </head>
 <br><br><br>
+
+<div class="msg">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
 <!------ signup page for doctor by admin(sumit)  ---------->
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container register-form">
-    <div class="text-right">
-      <a href="{% url 'admin-doctor' %}" class="btn btn-primary">Back</a>
+    <div class="d-flex justify-content-end mb-3">
+      <a href="/doctor-patient" class="btn btn-primary">Back</a>
     </div>
     <div class="form">
       <div class="note">
-        <p>Add New Doctor To Hospital</p>
+        <p>Appointment</p>
       </div>
       <div class="form-content">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+              {% render_field appointmentForm.doctor class="form-control" placeholder="Doctor ID" %}
             </div>
             <div class="form-group">
-              {% render_field userForm.username class="form-control" placeholder="Username" %}
+              {% render_field appointmentForm.patient class="form-control" placeholder="Patient ID" %}
             </div>
             <div class="form-group">
-              {% render_field doctorForm.department class="form-control" placeholder="Department" %}
+              {% render_field appointmentForm.appointmentDate type='date' class="form-control" placeholder="Doctor ID" %}
             </div>
             <div class="form-group">
-              {% render_field doctorForm.address class="form-control" placeholder="Address" %}
-            </div>
-
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
-            </div>
-            <div class="form-group">
-              {% render_field userForm.password class="form-control" placeholder="Password" %}
-            </div>
-            <div class="form-group">
-              {% render_field doctorForm.mobile class="form-control"  placeholder="Mobile" %}
-            </div>
-            <div class="form-group">
-              {% render_field doctorForm.profile_pic required="required" class="form-control" placeholder="Profile Picture" %}
+              {% render_field appointmentForm.description class="form-control" placeholder="Description" %}
             </div>
           </div>
         </div>
-        <button type="submit" class="btnSubmit">Register</button>
+        <button type="submit" class="btnSubmit">Add</button>
       </div>
     </div>
   </div>

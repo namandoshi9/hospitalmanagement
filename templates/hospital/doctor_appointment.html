@@ -8,8 +8,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <style type="text/css">
     a:link {
       text-decoration: none;
@@ -61,41 +63,86 @@
   </style>
 </head>
 
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4 col-xl-6">
-        <div class="card bg-c-blue order-card">
-          <div class="card-block">
-            <a href="/doctor-view-appointment">
-              <h6 class="m-b-20">View Your Appointment</h6>
-            </a>
-            <br>
-            <h2 class="text-right"><i class="fas fa-calendar f-left"></i></h2>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-xl-6">
+      <div class="card bg-c-blue order-card">
+        <div class="card-block">
+          <a href="/doctor-view-appointment">
+            <h6 class="m-b-20">View Your Appointment</h6>
+          </a>
+          <br>
+          <h2 class="text-right"><i class="fas fa-calendar f-left"></i></h2>
+          <h2 class="text-right">{{ appointmentscount }}</i></h2>
+        </div>
+      </div>
+    </div>
 
+    <!-- <div class="col-md-4 col-xl-6">
+      <div class="card bg-c-green order-card">
+        <div class="card-block">
+          <a href="/doctor-delete-appointment">
+            <h6 class="m-b-20">Delete Appointment</h6>
+          </a>
+          <br>
+          <h2 class="text-right"><i class="fas fa-eject f-left"></i></h2>
+        </div>
+      </div>
+    </div> -->
+
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <h6 class="m-b-20">All Appointments</h6>
+          <div class="d-flex justify-content-end mb-3">
+            <!-- Button to add a new appointment -->
+            <a href="/doctor-add-appointment" class="btn btn-primary">Add Appointment</a>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover" id="dev-table">
+              <thead>
+                <tr>
+                  <th>Patient Name</th>
+                  <th>Doctor Name</th>
+                  <th>Appointment Date</th>
+                  <th>Description</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                  <td>{{ appointment.patient }}</td>
+                  <td>{{ appointment.doctor }}</td>
+                  <td>{{ appointment.appointmentDate }}</td>
+                  <td>{{ appointment.description }}</td>
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'update-appointment' appointment.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                  <td>
+                    <form action="{% url 'delete-appointment' appointment.id %}" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="delete_appointment" value="from_dash" />
+                      <button type="submit" class="btn btn-danger btn-xs"><span
+                          class="glyphicon glyphicon-trash"></span></button>
+                    </form>
+                  </td>
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-
-      <div class="col-md-4 col-xl-6">
-        <div class="card bg-c-green order-card">
-          <div class="card-block">
-            <a href="/doctor-delete-appointment">
-              <h6 class="m-b-20">Delete Appointment</h6>
-            </a>
-            <br>
-            <h2 class="text-right"><i class="fas fa-eject f-left"></i></h2>
-          </div>
-        </div>
-      </div>
-
-
     </div>
   </div>
-  <!--
+</div>
+<!--
   developed By : sumit kumar
   facebook : fb.com/sumit.luv
   youtube : youtube.com/lazycoders
-  -->
+-->
 <br><br><br><br><br><br><br>
 {% endblock content %}

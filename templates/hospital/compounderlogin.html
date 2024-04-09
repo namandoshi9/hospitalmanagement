@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load widget_tweaks %}
-{% load static %}
 <html lang="en" dir="ltr">
 
 <head>
@@ -8,10 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>LazyCoder || sumit</title>
 
+
   <style type="text/css">
     body {
       color: #aa082e;
-      background-color: #007bff; /* Change to blue color */
+      background-color: #b6bde7;
       font-family: 'Roboto', sans-serif;
     }
 
@@ -19,40 +19,13 @@
       text-decoration: none;
     }
 
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .logo {
-      flex: 0 0 30%; /* Adjust the width of the logo */
-      padding: 20px; /* Add some padding around the logo */
-    }
-
-    .logo img {
-      width: 100%; /* Set the width to 100% to fill the container */
-      height: auto; /* Maintain the aspect ratio */
-    }
-
-    .form-container {
-      flex: 0 0 70%; /* Adjust the width of the form */
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-    }
-
     .note {
       text-align: center;
-      background-color: #007bff; /* Change to blue color */
+      height: 80px;
+      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
       color: #fff;
       font-weight: bold;
       line-height: 80px;
-      margin-bottom: 20px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
     }
 
     .form-content {
@@ -69,29 +42,28 @@
       border: none;
       border-radius: 1.5rem;
       padding: 1%;
-      width: 100%;
+      width: 20%;
       cursor: pointer;
       background: #0062cc;
       color: #fff;
     }
   </style>
 
-
 </head>
 
 <body>
   {% include "hospital/navbar.html" %}
+  <br>
+  <br>
+  <br><br>
 
-  <div class="container">
-    <div class="logo">
-      <img src="{% static 'images/h_logo.png' %}" alt="Logo">
-    </div>
-
-    <div class="form-container">
-      <form method="post">
-        {% csrf_token %}
+  <!--- login page for doctor by admin(sumit)  ---------->
+  <form method="post">
+    {% csrf_token %}
+    <div class="container register-form">
+      <div class="form">
         <div class="note">
-          <p>LogIn</p>
+          <p>Compounder Login Page</p>
         </div>
 
         <div class="form-content">
@@ -114,9 +86,17 @@
           <button type="submit" class="btnSubmit">Login</button>
           <!-- <div class="text-center">Do not have account? <a href="doctorsignup">Signup here</a></div> -->
         </div>
-      </form>
+      </div>
     </div>
-  </div>
+
+  </form>
+
+  <br><br><br>
+  <!--
+  developed By : sumit kumar
+  facebook : fb.com/sumit.luv
+  youtube : youtube.com/lazycoders
+  -->
 
   <!-- {% include "hospital/footer.html" %} -->
 </body>
