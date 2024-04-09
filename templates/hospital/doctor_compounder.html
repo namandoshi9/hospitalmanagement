@@ -18,6 +18,10 @@
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
   <style type="text/css">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     a:link {
       text-decoration: none;
     }
@@ -57,8 +61,8 @@
       box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
       border: none;
       margin-bottom: 30px;
-      -webkit-transition: all 0.3s ease-in-out;
-      transition: all 0.3s ease-in-out;
+      /* -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; */
     }
 
     .card .card-block {
@@ -83,7 +87,7 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-md-4 col-xl-6">
+    <div class="col-md-4 col-xl-6" style="margin-left: 42rem; margin-top: 2rem;">
       <div class="card bg-c-blue order-card">
         <div class="card-block">
           <a href="/doctor-view-patient">
@@ -111,7 +115,7 @@
     </div> -->
 
 
-    <div class="col-md-12">
+    <div class="col-md-12" style="margin-left: 12rem;">
       <div class="card">
         <div class="card-block">
           <h6 class="m-b-20">All Compounders</h6>
@@ -136,16 +140,16 @@
                   <td>{{ p.first_name }} {{ p.last_name }}</td>
                   <td>{{ p.mobile }}</td>
                   <td>{{ p.address }}</td>
-                  
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-compounder' p.id  %}"><span
+
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
                         class="glyphicon glyphicon-edit"></span></a></td>
                   <td>
-                    <form action="" method="post">
+                    <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post">
                       {% csrf_token %}
                       <input type="hidden" name="delete_patient" value="from_dash" />
-                      <button type="submit"class="btn btn-danger btn-xs"><span
-                        class="glyphicon glyphicon-trash"></span></button>
-                  </form>
+                      <button type="submit" class="btn btn-danger btn-xs"><span
+                          class="glyphicon glyphicon-trash"></span></button>
+                    </form>
                   </td>
                 </tr>
                 {% endfor %}

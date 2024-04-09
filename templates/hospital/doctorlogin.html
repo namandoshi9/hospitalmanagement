@@ -6,13 +6,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>LazyCoder || sumit</title>
+  <title>Login</title>
 
   <style type="text/css">
     body {
-      color: #aa082e;
-      background-color: #007bff; /* Change to blue color */
-      font-family: 'Roboto', sans-serif;
+      color: black;
+      background-color: white;
+      /* Change to blue color */
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     a:link {
@@ -24,20 +27,31 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      text-align: center;
+      /* Added to center align content */
     }
 
+
     .logo {
-      flex: 0 0 30%; /* Adjust the width of the logo */
-      padding: 20px; /* Add some padding around the logo */
+      flex: 0 0 20%;
+      /* Adjust the width of the logo */
+      padding: 20px;
+      /* Add some padding around the logo */
+      display: flex;
+      justify-content: center;
     }
 
     .logo img {
-      width: 100%; /* Set the width to 100% to fill the container */
-      height: auto; /* Maintain the aspect ratio */
+      width: 150px;
+
+      /* Set the width to 100% to fill the container */
+      height: 150px;
+      /* Maintain the aspect ratio */
     }
 
     .form-container {
-      flex: 0 0 70%; /* Adjust the width of the form */
+      flex: 0 0 40%;
+      /* Adjust the width of the form */
       background-color: #fff;
       padding: 20px;
       border-radius: 10px;
@@ -46,33 +60,41 @@
 
     .note {
       text-align: center;
-      background-color: #007bff; /* Change to blue color */
-      color: #fff;
+      /* background-color: #007bff; */
+      /* Change to blue color */
+      color: black;
       font-weight: bold;
-      line-height: 80px;
-      margin-bottom: 20px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-weight: 700;
+      font-size: 2rem;
     }
 
     .form-content {
       padding: 5%;
-      border: 1px solid #ced4da;
+      /* border: 1px solid #ced4da; */
       margin-bottom: 2%;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
     }
 
     .form-control {
       border-radius: 1.5rem;
+      width: 50%;
+      padding: 10px;
+      border: 1px solid #ced4da;
     }
 
     .btnSubmit {
       border: none;
       border-radius: 1.5rem;
-      padding: 1%;
-      width: 100%;
+      padding: 10px 20px;
       cursor: pointer;
       background: #0062cc;
       color: #fff;
+      font-size: 16px;
+      width: 50%;
     }
   </style>
 
@@ -80,37 +102,34 @@
 </head>
 
 <body>
-  {% include "hospital/navbar.html" %}
+  <!-- {% include "hospital/navbar.html" %} -->
 
   <div class="container">
-    <div class="logo">
-      <img src="{% static 'images/h_logo.png' %}" alt="Logo">
-    </div>
 
     <div class="form-container">
       <form method="post">
         {% csrf_token %}
         <div class="note">
-          <p>LogIn</p>
+          <p style="
+          margin-bottom: 0px;
+          margin-top: 0px;
+      ">LOGIN</p>
+        </div>
+        <div class="logo">
+          <img src="{% static 'images/h_logo.png' %}" alt="Logo">
         </div>
 
         <div class="form-content">
-          <div class="row">
-            <div class="col-md-6">
-
-              <div class="form-group">
-                {% render_field form.username class="form-control" placeholder="Username" %}
-              </div>
-
-            </div>
-            <div class="col-md-6">
-
-              <div class="form-group">
-                {% render_field form.password class="form-control" placeholder="Password" %}
-              </div>
-
-            </div>
+          <div class="form-group">
+            <!-- <label for="id_username">Username</label> -->
+            {% render_field form.username class="form-control" placeholder="Username" id="id_username" %}
           </div>
+
+          <div class="form-group">
+            <!-- <label for="id_password">Password</label> -->
+            {% render_field form.password class="form-control" placeholder="Password" id="id_password" %}
+          </div>
+
           <button type="submit" class="btnSubmit">Login</button>
           <!-- <div class="text-center">Do not have account? <a href="doctorsignup">Signup here</a></div> -->
         </div>

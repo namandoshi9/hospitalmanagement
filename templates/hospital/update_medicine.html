@@ -38,6 +38,10 @@
       margin-top: 50px;
     }
 
+    .menu {
+      top: 50px;
+    }
+
     .text-right {
       margin-bottom: 20px;
     }
@@ -52,7 +56,7 @@
 <br><br>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="container register-form">
+  <div class="container register-form" style="margin-left: 20rem;">
     <div class="text-right">
       <a href="{% url 'doctor-medicine' %}" class="btn btn-primary">Back</a>
     </div>

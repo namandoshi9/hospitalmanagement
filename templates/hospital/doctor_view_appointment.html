@@ -1,6 +1,6 @@
 {% extends 'hospital/doctor_base.html' %}
 {% block content %}
-{% load static %}
+{%load static%}
 
 <head>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -17,26 +17,11 @@
     }
 
     .row {
-      margin-top: 50px;
+      margin: 100px;
     }
 
-    .search-box {
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    .search-input {
-      flex: 1;
-      margin-right: 10px;
-    }
-
-    .btn-search {
-      margin-left: 10px;
-    }
-
-    .btn-group {
-      margin-top: 20px;
+    .menu {
+      top: 50px;
     }
   </style>
 </head>
@@ -44,71 +29,35 @@
 written By : sumit kumar
 facebook : fb.com/sumit.luv
 -->
-
-<div class="container">
-
-  <div class="row">
-    <div class="col-md-8">
-      <div class="search-box">
-        <!-- Search bar -->
-        <!-- <input type="text" class="form-control search-input" placeholder="Search here..."> -->
-        <!-- Search button -->
-        <!-- <button class="btn btn-primary btn-search">Search</button> -->
-      </div>
+<div class="container" style="margin-left: 30rem; margin-top: 7rem;">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h6 class="panel-title">Your Appointments</h6>
     </div>
-    <div class="col-md-4">
-      <!-- <a href="/doctor-add-patient" class="btn btn-primary">Add Patient</a> -->
-      <a href="/doctor-appointment" class="btn btn-primary">Back</a>
-      <a href="/doctor-add-appointment" class="btn btn-primary">Add Appointment</a>
-    </div>
+    <table class="table table-hover" id="dev-table">
+      <thead>
+        <tr>
+          <th>Patient Name</th>
+          <th>Picture</th>
+          <th>Description</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Appointment Date</th>
+        </tr>
+      </thead>
+      {% for a,p in appointments %}
+      <tr>
+        <td>{{a.patientName}}</td>
+        <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+        <td>{{a.description}}</td>
+        <td>{{p.mobile}}</td>
+        <td>{{p.address}}</td>
+        <td>{{a.appointmentDate}}</td>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
-
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-block">
-          <div class="table-responsive">
-            <table class="table table-hover" id="dev-table">
-              <thead>
-                <tr>
-                  <th>Patient Name</th>
-                  <th>Doctor Name</th>
-                  <th>Appointment Date</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                  <th>Update</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for appointment in appointments %}
-                <tr>
-                  <td>{{ appointment.patient }}</td>
-                  <td>{{ appointment.doctor }}</td>
-                  <td>{{ appointment.appointmentDate }}</td>
-                  <td>{{ appointment.description }}</td>
-                  <td>{{ appointment.status }}</td>
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'update-appointment' appointment.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                  <td>
-                    <form action="{% url 'delete-appointment' appointment.id %}" method="post">
-                      {% csrf_token %}
-                      <input type="hidden" name="delete_appointment" value="from_view" />
-                      <button type="submit" class="btn btn-danger btn-xs"><span
-                          class="glyphicon glyphicon-trash"></span></button>
-                    </form>
-                  </td>
-
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
+
 
 {% endblock content %}

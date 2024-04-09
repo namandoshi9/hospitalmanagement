@@ -3,24 +3,6 @@ from django.contrib.auth.models import User
 
 
 
-ROLES = [
-    ('doctor', 'Doctor'),
-    ('patient', 'Patient'),
-    ('compounder', 'Compounder'),
-]
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=ROLES)
-
-    # Add other fields as needed
-
-    def __str__(self):
-        return f'{self.user.username} Profile'
-    
-
-
-
 departments=[('Cardiologist','Cardiologist'),
 ('Dermatologists','Dermatologists'),
 ('Emergency Medicine Specialists','Emergency Medicine Specialists'),
@@ -38,7 +20,7 @@ class Doctor(models.Model):
     status=models.BooleanField(default=False)
     @property
     def get_name(self):
-        return self.user.first_name+" "+self.user.last_name #
+        return self.user.first_name+" "+self.user.last_name
     @property
     def get_id(self):
         return self.user.id
@@ -46,46 +28,34 @@ class Doctor(models.Model):
         return "{} ({})".format(self.user.first_name,self.department)
 
 
+    
+
 
 class Patient(models.Model):
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, default=None)
-    first_name = models.CharField(max_length=40)
-    last_name = models.CharField(max_length=40)
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    profile_pic= models.ImageField(upload_to='profile_pic/PatientProfilePic/',null=True,blank=True)
     address = models.CharField(max_length=40)
-    mobile = models.CharField(max_length=20, null=False)
-    SYMPTOM_CHOICES = [
-        ('Fever', 'Fever'),
-        ('Cough', 'Cough'),
-        ('Headache', 'Headache'),
-        ('Fatigue', 'Fatigue'),
-        ('Shortness of breath', 'Shortness of breath'),
-        ('Other', 'Other'),
-    ]
-    symptoms = models.CharField(max_length=100, choices=SYMPTOM_CHOICES)
-    # assignedDoctorId = models.PositiveIntegerField(null=True)
-    admitDate = models.DateField(auto_now=True)
-    status = models.BooleanField(default=False)
-    
+    mobile = models.CharField(max_length=20,null=False)
+    symptoms = models.CharField(max_length=100,null=False)
+    assignedDoctorId = models.PositiveIntegerField(null=True)
+    admitDate=models.DateField(auto_now=True)
+    status=models.BooleanField(default=False)
     @property
     def get_name(self):
-        return self.user.first_name + " " + self.user.last_name
-    
+        return self.user.first_name+" "+self.user.last_name
     @property
     def get_id(self):
         return self.user.id
-    
     def __str__(self):
-        return f" {self.first_name} {self.last_name} ({self.symptoms})"
-    
-
+        return self.user.first_name+" ("+self.symptoms+")"
 
 
 class Appointment(models.Model):
-    patient=models.ForeignKey(Patient,on_delete=models.CASCADE)
-    doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE)
-    # patientName=models.CharField(max_length=40,null=True)
-    # doctorName=models.CharField(max_length=40,null=True)
-    appointmentDate=models.DateField()
+    patientId=models.PositiveIntegerField(null=True)
+    doctorId=models.PositiveIntegerField(null=True)
+    patientName=models.CharField(max_length=40,null=True)
+    doctorName=models.CharField(max_length=40,null=True)
+    appointmentDate=models.DateField(auto_now=True)
     description=models.TextField(max_length=500)
     status=models.BooleanField(default=False)
 
@@ -109,27 +79,6 @@ class PatientDischargeDetails(models.Model):
     OtherCharge=models.PositiveIntegerField(null=False)
     total=models.PositiveIntegerField(null=False)
 
-
-class Medicine(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(max_length=500)
-    # Add other fields for medicine details as needed
-
-    def __str__(self):
-        return self.name
-
-
-
-class Compounder(models.Model):
-    doctor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default=None)
-    first_name = models.CharField(max_length=40, null=True)
-    last_name = models.CharField(max_length=40, null=True)
-    address = models.CharField(max_length=40)
-    mobile = models.CharField(max_length=20, null=True)
-    status = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
 
 #Developed By : sumit kumar
 #facebook : fb.com/sumit.luv

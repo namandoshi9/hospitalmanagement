@@ -10,6 +10,10 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <style type="text/css">
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
         a:link {
             text-decoration: none;
         }
@@ -48,8 +52,8 @@
             box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
             border: none;
             margin-bottom: 30px;
-            -webkit-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
+            /* -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out; */
         }
 
         .card .card-block {
@@ -73,7 +77,10 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
     <div class="row">
-        <div class="col-md-4 col-xl-6">
+        <div class="col-md-4 col-xl-6" style="
+        margin-left: 24rem;
+        margin-top: 0.2rem;
+    ">
             <div class="card bg-c-blue order-card">
                 <div class="card-block">
                     <a href="/doctor-view-medicine">
@@ -86,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" style="margin-left: 8rem;">
             <div class="card">
                 <div class="card-block">
                     <h6 class="m-b-20">Medicine Records</h6>
@@ -112,14 +119,16 @@
                                 <td>
                                     <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                                        <button type="submit" class="btn btn-info"><i
+                                                class="fas fa-pencil-alt"></i></button>
                                     </form>
                                 </td>
                                 <td>
                                     <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post">
                                         {% csrf_token %}
-                                        <input type="hidden" name="delete_doctor" value="from_dash"/>
-                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                        <input type="hidden" name="delete_doctor" value="from_dash" />
+                                        <button type="submit" class="btn btn-danger"><i
+                                                class="fas fa-trash-alt"></i></button>
                                     </form>
                                 </td>
                                 <!-- Add more columns as needed -->
@@ -139,10 +148,3 @@
   -->
 <br><br><br><br><br><br><br>
 {% endblock content %}
-
-
-
-
-
-
-
