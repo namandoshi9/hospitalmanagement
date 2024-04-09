@@ -5,19 +5,28 @@
   <style media="screen">
     .note {
       text-align: center;
-      height: 80px;
+      height: 50px;
       background: #0072ff;
       color: #fff;
       font-weight: bold;
-      line-height: 80px;
+      line-height: 50px;
+    }
+
+    div {
+      font-family: Arial, Helvetica, sans-serif;
+
+    }
+
+    .menu {
+      top: 50px;
     }
   </style>
 </head>
 
-<div class="container">
+<div class="container" style="margin-left: 20rem;margin-top: 5rem;">
   <div class="d-flex justify-content-end mb-3">
-    <a href="/doctor-add-medicine" class="btn btn-primary">Add Medicine</a>
     <a href="/doctor-medicine" class="btn btn-primary">Back</a>
+
   </div>
   <div class="form">
     <div class="note">
@@ -42,13 +51,13 @@
           <td>
             <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post">
               {% csrf_token %}
-              <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i> Update Medicine</button>
+              <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i> Update</button>
             </form>
           </td>
           <td>
             <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post">
               {% csrf_token %}
-              <input type="hidden" name="delete_doctor" value="from_view"/>
+              <input type="hidden" name="delete_doctor" value="from_view" />
               <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
             </form>
           </td>

@@ -3,6 +3,7 @@
 {% block content %}
 {% include 'hospital/doctor_dashboard_cards.html' %}
 <br><br><br><br>
+
 <head>
   <meta charset="utf-8">
 
@@ -17,6 +18,10 @@
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
   <style type="text/css">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     a:link {
       text-decoration: none;
     }
@@ -58,6 +63,7 @@
       margin-bottom: 30px;
       -webkit-transition: all 0.3s ease-in-out;
       transition: all 0.3s ease-in-out;
+      margin-left: 25rem;
     }
 
     .card .card-block {
@@ -77,68 +83,68 @@
 
       a:link {
         text-decoration: none;
-    }
+      }
 
-    .menu {
+      .menu {
         top: 50px;
-    }
+      }
 
-    h6 {
+      h6 {
         color: white;
-    }
+      }
 
-    .order-card {
+      .order-card {
         color: #fff;
-    }
+      }
 
-    .bg-c-blue {
+      .bg-c-blue {
         background: linear-gradient(45deg, #4099ff, #73b4ff);
-    }
+      }
 
-    .bg-c-green {
+      .bg-c-green {
         background: linear-gradient(45deg, #2ed8b6, #59e0c5);
-    }
+      }
 
-    .bg-c-yellow {
+      .bg-c-yellow {
         background: linear-gradient(45deg, #FFB64D, #ffcb80);
-    }
+      }
 
-    .bg-c-pink {
+      .bg-c-pink {
         background: linear-gradient(45deg, #FF5370, #ff869a);
-    }
+      }
 
-    .card {
+      .card {
         border-radius: 5px;
         -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
         box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
         border: none;
         margin-bottom: 30px;
-        -webkit-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-    }
+        /* -webkit-transition: all 0.3s ease-in-out; */
+        /* transition: all 0.3s ease-in-out; */
+      }
 
-    .card .card-block {
+      .card .card-block {
         padding: 25px;
-    }
+      }
 
-    .order-card i {
+      .order-card i {
         font-size: 26px;
-    }
+      }
 
-    .f-left {
+      .f-left {
         float: left;
-    }
+      }
 
-    .f-right {
+      .f-right {
         float: right;
-    }
+      }
     }
   </style>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="col-md-12">
+  <div class="col-md-12">
     <div class="card">
       {% comment %} <div class="card-block"> {% endcomment %}
-        {% comment %} <h6 class="m-b-20">All Patients</h6> {% endcomment %}
+        {% comment %} <h6 class="m-b-0">All Patients</h6> {% endcomment %}
         {% comment %} <div class="d-flex justify-content-end mb-3"> {% endcomment %}
           <!-- Button to add a new patient -->
           {% comment %} <a href="/doctor-add-patient" class="btn btn-primary">Add Patient</a>
@@ -164,23 +170,25 @@
                 <td>{{ p.address }}</td>
                 <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
                       class="glyphicon glyphicon-edit"></span></a></td>
-                      <td>
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="delete_patient" value="from_dash" />
-                            <button type="submit" class="btn btn-danger btn-xs"><span
-                                    class="glyphicon glyphicon-trash"></span></button>
-                        </form>
-                    </td>
+                <td>
+                  <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_patient" value="from_dash" />
+                    <button type="submit" class="btn btn-danger btn-xs"><span
+                        class="glyphicon glyphicon-trash"></span></button>
+                  </form>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
           </table> {% endcomment %}
-        {% comment %} </div> {% endcomment %}
-      {% comment %} </div> {% endcomment %}
+          {% comment %}
+        </div> {% endcomment %}
+        {% comment %}
+      </div> {% endcomment %}
     </div>
   </div>
-  
+
   <div class="col-md-12">
     <div class="card">
       <div class="card-block">
@@ -197,8 +205,11 @@
                 <th>Symptoms</th>
                 <th>Mobile</th>
                 <th>Address</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <!-- <th>Update</th>
+                <th>Delete</th> -->
+                <th style="
+                padding-left: 2.4rem;
+            ">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -208,15 +219,26 @@
                 <td>{{ p.symptoms }}</td>
                 <td>{{ p.mobile }}</td>
                 <td>{{ p.address }}</td>
-                <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
+                <!-- <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
                       class="glyphicon glyphicon-edit"></span></a></td>
                 <td>
                   <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="delete_patient" value="from_dash" />
-                    <button type="submit"class="btn btn-danger btn-xs"><span
-                      class="glyphicon glyphicon-trash"></span></button>
-                </form>
+                    <button type="submit" class="btn btn-danger btn-xs"><span
+                        class="glyphicon glyphicon-trash"></span></button>
+                  </form>
+                </td> -->
+                <td>
+                  <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                  </form>
+                  <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="delete_doctor" value="from_dash" />
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                  </form>
                 </td>
               </tr>
               {% endfor %}
@@ -230,51 +252,52 @@
 
   <div class="col-md-12">
     <div class="card">
-        <div class="card-block">
-            <h6 class="m-b-20">Medicine Records</h6>
-            <div class="d-flex justify-content-end mb-3">
-                <!-- Button to add a new medicine -->
-                <a href="/doctor-add-medicine" class="btn btn-primary">Add Medicine</a>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover" id="dev-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Update</th>
-                            <th>Delete</th>
-                            <!-- Add more columns as needed -->
-                        </tr>
-                    </thead>
-                    {% for medicine in medicine %}
-                    <tr>
-                        <td>{{ medicine.name }}</td>
-                        <td>{{ medicine.description }}</td>
-                        <td>
-                            <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="delete_doctor" value="from_dash"/>
-                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                            </form>
-                        </td>
-                        <!-- Add more columns as needed -->
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
+      <div class="card-block">
+        <h6 class="m-b-20">Medicine Records</h6>
+        <div class="d-flex justify-content-end mb-3">
+          <!-- Button to add a new medicine -->
+          <a href="/doctor-add-medicine" class="btn btn-primary">Add Medicine</a>
         </div>
+        <div class="table-responsive">
+          <table class="table table-hover" id="dev-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <!-- <th>Update</th>
+                <th>Delete</th> -->
+                <th style="
+                padding-left: 2.4rem;
+            ">Action</th>
+              </tr>
+            </thead>
+            {% for medicine in medicine %}
+            <tr>
+              <td>{{ medicine.name }}</td>
+              <td>{{ medicine.description }}</td>
+              <td>
+                <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                </form>
+                <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post"
+                  style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="delete_doctor" value="from_dash" />
+                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </form>
+              </td>
+              <!-- Add more columns as needed -->
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
 
-</div>
-</div>
+  </div>
+  </div>
 
-{% endblock content %}
+  {% endblock content %}

@@ -6,6 +6,10 @@
   <title></title>
 
   <style media="screen">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     .market-update-block {
       padding: 2em 2em;
       background: #999;
@@ -14,7 +18,7 @@
     .market-update-block h3 {
       color: #fff;
       font-size: 2.5em;
-      font-family: 'Carrois Gothic', sans-serif;
+      /* font-family: 'Carrois Gothic', sans-serif; */
     }
 
     .market-update-block h4 {
@@ -136,11 +140,11 @@
 </head>
 
 <body>
-  <div class="market-updates">
+  <div class="market-updates" style="margin-left: 25rem;  margin-top: 6rem;">
     <div class="col-md-4 market-update-gd">
       <div class="market-update-block clr-block-1">
         <div class="col-md-8 market-update-left">
-          <h3>{{ appointmentscount }}</h3>
+          <h3>{{appointmentcount}}</h3>
           <h4>Appointments</h4>
         </div>
         <div class="col-md-4 market-update-right">

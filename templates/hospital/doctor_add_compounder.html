@@ -1,14 +1,21 @@
 {% extends 'hospital/doctor_base.html' %}
 {% load widget_tweaks %}
 {% block content %}
+
 <head>
   <style media="screen">
-    /* Add your custom CSS here */
-    /* Ensure the styles match the styling in the second HTML code block */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
     .note {
       text-align: center;
       height: 80px;
-      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+      background-color: #007bff;
       color: #fff;
       font-weight: bold;
       line-height: 80px;
@@ -34,19 +41,42 @@
       color: #fff;
     }
 
-    /* Add more styles as needed */
+    .menu {
+      top: 50px;
+    }
+
+    .msg {
+      text-align: center;
+      margin-bottom: 10px;
+    }
   </style>
 
-  <!-- Include Bootstrap CSS and JavaScript -->
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
 
+</head>
 <br><br><br>
+
+<div class="msg">
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+
+
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="container register-form">
+  <div class="container register-form" style="
+  margin-left: 20rem;
+">
+    <div class="d-flex justify-content-end mb-3">
+      <a href="/doctor-compounder" class="btn btn-primary">Back</a>
+    </div>
     <div class="form">
       <div class="note">
         <p>Add Compounder</p>
@@ -55,32 +85,30 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="first_name">First Name:</label>
-              {{ compounderForm.first_name }}
+              {% render_field compounderForm.first_name class="form-control" placeholder="First Name" %}
             </div>
             <div class="form-group">
-              <label for="last_name">Last Name:</label>
-              {{ compounderForm.last_name }}
+              {% render_field compounderForm.last_name class="form-control" placeholder="Last Name" %}
             </div>
             <div class="form-group">
-              <label for="address">Address:</label>
-              {{ compounderForm.address }}
+              {% render_field compounderForm.address class="form-control" placeholder="Address" %}
             </div>
-            <div class="form-group">
-              <label for="mobile">Mobile:</label>
-              {{ compounderForm.mobile }}
+            {% comment %} <div class="form-group">
+              {% render_field patientForm.symptoms class="form-control" placeholder="Symptoms" %}
             </div>
+          </div> {% endcomment %}
+
+
+          <div class="form-group">
+            {% render_field compounderForm.mobile class="form-control" placeholder="Mobile" %}
           </div>
         </div>
-        <button type="submit" class="btnSubmit">Submit</button>
       </div>
+      <button type="submit" class="btnSubmit">Add</button>
     </div>
   </div>
+  </div>
+
 </form>
 
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
 {% endblock content %}

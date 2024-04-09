@@ -15,6 +15,10 @@
 
 
   <style media="screen">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     a:link {
       text-decoration: none;
     }
@@ -80,7 +84,7 @@
     }
 
     body {
-      padding-left: 240px;
+      padding-left: 0px;
     }
 
     main {
@@ -93,7 +97,7 @@
       height: 100vh;
       width: 240px;
       position: fixed;
-      top: 0px;
+      margin-top: 0;
       left: 0;
       z-index: 5;
       outline: none;
@@ -114,8 +118,10 @@
     }
 
     .menu .avatar h4 {
-      font-weight: bold; /* Make the name bold */
-      color: #ffea92; /* Adjust the color of the name */
+      font-weight: bold;
+      /* Make the name bold */
+      color: #ffea92;
+      /* Adjust the color of the name */
       margin-bottom: 0;
     }
 
@@ -132,12 +138,13 @@
       background-repeat: no-repeat;
       background-position: left 15px center;
       background-size: auto 20px;
-      transition: all 0.15s linear;
+      /* transition: all 0.15s linear; */
       cursor: pointer;
     }
 
     ul li a span {
-    font-size: 20px; /* Adjust the font size as needed */
+      font-size: 20px;
+      /* Adjust the font size as needed */
     }
 
     .menu ul li.icon-dashboard {
@@ -300,22 +307,28 @@
     <header class="avatar">
       <img src="{% static 'images/h_logo.png' %}" alt="Profile Pic" />
       <br><br>
-      <h4>Dr. Manthan Hirani</h4> <!-- Bolden the name -->
+      <h4>Dr. Manthan Hirani</h4>
     </header>
     <ul>
-      <li tabindex="0" class="icon-dashboard"> <a style="color:white; text-decoration:none;" href="/doctor-dashboard"><span>Dashboard</span></a> </li>
-      <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;" href="/doctor-patient"><span>Patient</span></a></li>
-      <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;" href="/doctor-medicine"><span>Medicines</span></a></li>
-      <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;" href="/doctor-compounder"><span>Compounder</span></a></li>
-      <li tabindex="0" class="icon-calendar"> <a style="color:white; text-decoration:none;" href="/doctor-appointment"><span>Appointments</span></a></li>
-      
+      <li tabindex="0" class="icon-dashboard"> <a style="color:white; text-decoration:none;"
+          href="/doctor-dashboard"><span>Dashboard</span></a> </li>
+      <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;"
+          href="/doctor-patient"><span>Patient</span></a></li>
+      <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;"
+          href="/doctor-medicine"><span>Medicines</span></a></li>
+      <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;"
+          href="/doctor-compounder"><span>Compounder</span></a></li>
+      <li tabindex="0" class="icon-calendar"> <a style="color:white; text-decoration:none;"
+          href="/doctor-appointment"><span>Appointments</span></a></li>
+
     </ul>
   </nav>
   <main>
     <!-- nav start -->
     <div class="bs-example">
-      <nav class="navbar navbar-expand-md  navbar-dark fixed-top" style="background:#337AB7;">
-        <a href="/doctor-dashboard" class="navbar-brand">Management System</a>
+      <nav class="navbar navbar-expand-lg  navbar-dark fixed-top"
+        style="background:#337AB7; width: 100%; position: fixed;">
+        <a href="/doctor-dashboard" class="navbar-brand">Hirani Homoeopathic Clinic</a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -336,10 +349,6 @@
   </main>
   <!-- partial -->
 </body>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
+
 
 </html>

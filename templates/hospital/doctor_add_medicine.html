@@ -4,6 +4,10 @@
 
 <head>
   <style media="screen">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     a:link {
       text-decoration: none;
     }
@@ -51,9 +55,11 @@
 <!------ Add Medicine Form doctor ---------->
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="container register-form">
+  <div class="container register-form" style="
+  margin-left: 20rem;
+">
     <div class="d-flex justify-content-end mb-3">
-      <a href="{% url 'doctor-medicine' %}" class="btn btn-primary">Back</a>
+      <a href="{% url 'doctor-add-medicine' %}" class="btn btn-primary">Back</a>
     </div>
     <div class="form">
       <div class="note">
@@ -77,10 +83,6 @@
   </div>
 </form>
 
- 
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
+
+
 {% endblock content %}
