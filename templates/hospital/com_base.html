@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Componder</title>
+  <title>LazyCoder || sumit</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,6 +15,10 @@
 
 
   <style media="screen">
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     a:link {
       text-decoration: none;
     }
@@ -27,9 +31,6 @@
       color: white;
     }
 
-
-
-
     /*---------------------------------------
        Social section
     -----------------------------------------*/
@@ -39,14 +40,11 @@
       margin: 0px;
     }
 
-
     #ftr {
-
       padding: 20px;
     }
 
     .fa {
-
       font-size: 23px;
       width: 60px;
       text-align: center;
@@ -83,16 +81,10 @@
 
     p {
       text-align: center;
-
     }
 
-
-
-
-
     body {
-
-      padding-left: 240px;
+      padding-left: 0px;
     }
 
     main {
@@ -105,7 +97,7 @@
       height: 100vh;
       width: 240px;
       position: fixed;
-      top: 0px;
+      margin-top: 0;
       left: 0;
       z-index: 5;
       outline: none;
@@ -125,8 +117,11 @@
       box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
     }
 
-    .menu .avatar h2 {
-      font-weight: normal;
+    .menu .avatar h4 {
+      font-weight: bold;
+      /* Make the name bold */
+      color: #ffea92;
+      /* Adjust the color of the name */
       margin-bottom: 0;
     }
 
@@ -143,8 +138,13 @@
       background-repeat: no-repeat;
       background-position: left 15px center;
       background-size: auto 20px;
-      transition: all 0.15s linear;
+      /* transition: all 0.15s linear; */
       cursor: pointer;
+    }
+
+    ul li a span {
+      font-size: 20px;
+      /* Adjust the font size as needed */
     }
 
     .menu ul li.icon-dashboard {
@@ -189,7 +189,7 @@
         width: 60px;
       }
 
-      .menu .avatar h2 {
+      .menu .avatar h4 {
         opacity: 0;
         position: absolute;
         top: 50%;
@@ -202,7 +202,7 @@
         transition: all 0.15s ease-in-out;
       }
 
-      .menu .avatar:hover h2 {
+      .menu .avatar:hover h4 {
         opacity: 1;
         transform: translate3d(0px, -50%, 0);
       }
@@ -305,33 +305,33 @@
   <nav class="menu" tabindex="0">
     <div class="smartphone-menu-trigger"></div>
     <header class="avatar">
-      <img src="{% static doctor.profile_pic.url %}" alt="Profile Pic" />
+      <img src="{% static 'images/h_logo.png' %}" alt="Profile Pic" />
       <br><br>
-      <h6>Doctor</h6>
-      <h2>{{request.user.first_name}}</h2>
+      <h4>Compounder Name</h4>
     </header>
     <ul>
       <li tabindex="0" class="icon-dashboard"> <a style="color:white; text-decoration:none;"
-          href="/doctor-dashboard"><span>Dashboard</span></a> </li>
+          href="/com-dashboard"><span>Dashboard</span></a> </li>
       <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;"
-          href="/doctor-patient"><span>Patient</span></a></li>
-      <li tabindex="0" class="icon-calendar"> <a style="color:white; text-decoration:none;"
-          href="/doctor-appointment"><span>Appointments</span></a></li>
+          href="/com-patient"><span>Patient</span></a></li>
       <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;"
-          href="/doctor-medicine"><span>Mediciens</span></a></li>
+          href="/doctor-medicine"><span>Medicines</span></a></li>
+      <li tabindex="0" class="icon-users"> <a style="color:white; text-decoration:none;"
+          href=""><span>Prescription</span></a></li>
+
     </ul>
   </nav>
   <main>
     <!-- nav start -->
     <div class="bs-example">
-      <nav class="navbar navbar-expand-md  navbar-dark fixed-top" style="background:#337AB7;">
-        <a href="/doctor-dashboard" class="navbar-brand">HOSPITAL MANAGEMENT</a>
+      <nav class="navbar navbar-expand-lg  navbar-dark fixed-top"
+        style="background:#337AB7; width: 100%; position: fixed;">
+        <a href="/com-dashboard" class="navbar-brand">Hirani Homoeopathic Clinic</a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
           <div class="navbar-nav" style=" margin-left: 90%;">
-
             <a href="/logout" class="nav-item nav-link">Logout</a>
           </div>
         </div>
@@ -344,7 +344,6 @@
     {% endblock content %}
     <!-- content end-->
     <br><br><br><br><br><br><br>
-
   </main>
   <!-- partial -->
 </body>

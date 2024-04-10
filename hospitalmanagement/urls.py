@@ -35,13 +35,14 @@ urlpatterns = [
     path('patientsignup', views.patient_signup_view),
     
     path('adminlogin', LoginView.as_view(template_name='hospital/adminlogin.html')),
-    path('', LoginView.as_view(template_name='hospital/doctorlogin.html')),
+    path('', LoginView.as_view(template_name='hospital/doctorlogin.html'),name='doctorlogin'),
     path('patientlogin', LoginView.as_view(template_name='hospital/patientlogin.html')),
     path('compounderlogin', LoginView.as_view(template_name='hospital/compounderlogin.html')),
 
 
     path('afterlogin', views.afterlogin_view,name='afterlogin'),
-    path('logout', LogoutView.as_view(template_name='hospital/index.html'),name='logout'),
+    # path('logout', LogoutView.as_view(template_name='hospital/doctorlogin.html'),name='logout'),
+    path('logout', views.doctor_logout,name='logout'),
 
 
     path('admin-dashboard', views.admin_dashboard_view,name='admin-dashboard'),
@@ -142,24 +143,24 @@ urlpatterns +=[
 
 
 
-#---------FOR Compunder RELATED URLS-------------------------------------
-# urlpatterns +=[
-#     path('doctor-dashboard', views.doctor_dashboard_view,name='doctor-dashboard'),
-#     path('search', views.search_view,name='search'),
+# ---------FOR Compunder RELATED URLS-------------------------------------
+urlpatterns +=[
+    path('com-dashboard', views.compounder_dashboard_view,name='com-dashboard'),
+    # path('search', views.search_view,name='search'),
 
-#     path('doctor-patient', views.doctor_patient_view,name='doctor-patient'),
-#     path('doctor-add-patient', views.doctor_add_patient_view,name='doctor-add-patient'),
-#     path('doctor-view-patient', views.doctor_view_patient_view,name='doctor-view-patient'),
-#     path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
+    path('com-patient', views.com_patient_view,name='com-patient'),
+    path('com-add-patient', views.com_add_patient_view,name='com-add-patient'),
+    path('com-view-patient', views.com_view_patient_view,name='com-view-patient'),
+    # path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
 
-#     path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
-#     path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
-#     path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
-#     path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
+    # path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
+    # path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
+    # path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
+    # path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
 
-#     path('doctor-medicine', views.doctor_medicine_view,name='doctor-medicine'),
-#     path('doctor-add-medicine', views.doctor_add_medicine_view,name='doctor-add-medicine'),
-# ]
+    # path('doctor-medicine', views.doctor_medicine_view,name='doctor-medicine'),
+    # path('doctor-add-medicine', views.doctor_add_medicine_view,name='doctor-add-medicine'),
+]
 
 
 

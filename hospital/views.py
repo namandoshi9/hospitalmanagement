@@ -15,8 +15,20 @@ from django.shortcuts import render
 from .forms import MedicineForm, CompounderForm, PatientForm,PatientUserForm, AppointmentForm
 from django.contrib.auth.models import Group
 from django.http import Http404
-
+from django.contrib import messages
 from .forms import DoctorForm  # Assuming you have a DoctorForm defined
+from django.contrib.auth import logout
+
+def doctor_logout(request):
+    if request.user.is_authenticated:
+        logout(request)
+        messages.info(request,'Logout success')
+        return redirect('/')
+    else:
+        messages.info(request,'Please login first')
+        return redirect('/')
+
+
 
 # Create your views here.
 def home_view(request):
@@ -44,6 +56,8 @@ def patientclick_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'hospital/patientclick.html')
+
+
 
 
 
@@ -116,28 +130,36 @@ def is_doctor(user):
     return user.groups.filter(name='DOCTOR').exists()
 def is_patient(user):
     return user.groups.filter(name='PATIENT').exists()
+def is_compounder(user):
+    return user.groups.filter(name='COMPOUNDER').exists()
 
 
 #---------AFTER ENTERING CREDENTIALS WE CHECK WHETHER USERNAME AND PASSWORD IS OF ADMIN,DOCTOR OR PATIENT
 def afterlogin_view(request):
-    if is_admin(request.user):
+    if request.user.is_authenticated:
+        if is_admin(request.user):
+            return redirect('admin-dashboard')
+        elif is_doctor(request.user):
+            accountapproval=models.Doctor.objects.all().filter(user_id=request.user.id,status=True)
+            if accountapproval:
+                return redirect('doctor-dashboard')
+            else:
+                return render(request,'hospital/doctor_wait_for_approval.html')
+        elif is_patient(request.user):
+            accountapproval=models.Patient.objects.all().filter(user_id=request.user.id,status=True)
+            if accountapproval:
+                return redirect('patient-dashboard')
+            else:
+                return render(request,'hospital/patient_wait_for_approval.html')
+        elif is_compounder(request.user):
+                return redirect('com-dashboard')
+        else:
+            messages = "User does not exist or invalid username/password"
         
-        return redirect('admin-dashboard')
-    elif is_doctor(request.user):
-        accountapproval=models.Doctor.objects.all().filter(user_id=request.user.id,status=True)
-        if accountapproval:
-            return redirect('doctor-dashboard')
-        else:
-            return render(request,'hospital/doctor_wait_for_approval.html')
-    elif is_patient(request.user):
-        accountapproval=models.Patient.objects.all().filter(user_id=request.user.id,status=True)
-        if accountapproval:
-            return redirect('patient-dashboard')
-        else:
-            return render(request,'hospital/patient_wait_for_approval.html')
+        return render(request, 'hospital/doctorlogin.html', {'messages': messages})
     else:
-        return HttpResponse("hello")
-
+        messages.info(request,'Please login first')
+        return redirect('/')
 
 
 
@@ -483,6 +505,24 @@ def doctor_add_patient_view(request):
         patientForm = PatientForm()
         
     return render(request, 'hospital/doctor_add_patient.html', {'patientForm': patientForm})
+
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_add_patient_view(request):
+    if request.method == 'POST':
+        patient_form = PatientForm(request.POST)
+        if patient_form.is_valid():
+            patient = patient_form.save(commit=False)
+            compounder = Compounder.objects.get(doctor=request.user)
+            patient.compounder = compounder
+            patient.save()
+            return HttpResponseRedirect('com-view-patient')  # Redirect after successful submission
+    else:
+        patient_form = PatientForm()
+        
+    return render(request, 'hospital/com_add_patient.html', {'patient_form': patient_form})
 
 
 
@@ -1005,6 +1045,15 @@ def doctor_dashboard_view(request):
     return render(request,'hospital/doctor_dashboard.html',context=mydict)
 
 
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def compounder_dashboard_view(request):
+    return render(request,'hospital/com_dashboard.html')
+
+
+
+
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_dashboard_card_view(request):
@@ -1019,6 +1068,12 @@ def doctor_dashboard_card_view(request):
     'medicine_count': medicine_count,
     }
     return render(request,'hospital/doctor_dashboard_cards.html',context=mydict)
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def compounder_dashboard_card_view(request):
+    return render(request,'hospital/com_dashboard_cards.html')
 
 
 
@@ -1046,6 +1101,17 @@ def doctor_patient_view(request):
     }
     return render(request,'hospital/doctor_patient.html',context=mydict)
 
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_patient_view(request):
+    # patients = Patient.objects.all()
+    # patient_count = patients.count()
+    # mydict={
+    # 'patients':patients,
+    # 'patient_count': patient_count
+    # }
+    return render(request,'hospital/com_patient.html')
 
 
 @login_required(login_url='doctorlogin')
@@ -1119,6 +1185,14 @@ def doctor_view_patient(request):
     patients = Patient.objects.all()
     context = {'patients': patients}
     return render(request, 'hospital/doctor_view_patient.html', context)
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_view_patient_view(request):
+    # patients = Patient.objects.all()
+    # context = {'patients': patients}
+    return render(request, 'hospital/com_view_patient.html')
 
 
 @login_required(login_url='doctorlogin')
@@ -1241,18 +1315,18 @@ def delete_appointment_from_doctor_view(request, pk):
 @login_required(login_url='patientlogin')
 @user_passes_test(is_patient)
 def patient_dashboard_view(request):
-    patient=models.Patient.objects.get(user_id=request.user.id)
-    doctor=models.Doctor.objects.get(user_id=patient.assignedDoctorId)
-    mydict={
-    'patient':patient,
-    'doctorName':doctor.get_name,
-    'doctorMobile':doctor.mobile,
-    'doctorAddress':doctor.address,
-    'symptoms':patient.symptoms,
-    'doctorDepartment':doctor.department,
-    'admitDate':patient.admitDate,
-    }
-    return render(request,'hospital/patient_dashboard.html',context=mydict)
+    # patient=models.Patient.objects.get(user_id=request.user.id)
+    # doctor=models.Doctor.objects.get(user_id=patient.assignedDoctorId)
+    # mydict={
+    # 'patient':patient,
+    # 'doctorName':doctor.get_name,
+    # 'doctorMobile':doctor.mobile,
+    # 'doctorAddress':doctor.address,
+    # 'symptoms':patient.symptoms,
+    # 'doctorDepartment':doctor.department,
+    # 'admitDate':patient.admitDate,
+    # }
+    return render(request,'hospital/patient_dashboard.html')
 
 
 

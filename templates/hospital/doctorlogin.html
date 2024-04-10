@@ -102,7 +102,7 @@
 </head>
 
 <body>
-  <!-- {% include "hospital/navbar.html" %} -->
+  
 
   <div class="container">
 
@@ -118,7 +118,13 @@
         <div class="logo">
           <img src="{% static 'images/h_logo.png' %}" alt="Logo">
         </div>
-
+        <div class="response-message">
+          {% if messages %}
+            {% for i in messages %}
+            <p>{{i}}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
         <div class="form-content">
           <div class="form-group">
             <!-- <label for="id_username">Username</label> -->
