@@ -66,7 +66,7 @@
     }
 
     .card .card-block {
-      padding: 25px;
+      padding: 20px;
     }
 
     .order-card i {
@@ -88,13 +88,14 @@
   <div class="row" style="justify-content: center;">
 
     <div class="col-md-4 col-xl-6" style="
-    margin-left: 24rem;
-    margin-top: 1rem;
+    margin-left: 40rem;
+    margin-top: 2rem;
 ">
-      <div class="card bg-c-blue order-card">
+      <div class="card bg-c-blue order-card" style="max-width: 80%;">
         <div class="card-block">
-          <a href="/doctor-view-patient">
-            <h6 class="m-b-20">Your Patient Record</h6>
+          <!-- <a href="/doctor-view-patient"> -->
+          <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600">Patient Record</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-injured f-left"></i></h2>
@@ -108,7 +109,8 @@
       <div class="card bg-c-pink order-card">
         <div class="card-block">
           <a href="/doctor-view-discharge-patient">
-            <h6 class="m-b-20">Your Discharged Patient</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Your Discharged Patient</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-eject f-left"></i></h2>
@@ -118,10 +120,11 @@
     </div> -->
 
 
-    <div class="col-md-12" style="margin-left: 24rem;">
+    <div class="col-lg-11" style="margin-left: 24rem;">
       <div class="card">
         <div class="card-block">
-          <h6 class="m-b-20">All Patients</h6>
+          <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600; color: black">All Patients</h6>
           <div class="d-flex justify-content-end mb-3">
             <!-- Button to add a new patient -->
             <a href="/doctor-add-patient" class="btn btn-primary">Add Patient</a>
@@ -134,8 +137,11 @@
                   <th>Symptoms</th>
                   <th>Mobile</th>
                   <th>Address</th>
-                  <th>Update</th>
-                  <th>Delete</th>
+                  <!-- <th>Update</th>
+                  <th>Delete</th> -->
+                  <th style="
+                  padding-left: 2.4rem;
+              ">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -145,7 +151,7 @@
                   <td>{{ p.symptoms }}</td>
                   <td>{{ p.mobile }}</td>
                   <td>{{ p.address }}</td>
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
+                  <!-- <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
                         class="glyphicon glyphicon-edit"></span></a></td>
                   <td>
                     <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post">
@@ -153,6 +159,17 @@
                       <input type="hidden" name="delete_patient" value="from_dash" />
                       <button type="submit" class="btn btn-danger btn-xs"><span
                           class="glyphicon glyphicon-trash"></span></button>
+                    </form>
+                  </td> -->
+                  <td>
+                    <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                    </form>
+                    <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="delete_doctor" value="from_dash" />
+                      <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                     </form>
                   </td>
                 </tr>
@@ -167,10 +184,6 @@
 
   </div>
 </div>
-<!--
-  developed By : sumit kumar
-  facebook : fb.com/sumit.luv
-  youtube : youtube.com/lazycoders
-  -->
+
 <br><br><br><br><br><br><br>
 {% endblock content %}

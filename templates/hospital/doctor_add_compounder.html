@@ -51,7 +51,8 @@
     }
   </style>
 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -72,12 +73,14 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container register-form" style="
-  margin-left: 20rem;
+  margin-left: 40rem; width: 70%;
 ">
-    <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-start mb-3">
       <a href="/doctor-compounder" class="btn btn-primary">Back</a>
     </div>
-    <div class="form">
+    <div class="form" style="
+    width: 70%;
+">
       <div class="note">
         <p>Add Compounder</p>
       </div>

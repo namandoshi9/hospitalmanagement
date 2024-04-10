@@ -8,14 +8,14 @@
     .note {
       text-align: center;
       height: 80px;
-      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+      background: #0072ff;
       color: #fff;
       font-weight: bold;
       line-height: 80px;
     }
 
     .form-content {
-      padding: 5%;
+      padding: 3%;
       border: 1px solid #ced4da;
       margin-bottom: 2%;
     }
@@ -48,7 +48,8 @@
   </style>
 
   <!-- Include Bootstrap CSS and JavaScript -->
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
@@ -56,7 +57,7 @@
 <br><br>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="container register-form" style="margin-left: 20rem;">
+  <div class="container register-form" style="margin-left: 32rem;width: 70%">
     <div class="text-right">
       <a href="{% url 'doctor-medicine' %}" class="btn btn-primary">Back</a>
     </div>
