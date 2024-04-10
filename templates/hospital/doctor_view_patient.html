@@ -64,7 +64,7 @@ facebook : fb.com/sumit.luv
 
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-lg-11">
       <div class="card">
         <div class="card-block">
           <div class="table-responsive">
@@ -75,8 +75,11 @@ facebook : fb.com/sumit.luv
                   <th>Symptoms</th>
                   <th>Mobile</th>
                   <th>Address</th>
-                  <th>Update</th>
-                  <th>Delete</th>
+                  <!-- <th>Update</th>
+                  <th>Delete</th> -->
+                  <th style="
+                  padding-left: 2.4rem;
+              ">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -86,7 +89,7 @@ facebook : fb.com/sumit.luv
                   <td>{{ p.symptoms }}</td>
                   <td>{{ p.mobile }}</td>
                   <td>{{ p.address }}</td>
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
+                  <!-- <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
                         class="glyphicon glyphicon-edit"></span></a></td>
                   <td>
                     <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post">
@@ -95,8 +98,18 @@ facebook : fb.com/sumit.luv
                       <button type="submit" class="btn btn-danger btn-xs"><span
                           class="glyphicon glyphicon-trash"></span></button>
                     </form>
+                  </td> -->
+                  <td>
+                    <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                    </form>
+                    <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="delete_doctor" value="from_dash" />
+                      <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                    </form>
                   </td>
-
                 </tr>
                 {% endfor %}
               </tbody>

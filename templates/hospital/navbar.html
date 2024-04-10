@@ -15,9 +15,14 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+    .navbar {
+      border-radius: unset;
+    }
+
     .bs-example {
       margin: 0px;
       position: fixed;
+
     }
 
     .navbar-brand {
@@ -42,9 +47,9 @@
 
 
   <div class="bs-example">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background:#337AB7;">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background:#337AB7; border-radius: unset;">
       <a href="" class="navbar-brand">
-        <img src="{% static 'images/logo.png' %}" alt="Logo"> 
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
         Hirani Homoeopathic Clinic
       </a>
       <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -70,7 +75,7 @@
     </nav>
   </div>
 
- 
+
 
 </body>
 

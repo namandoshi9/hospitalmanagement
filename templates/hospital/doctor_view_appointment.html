@@ -40,15 +40,12 @@
     }
   </style>
 </head>
-<!--
-written By : sumit kumar
-facebook : fb.com/sumit.luv
--->
+
 
 <div class="container">
 
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-2">
       <div class="search-box">
         <!-- Search bar -->
         <!-- <input type="text" class="form-control search-input" placeholder="Search here..."> -->
@@ -65,7 +62,7 @@ facebook : fb.com/sumit.luv
 
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-lg-11" style="margin-left: 15rem;">
       <div class="card">
         <div class="card-block">
           <div class="table-responsive">
@@ -77,8 +74,11 @@ facebook : fb.com/sumit.luv
                   <th>Appointment Date</th>
                   <th>Description</th>
                   <th>Status</th>
-                  <th>Update</th>
-                  <th>Delete</th>
+                  <!-- <th>Update</th>
+                  <th>Delete</th> -->
+                  <th style="
+                padding-left: 2.4rem;
+            ">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -89,13 +89,25 @@ facebook : fb.com/sumit.luv
                   <td>{{ appointment.appointmentDate }}</td>
                   <td>{{ appointment.description }}</td>
                   <td>{{ appointment.status }}</td>
-                  <td><a class="btn btn-primary btn-xs" href="{% url 'update-appointment' appointment.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                  <!-- <td><a class="btn btn-primary btn-xs" href="{% url 'update-appointment' appointment.id %}"><span
+                        class="glyphicon glyphicon-edit"></span></a></td>
                   <td>
                     <form action="{% url 'delete-appointment' appointment.id %}" method="post">
                       {% csrf_token %}
                       <input type="hidden" name="delete_appointment" value="from_view" />
                       <button type="submit" class="btn btn-danger btn-xs"><span
                           class="glyphicon glyphicon-trash"></span></button>
+                    </form>
+                  </td> -->
+                  <td>
+                    <form action="{% url 'update-appointment' appointment.id %}" style="display: inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                    </form>
+                    <form action="{% url 'delete-appointment' appointment.id %}" method="post" style="display: inline;">
+                      {% csrf_token %}
+                      <input type="hidden" name="delete_appointment" value="from_dash" />
+                      <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                     </form>
                   </td>
 

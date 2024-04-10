@@ -1,6 +1,7 @@
 {% extends 'hospital/doctor_base.html' %}
 {% load widget_tweaks %}
 {% block content %}
+
 <head>
   <style media="screen">
     a:link {
@@ -17,7 +18,7 @@
     }
 
     .form-content {
-      padding: 5%;
+      padding: 3%;
       border: 1px solid #ced4da;
       margin-bottom: 2%;
     }
@@ -44,10 +45,10 @@
       text-align: center;
       margin-bottom: 10px;
     }
-
   </style>
 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -56,18 +57,21 @@
 
 <div class="msg">
   {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-success" role="alert">
-        {{ message }}
-      </div>
-    {% endfor %}
+  {% for message in messages %}
+  <div class="alert alert-success" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
   {% endif %}
 </div>
 
 <!------ signup page for doctor by admin(sumit)  ---------->
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="container register-form">
+  <div class="container register-form" style="
+  margin-left: 32rem;
+  width: 70%;
+">
     <div class="d-flex justify-content-end mb-3">
       <a href="/doctor-patient" class="btn btn-primary">Back</a>
     </div>
@@ -85,7 +89,8 @@
               {% render_field appointmentForm.patient class="form-control" placeholder="Patient ID" %}
             </div>
             <div class="form-group">
-              {% render_field appointmentForm.appointmentDate type='date' class="form-control" placeholder="Doctor ID" %}
+              {% render_field appointmentForm.appointmentDate type='date' class="form-control" placeholder="Doctor ID"
+              %}
             </div>
             <div class="form-group">
               {% render_field appointmentForm.description class="form-control" placeholder="Description" %}
