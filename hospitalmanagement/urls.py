@@ -19,7 +19,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 #-------------FOR ADMIN RELATED URLS
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.home_view,name=''),
+    #path('',views.home_view,name=''),
 
 
     path('aboutus', views.aboutus_view),
@@ -35,7 +35,7 @@ urlpatterns = [
     path('patientsignup', views.patient_signup_view),
     
     path('adminlogin', LoginView.as_view(template_name='hospital/adminlogin.html')),
-    path('doctorlogin', LoginView.as_view(template_name='hospital/doctorlogin.html')),
+    path('', LoginView.as_view(template_name='hospital/doctorlogin.html')),
     path('patientlogin', LoginView.as_view(template_name='hospital/patientlogin.html')),
     path('compounderlogin', LoginView.as_view(template_name='hospital/compounderlogin.html')),
 
@@ -104,7 +104,9 @@ urlpatterns +=[
     path('doctor-add-appointment', views.doctor_add_appointment_view,name='doctor-add-appointment'),
     path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
     path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
-    path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
+    path('delete-appointment/<int:pk>', views.delete_appointment_from_doctor_view,name='delete-appointment'),
+    path('update-appointment/<int:pk>', views.update_appointment_view,name='update-appointment'),
+
 
     path('doctor-medicine', views.doctor_medicine_view,name='doctor-medicine'),
     path('doctor-add-medicine', views.doctor_add_medicine_view,name='doctor-add-medicine'),
@@ -116,6 +118,9 @@ urlpatterns +=[
     
     path('doctor-compounder', views.doctor_compounder_view,name='doctor-compounder'),
     path('doctor-add-compounder', views.doctor_add_compounder,name='doctor-add-compounder'),
+    path('doctor-view-compounder', views.doctor_view_compounder_view,name='doctor-view-compounder'),
+    path('doctor-update-compounder/<int:pk>', views.update_compounder_view_doctor,name='doctor-update-compounder'),
+    path('delete-compounder-from-doctor/<int:pk>', views.delete_compounder_from_doctor_view,name='delete-compounder-from-doctor'),
    
 ]
 

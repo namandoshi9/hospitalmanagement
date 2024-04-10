@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 <br><br>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,20 +9,16 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <style type="text/css">
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
     a:link {
       text-decoration: none;
     }
-
-    .menu {
+    .menu{
       top: 50px;
     }
-
     h6 {
       color: white;
     }
@@ -69,9 +64,7 @@
 </head>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container" style="
-margin-left: 20rem;
-">
+<div class="container">
   <div class="row">
     <div class="col-md-4 col-xl-6">
       <div class="card bg-c-blue order-card">
@@ -81,12 +74,12 @@ margin-left: 20rem;
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-calendar f-left"></i></h2>
-
+          <h2 class="text-right">{{ appointmentscount }}</i></h2>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4 col-xl-6">
+    <!-- <div class="col-md-4 col-xl-6">
       <div class="card bg-c-green order-card">
         <div class="card-block">
           <a href="/doctor-delete-appointment">
@@ -96,7 +89,7 @@ margin-left: 20rem;
           <h2 class="text-right"><i class="fas fa-eject f-left"></i></h2>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
     <div class="col-md-12">
@@ -115,7 +108,6 @@ margin-left: 20rem;
                   <th>Doctor Name</th>
                   <th>Appointment Date</th>
                   <th>Description</th>
-                  <th>Status</th>
                   <th>Update</th>
                   <th>Delete</th>
                 </tr>
@@ -123,20 +115,20 @@ margin-left: 20rem;
               <tbody>
                 {% for appointment in appointments %}
                 <tr>
-                  <td>{{ appointment.patientName }}</td>
-                  <td>{{ appointment.doctorName }}</td>
+                  <td>{{ appointment.patient }}</td>
+                  <td>{{ appointment.doctor }}</td>
                   <td>{{ appointment.appointmentDate }}</td>
                   <td>{{ appointment.description }}</td>
-                  <td>{{ appointment.status }}</td>
-                  <td><a class="btn btn-primary btn-xs" href=""><span class="glyphicon glyphicon-edit"></span></a></td>
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'update-appointment' appointment.id %}"><span class="glyphicon glyphicon-edit"></span></a></td>
                   <td>
-                    <form action="" method="post">
+                    <form action="{% url 'delete-appointment' appointment.id %}" method="post">
                       {% csrf_token %}
                       <input type="hidden" name="delete_appointment" value="from_dash" />
                       <button type="submit" class="btn btn-danger btn-xs"><span
                           class="glyphicon glyphicon-trash"></span></button>
                     </form>
                   </td>
+
                 </tr>
                 {% endfor %}
               </tbody>
