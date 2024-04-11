@@ -100,7 +100,7 @@ urlpatterns +=[
     path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
     path('doctor-update-patient/<int:pk>', views.update_patient_view_doctor,name='doctor-update-patient'),
     path('delete-patient-from-doctor/<int:pk>', views.delete_patient_from_doctor_view,name='delete-patient-from-doctor'),
-
+    
     path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
     path('doctor-add-appointment', views.doctor_add_appointment_view,name='doctor-add-appointment'),
     path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
@@ -151,6 +151,8 @@ urlpatterns +=[
     path('com-patient', views.com_patient_view,name='com-patient'),
     path('com-add-patient', views.com_add_patient_view,name='com-add-patient'),
     path('com-view-patient', views.com_view_patient_view,name='com-view-patient'),
+    path('delete-patient-from-com/<int:pk>', views.delete_patient_from_com_view,name='delete-patient-from-com'),
+
     # path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
 
     # path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),

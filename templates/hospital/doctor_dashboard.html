@@ -141,53 +141,6 @@
     }
   </style>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <div class="col-lg-11">
-    <div class="card">
-      <!-- {% comment %} <div class="card-block"> {% endcomment %}
-        {% comment %} <h6 class="m-b-0">All Patients</h6> {% endcomment %}
-        {% comment %} <div class="d-flex justify-content-end mb-3"> {% endcomment %} -->
-      <!-- Button to add a new patient -->
-      {% comment %} <a href="/doctor-add-patient" class="btn btn-primary">Add Patient</a>
-    </div>
-    <div class="table-responsive">
-      <table class="table table-hover" id="dev-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Symptoms</th>
-            <th>Mobile</th>
-            <th>Address</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for p in patients %}
-          <tr>
-            <td>{{ p.first_name }} {{ p.last_name }}</td>
-            <td>{{ p.symptoms }}</td>
-            <td>{{ p.mobile }}</td>
-            <td>{{ p.address }}</td>
-            <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
-                  class="glyphicon glyphicon-edit"></span></a></td>
-            <td>
-              <form action="" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="delete_patient" value="from_dash" />
-                <button type="submit" class="btn btn-danger btn-xs"><span
-                    class="glyphicon glyphicon-trash"></span></button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table> {% endcomment %}
-      {% comment %}
-    </div> {% endcomment %}
-    {% comment %}
-  </div> {% endcomment %}
-  </div>
-  </div>
 
   <div class="col-lg-11">
     <div class="card">
@@ -237,7 +190,7 @@
                   </form>
                   <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
                     {% csrf_token %}
-                    <input type="hidden" name="delete_doctor" value="from_dash" />
+                    <input type="hidden" name="delete_patient" value="from_dash1" />
                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                   </form>
                 </td>
@@ -285,7 +238,7 @@
                 <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post"
                   style="display: inline;">
                   {% csrf_token %}
-                  <input type="hidden" name="delete_doctor" value="from_dash" />
+                  <input type="hidden" name="delete_doctor" value="from_dash1" />
                   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                 </form>
               </td>

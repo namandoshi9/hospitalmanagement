@@ -168,7 +168,7 @@
                     </form>
                     <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
                       {% csrf_token %}
-                      <input type="hidden" name="delete_doctor" value="from_dash" />
+                      <input type="hidden" name="delete_patient" value="from_dash" />
                       <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                     </form>
                   </td>
