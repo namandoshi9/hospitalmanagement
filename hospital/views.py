@@ -1047,6 +1047,8 @@ def doctor_dashboard_view(request):
     doctor = request.user.doctor 
     appointments = Appointment.objects.filter(doctor=doctor)
     appointmentscount = appointments.count()
+    compounder = Compounder.objects.all()
+    compounder_count = compounder.count()
     #for  table in doctor dashboard
     # appointments=models.Appointment.objects.all().filter(status=True,doctorId=request.user.id).order_by('-id')
     # patientid=[]
@@ -1065,6 +1067,8 @@ def doctor_dashboard_view(request):
     'patientdischarged':patientdischarged,
     'medicine':medicine,
     'medicine_count': medicine_count,
+    'compounder':compounder,
+    'compounder_count': compounder_count,
     # 'appointments':appointments,
     'doctor':models.Doctor.objects.get(user_id=request.user.id), #for profile picture of doctor in sidebar
     }
