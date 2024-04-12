@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 {% extends 'hospital/doctor_base.html' %}
 {% load static %}
 {% block content %}
 <br><br>
-
 
 <head>
   <meta charset="utf-8">
@@ -66,7 +66,7 @@
     }
 
     .card .card-block {
-      padding: 20px;
+      padding: 0px;
     }
 
     .order-card i {
@@ -81,12 +81,10 @@
       float: right;
     }
 
-    /*Table style*/
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
       width: 99%;
-
     }
 
     td,
@@ -99,158 +97,165 @@
     tr:nth-child(odd) {
       background-color: rgba(0, 0, 0, .05);
     }
+
+    /* Custom color for specific rows */
+    tr.special-row {
+      background-color: #f5f5f5; /* Change this color as needed */
+    }
+
+    /* Header row style */
+    th {
+      background-color: white;
+    }
   </style>
 </head>
 
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<!-- <div class="container">
-  <div class="row" style="justify-content: center;"> -->
-
-
-
-
-<!-- <div class="col-md-4 col-xl-6">
-      <div class="card bg-c-pink order-card">
-        <div class="card-block">
-          <a href="/doctor-view-discharge-patient">
-            <h6 class="m-b-20" style="font-size: 15px;
-            font-weight: 600;">Your Discharged Patient</h6>
-          </a>
-          <br>
-          <h2 class="text-right"><i class="fas fa-eject f-left"></i></h2>
-          <h2 class="text-right">{{patientdischarged}}</i></h2>
-        </div>
-      </div>
-    </div> -->
-
-<!-- 
-    <div class="col-lg-11" style="margin-left: 24rem;">
-      <div class="card">
-        <div class="card-block">
-          <h6 class="m-b-20" style="font-size: 15px;
-            font-weight: 600; color: black">All Patients</h6>
-          <div class="d-flex justify-content-end mb-3"> -->
-<!-- Button to add a new patient -->
-<!-- <a href="/doctor-add-patient" class="btn btn-primary">Add Patient</a>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-hover" id="dev-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Symptoms</th>
-                  <th>Mobile</th>
-                  <th>Address</th>
-                  
-                  <th style="
-                  padding-left: 2.4rem;
-              ">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for p in patients %}
-                <tr>
-                  <td>{{ p.first_name }} {{ p.last_name }}</td>
-                  <td>{{ p.symptoms }}</td>
-                  <td>{{ p.mobile }}</td>
-                  <td>{{ p.address }}</td> -->
-<!-- <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
-                        class="glyphicon glyphicon-edit"></span></a></td>
-                  <td>
-                    <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post">
-                      {% csrf_token %}
-                      <input type="hidden" name="delete_patient" value="from_dash" />
-                      <button type="submit" class="btn btn-danger btn-xs"><span
-                          class="glyphicon glyphicon-trash"></span></button>
-                    </form>
-                  </td> -->
-<!-- <td>
-                    <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-                    </form>
-                    <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
-                      {% csrf_token %}
-                      <input type="hidden" name="delete_patient" value="from_dash" />
-                      <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                    </form>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div> -->
 <div>
-  <h6 class="m-b-20" style="font-size: 20px;
-              font-weight: 300; color: black; margin-left: 26rem;">All Patients</h6>
+  <h6 class="m-b-20" style="font-size: 20px; font-weight: 300; color: black; margin-left: 26rem;">Patients</h6>
   <div style="padding: 1px 2rem 10px 26rem;">
-    <div class="card">
+    <div class="card" style="padding: 2rem; max-width: 100%;">
       <div class="card-block">
-        <div class="d-flex justify-content-end mb-4 input" style="
-      margin-right: 1.2rem;
-  ">
-          <label for="gsearch"
-            style="font-family: Arial, Helvetica, sans-serif;font-size: 16px;font-weight: 100; ">Search:
-          </label>&nbsp;&nbsp;
-          <input type="search" id="gsearch" name="gsearch" style="    border: 1px solid grey;
-        border-radius: 4px;
-        width: 17rem;padding: 0.25rem 0.5rem;
-    ">
+        <div class="d-flex justify-content-between align-items-center mb-4 input" style="margin-right: 1.2rem;">
+          <div>
+            <a href="{% url 'doctor-add-patient' %}" class="btn btn-primary">Add Patients</a>
+          </div>
+          <div>
+            <label for="gsearch" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 100;">Search:</label>&nbsp;&nbsp;
+            <input type="search" id="gsearch" name="gsearch" onkeyup="searchTable()" style="border: 1px solid grey; border-radius: 4px; width: 17rem; padding: 0.25rem 0.5rem;">
+          </div>
         </div>
-        <table>
-          <tr>
-          <tr>
-            <th>Name</th>
-            <th>Symptoms</th>
-            <th>Mobile</th>
-            <th>Address</th>
 
-            <th>Action</th>
-          </tr>
-          <tbody>
-            {% for p in patients %}
-            <tr>
-              <td>{{ p.first_name }} {{ p.last_name }}</td>
-              <td>{{ p.symptoms }}</td>
-              <td>{{ p.mobile }}</td>
-              <td>{{ p.address }}</td>
-              <td>
-                <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-                </form>
-                <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
-                  {% csrf_token %}
-                  <input type="hidden" name="delete_patient" value="from_dash1" />
-                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                </form>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-          </tr>
-        </table>
       </div>
+
+      <table class="table table-hover" id="dev-table">
+
+        <tr>
+          <th>id</th>
+          <th>Name</th>
+          <th>Symptoms</th>
+          <th>Mobile</th>
+          <th>Address</th>
+
+          <th>Action</th>
+
+        </tr>
+        <tbody>
+          {% for p in patients %}
+          <tr class="{% if p.symptoms == 'Special' %}special-row{% endif %}">
+            <td>{{ p.id }}</td>
+            <td>{{ p.first_name }} {{ p.last_name }}</td>
+            <td>{{ p.symptoms }}</td>
+            <td>{{ p.mobile }}</td>
+            <td>{{ p.address }}</td>
+            <td>
+              <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+              </form>
+              <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="delete_patient" value="from_dash" />
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        </tr>
+      </table>
       <nav aria-label="Page navigation example">
-        <ul class="pagination" style="    display: flex;
-          padding-left: 0;
-          margin: 20px 30px;
-          border-radius: 4px;
-          justify-content: end; border-radius: 8px;">
-          <li class="page-item"><a style="background-color: #337AB7; color:white;" class="page-link"
-              href="#">Previous</a>
-          </li>
-          <li class="page-item"><a style="background-color: #337AB7; color:white;" class="page-link" href="#">Next</a>
-          </li>
+        <ul class="pagination" id="pagination" style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;">
+          <!-- Pagination links will be dynamically added by JavaScript -->
         </ul>
       </nav>
     </div>
+
+
   </div>
 </div>
 
-
 <br><br><br><br><br><br><br>
+<script>
+  var currentPage = 1;
+  var itemsPerPage = 10;
+  var tableRows = $('#dev-table tbody tr');
+  var totalPages = Math.ceil(tableRows.length / itemsPerPage);
+  displayPage(currentPage);
+
+  function displayPage(pageNumber) {
+    // Hide all rows
+    tableRows.hide();
+    // Calculate the start and end index of the items to display
+    var startIndex = (pageNumber - 1) * itemsPerPage;
+    var endIndex = startIndex + itemsPerPage;
+    // Display the rows for the current page
+    tableRows.slice(startIndex, endIndex).show();
+    // Update pagination links
+    updatePagination(pageNumber);
+  }
+
+  function updatePagination(currentPage) {
+    var paginationElement = $('#pagination');
+    paginationElement.empty();
+    // Previous page link
+    if (currentPage > 1) {
+      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="previousPage()">Previous</a></li>');
+    } else {
+      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>');
+    }
+    // Next page link
+    if (currentPage < totalPages) {
+      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="nextPage()">Next</a></li>');
+    } else {
+      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>');
+    }
+  }
+
+  function previousPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      displayPage(currentPage);
+    }
+  }
+
+  function nextPage() {
+    if (currentPage < totalPages) {
+      currentPage++;
+      displayPage(currentPage);
+    }
+  }
+
+  function searchTable() {
+    // Your search functionality remains unchanged
+  }
+</script>
+
+<script>
+  function searchTable() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("gsearch");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("dev-table");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td");
+      for (var j = 0; j < td.length; j++) {
+        if (td[j]) {
+          txtValue = td[j].textContent || td[j].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+            break;
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  }
+</script>
+
+
 {% endblock content %}

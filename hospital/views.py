@@ -295,7 +295,7 @@ def update_medicine_view(request, pk):
         form = MedicineForm(request.POST, instance=medicine)
         if form.is_valid():
             form.save()
-            return redirect('doctor-view-medicine')  # Redirect to doctor's dashboard after update
+            return redirect('doctor-medicine')  # Redirect to doctor's dashboard after update
     else:
         form = MedicineForm(instance=medicine)
     return render(request, 'hospital/update_medicine.html', {'form': form})
@@ -316,7 +316,7 @@ def update_appointment_view(request, pk):
         # print(form.is_valid())
         # print(form.errors)
         # if form.is_valid():
-        return redirect('doctor-view-appointment')  # Redirect to doctor's dashboard after update
+        return redirect('doctor-appointment')  # Redirect to doctor's dashboard after update
     
     return render(request, 'hospital/update_appointment.html', {'appointment': appointment})
 
@@ -620,7 +620,7 @@ def update_patient_view_doctor(request, pk):
             patient_instance.status = True
             patient_instance.save()
             
-            return redirect('doctor-view-patient')
+            return redirect('doctor-patient')
 
     mydict = {'userForm': userForm, 'patientForm': patientForm}
     return render(request, 'hospital/doctor_update_patient.html', context=mydict)

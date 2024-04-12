@@ -135,7 +135,7 @@
     }
 
     .market-update-right i.fa.fa-medkit {
-      font-size: 5em;
+      font-size: 5rem;
       color: #336cc2;
       width: 80px;
       height: 80px;
@@ -177,25 +177,28 @@
     Welcome</h1>
   <h2 style="font-weight: bold;color: black;text-align: center;padding: 0rem 0rem 0rem 30rem;font-family: Arial;">
     Hirani Homoeopathic Clinic</h2>
-  <div class="market-updates" style="margin-left: 40rem;  margin-top: 6rem;">
+  <div class="market-updates" style="margin-left: 40rem;  margin-top: 3rem;">
     <div class="col-md-5 market-update-gd" style="
     margin-top: 20px;
 ">
-      <div class="market-update-block clr-block-2">
-        <div class="col-md-8 market-update-left">
-          <h3>{{ patient_count }}</h3>
-          <h4>Patient</h4>
+      <a href="{% url 'doctor-patient' %}" style="text-decoration: none; color: inherit;">
+        <div class="market-update-block clr-block-2">
+          <div class="col-md-8 market-update-left">
+            <h3>{{ patient_count }}</h3>
+            <h4>Patient</h4>
+          </div>
+          <div class="col-md-4 market-update-right">
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="clearfix"> </div>
         </div>
-        <div class="col-md-4 market-update-right">
-          <i class="fa fa-users"></i>
-        </div>
-        <div class="clearfix"> </div>
-      </div>
+      </a>
     </div>
 
     <div class="col-md-5 market-update-gd" style="
     margin-top: 20px;
 ">
+      <a href="{% url 'doctor-medicine' %}" style="text-decoration: none; color: inherit;">
       <div class="market-update-block clr-block-3">
         <div class="col-md-8 market-update-left">
           <h3>{{ medicine_count }}</h3>
@@ -206,11 +209,13 @@
         </div>
         <div class="clearfix"> </div>
       </div>
+      </a>
     </div>
 
     <div class="col-md-5 market-update-gd" style="
     margin-top: 20px;
 ">
+    <a href="{% url 'doctor-compounder' %}" style="text-decoration: none; color: inherit;">
       <div class="market-update-block clr-block-1">
         <div class="col-md-8 market-update-left">
           <h3>{{ compounder_count }}</h3>
@@ -221,11 +226,13 @@
         </div>
         <div class="clearfix"> </div>
       </div>
+    </a>
     </div>
 
     <div class="col-md-5 market-update-gd" style="
     margin-top: 20px;
 ">
+    <a href="{% url 'doctor-appointment' %}" style="text-decoration: none; color: inherit;">
       <div class="market-update-block clr-block-0">
         <div class="col-md-8 market-update-left">
           <h3>{{ appointmentscount }}</h3>
@@ -236,6 +243,7 @@
         </div>
         <div class="clearfix"> </div>
       </div>
+    </a>
     </div>
   </div>
 
