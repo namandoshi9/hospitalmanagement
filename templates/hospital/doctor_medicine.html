@@ -74,17 +74,11 @@
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 99%;
+
         }
 
+        td,
         th {
-            background-color: white; /* Set the background color of table header to white */
-            color: black; /* Set the text color of table header to black */
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 12px;
-        }
-
-        td {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 12px;
@@ -92,6 +86,11 @@
 
         tr:nth-child(odd) {
             background-color: rgba(0, 0, 0, .05);
+        }
+
+        .button {
+            background-color: #1b4965;
+            color: white;
         }
     </style>
 
@@ -105,7 +104,7 @@
             <div class="card-block">
                 <div class="d-flex justify-content-between align-items-center mb-4 input" style="margin-right: 1.2rem;">
                     <div>
-                        <a href="/doctor-add-medicine" class="btn btn-primary">Add Medicine</a>
+                        <a href="/doctor-add-medicine" class="button btn">Add Medicine</a>
                     </div>
                     <div>
                         <label for="gsearch"
@@ -116,35 +115,41 @@
                 </div>
             </div>
 
-            <table class="table table-hover" id="dev-table">
+            <table class="table" id="dev-table">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Action</th>
+                    <thead>
+                        <tr style="background-color: white;">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for medicine in medicine %}
+                        <tr>
+                            <td>{{ medicine.id }}</td>
+                            <td style="max-width: 15rem;">{{ medicine.name }}</td>
+                            <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
+                            <td>
+                                <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post"
+                                    style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-info"><i
+                                            class="fas fa-pencil-alt"></i></button>
+                                </form>
+                                <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post"
+                                    style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="delete_doctor" value="from_dash" />
+                                    <button type="submit" class="btn btn-danger"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </tr>
-                <tbody>
-                    {% for medicine in medicine %}
-                    <tr>
-                        <td>{{ medicine.id }}</td>
-                        <td style="max-width: 15rem;">{{ medicine.name }}</td>
-                        <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
-                        <td>
-                            <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post"
-                                style="display: inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-                            </form>
-                            <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post"
-                                style="display: inline;">
-                                {% csrf_token %}
-                                <input type="hidden" name="delete_doctor" value="from_dash" />
-                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
             </table>
             <nav aria-label="Page navigation example">
                 <ul class="pagination" id="pagination"

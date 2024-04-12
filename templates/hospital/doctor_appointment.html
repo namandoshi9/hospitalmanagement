@@ -45,7 +45,7 @@
     }
 
     .card .card-block {
-      padding: 20px;
+      padding: 0px;
     }
 
     .order-card i {
@@ -189,41 +189,43 @@
       <table class="table table-hover" id="dev-table">
 
         <tr>
-        <tr>
-          <th>ID</th>
-          <th>Patient Name</th>
-          <th>Doctor Name</th>
-          <th>Appointment Date</th>
-          <th>Description</th>
-          <th>Action</th>
-        </tr>
-        <tbody>
-          {% for appointment in appointments %}
-          <tr>
-            <td>{{ appointment.id }}</td>
-            <td>{{ appointment.patient }}</td>
-            <td style="
+          <thead>
+            <tr style="background-color: white;">
+              <th>ID</th>
+              <th>Patient Name</th>
+              <th>Doctor Name</th>
+              <th>Appointment Date</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for appointment in appointments %}
+            <tr>
+              <td>{{ appointment.id }}</td>
+              <td>{{ appointment.patient }}</td>
+              <td style="
                   max-width: 15rem;
               ">{{ appointment.doctor }}</td>
-            <td>{{ appointment.appointmentDate }}</td>
-            <td style="
+              <td>{{ appointment.appointmentDate }}</td>
+              <td style="
                   max-width: 40rem;
                   max-height: 25rem;
               ">{{ appointment.description }}</td>
-            <td>
-              <form action="{% url 'update-appointment' appointment.id %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-              </form>
-              <form action="{% url 'delete-appointment' appointment.id %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <input type="hidden" name="delete_appointment" value="from_dash" />
-                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
+              <td>
+                <form action="{% url 'update-appointment' appointment.id %}" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                </form>
+                <form action="{% url 'delete-appointment' appointment.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="delete_appointment" value="from_dash" />
+                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </tr>
       </table>
       <nav aria-label="Page navigation example">
@@ -242,6 +244,7 @@
 <script>
   var currentPage = 1;
   var itemsPerPage = 10;
+
   var tableRows = $('#dev-table tbody tr');
   var totalPages = Math.ceil(tableRows.length / itemsPerPage);
   displayPage(currentPage);

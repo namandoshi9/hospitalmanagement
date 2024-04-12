@@ -91,13 +91,6 @@
       background-color: rgba(0, 0, 0, .05);
     }
 
-    /* Custom color for specific rows */
-    tr.special-row {
-      background-color: #f5f5f5;
-      /* Change this color as needed */
-    }
-
-    /* Header row style */
     th {
       background-color: white;
     }
@@ -124,17 +117,19 @@
       </div>
 
       <table class="table table-hover" id="dev-table">
+      <tr>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>Symptoms</th>
+            <th>Mobile</th>
+            <th>Address</th>
 
-        <tr>
-          <th>id</th>
-          <th>Name</th>
-          <th>Symptoms</th>
-          <th>Mobile</th>
-          <th>Address</th>
+            <th>Action</th>
 
-          <th>Action</th>
-
-        </tr>
+          </tr>
+        </thead>
         <tbody>
           {% for p in patients %}
           <tr class="{% if p.symptoms == 'Special' %}special-row{% endif %}">
@@ -158,6 +153,7 @@
           {% endfor %}
         </tbody>
         </tr>
+      </tr>
       </table>
       <nav aria-label="Page navigation example">
         <ul class="pagination" id="pagination"
@@ -250,8 +246,4 @@
     updatePagination(currentPage);
   }
 </script>
-
-
-{% endblock content %}
-
 {% endblock content %}

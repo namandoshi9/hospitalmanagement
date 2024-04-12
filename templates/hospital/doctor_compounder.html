@@ -92,13 +92,6 @@
       background-color: rgba(0, 0, 0, .05);
     }
 
-    /* Custom color for specific rows */
-    tr.special-row {
-      background-color: #f5f5f5;
-      /* Change this color as needed */
-    }
-
-    /* Header row style */
     th {
       background-color: white;
     }
@@ -124,36 +117,39 @@
 
       </div>
 
-      <table class="table table-hover" id="dev-table">
-
+      <table class="table" id="dev-table">
         <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Mobile</th>
-          <th>Address</th>
-          <th>Action</th>
-        </tr>
-        <tbody>
-          {% for p in compounder %}
-          <tr>
-            <td>{{ p.id }}</td>
-            <td>{{ p.first_name }} {{ p.last_name }}</td>
-            <td>{{ p.mobile }}</td>
-            <td>{{ p.address }}</td>
-            <td>
-              <form action="{% url 'doctor-update-compounder' p.id  %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-              </form>
-              <form action="{% url 'delete-compounder-from-doctor' p.id %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <input type="hidden" name="delete_compounder" value="from_dash" />
-                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+
+          </thead>
+          <tbody>
+            {% for p in compounder %}
+            <tr>
+              <td>{{ p.id }}</td>
+              <td>{{ p.first_name }} {{ p.last_name }}</td>
+              <td>{{ p.mobile }}</td>
+              <td>{{ p.address }}</td>
+              <td>
+                <form action="{% url 'doctor-update-compounder' p.id  %}" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                </form>
+                <form action="{% url 'delete-compounder-from-doctor' p.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="delete_compounder" value="from_dash" />
+                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </tr>
       </table>
       <nav aria-label="Page navigation example">
