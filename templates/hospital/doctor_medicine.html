@@ -13,39 +13,39 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
-    
+
         a:link {
             text-decoration: none;
         }
-    
+
         .menu {
             top: 50px;
         }
-    
+
         h6 {
             color: white;
         }
-    
+
         .order-card {
             color: #fff;
         }
-    
+
         .bg-c-blue {
             background: linear-gradient(45deg, #4099ff, #73b4ff);
         }
-    
+
         .bg-c-green {
             background: linear-gradient(45deg, #2ed8b6, #59e0c5);
         }
-    
+
         .bg-c-yellow {
             background: linear-gradient(45deg, #FFB64D, #ffcb80);
         }
-    
+
         .bg-c-pink {
             background: linear-gradient(45deg, #FF5370, #ff869a);
         }
-    
+
         .card {
             border-radius: 5px;
             -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
@@ -53,30 +53,29 @@
             border: none;
             margin-bottom: 30px;
         }
-    
+
         .card .card-block {
             padding: 0px;
         }
-    
+
         .order-card i {
             font-size: 26px;
         }
-    
+
         .f-left {
             float: left;
         }
-    
+
         .f-right {
             float: right;
         }
-    
-        /*Table style*/
+
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 99%;
         }
-    
+
         th {
             background-color: white; /* Set the background color of table header to white */
             color: black; /* Set the text color of table header to black */
@@ -84,18 +83,18 @@
             text-align: left;
             padding: 12px;
         }
-    
+
         td {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 12px;
         }
-    
+
         tr:nth-child(odd) {
             background-color: rgba(0, 0, 0, .05);
         }
     </style>
-    
+
 </head>
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -160,79 +159,87 @@
 <br><br><br><br><br><br><br>
 
 <script>
-  var currentPage = 1;
-  var itemsPerPage = 10;
-  var tableRows = $('#dev-table tbody tr');
-  var totalPages = Math.ceil(tableRows.length / itemsPerPage);
-  displayPage(currentPage);
+    var currentPage = 1;
+    var itemsPerPage = 10;
+    var tableRows = $('#dev-table tbody tr');
+    var totalPages = Math.ceil(tableRows.length / itemsPerPage);
+    displayPage(currentPage);
 
-  function displayPage(pageNumber) {
-    // Hide all rows
-    tableRows.hide();
-    // Calculate the start and end index of the items to display
-    var startIndex = (pageNumber - 1) * itemsPerPage;
-    var endIndex = startIndex + itemsPerPage;
-    // Display the rows for the current page
-    tableRows.slice(startIndex, endIndex).show();
-    // Update pagination links
-    updatePagination(pageNumber);
-  }
-
-  function updatePagination(currentPage) {
-    var paginationElement = $('#pagination');
-    paginationElement.empty();
-    // Previous page link
-    if (currentPage > 1) {
-      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="previousPage()">Previous</a></li>');
-    } else {
-      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>');
+    function displayPage(pageNumber) {
+        // Hide all rows
+        tableRows.hide();
+        // Calculate the start and end index of the items to display
+        var startIndex = (pageNumber - 1) * itemsPerPage;
+        var endIndex = startIndex + itemsPerPage;
+        // Display the rows for the current page
+        tableRows.slice(startIndex, endIndex).show();
+        // Update pagination links
+        updatePagination(pageNumber);
     }
-    // Next page link
-    if (currentPage < totalPages) {
-      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="nextPage()">Next</a></li>');
-    } else {
-      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>');
-    }
-  }
 
-  function previousPage() {
-    if (currentPage > 1) {
-      currentPage--;
-      displayPage(currentPage);
-    }
-  }
-
-  function nextPage() {
-    if (currentPage < totalPages) {
-      currentPage++;
-      displayPage(currentPage);
-    }
-  }
-
-  function searchTable() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("gsearch");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("dev-table");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td");
-      for (var j = 0; j < td.length; j++) {
-        if (td[j]) {
-          txtValue = td[j].textContent || td[j].innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-            break;
-          } else {
-            tr[i].style.display = "none";
-          }
+    function updatePagination(currentPage) {
+        var paginationElement = $('#pagination');
+        paginationElement.empty();
+        // Previous page link
+        if (currentPage > 1) {
+            paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="previousPage()">Previous</a></li>');
+        } else {
+            paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>');
         }
-      }
+        // Numbered pages
+        for (var i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                paginationElement.append('<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>');
+            } else {
+                paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>');
+            }
+        }
+        // Next page link
+        if (currentPage < totalPages) {
+            paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="nextPage()">Next</a></li>');
+        } else {
+            paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>');
+        }
     }
-  }
+
+    function previousPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayPage(currentPage);
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayPage(currentPage);
+        }
+    }
+
+    function searchTable() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("gsearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("dev-table");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
 </script>
 
 {% endblock content %}
