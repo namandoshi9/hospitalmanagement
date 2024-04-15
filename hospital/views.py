@@ -671,7 +671,6 @@ def doctor_add_medicine_view(request):
     return render(request, 'hospital/doctor_add_medicine.html', context=mydict)
 
 
-
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_view_medicine_view(request):

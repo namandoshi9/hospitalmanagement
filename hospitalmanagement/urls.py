@@ -14,6 +14,8 @@ from django.contrib import admin
 from django.urls import path
 from hospital import views
 from django.contrib.auth.views import LoginView,LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 #-------------FOR ADMIN RELATED URLS
@@ -123,7 +125,7 @@ urlpatterns +=[
     path('doctor-update-compounder/<int:pk>', views.update_compounder_view_doctor,name='doctor-update-compounder'),
     path('delete-compounder-from-doctor/<int:pk>', views.delete_compounder_from_doctor_view,name='delete-compounder-from-doctor'),
    
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 

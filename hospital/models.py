@@ -1,5 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+import barcode
+from barcode.writer import ImageWriter
+import os
+import barcode
+from io import BytesIO
+from django.core.files import File
+import random
+import string
+
 
 
 
@@ -110,10 +119,44 @@ class PatientDischargeDetails(models.Model):
     total=models.PositiveIntegerField(null=False)
 
 
+
+
+
+
 class Medicine(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
-    # Add other fields for medicine details as needed
+    barcode = models.ImageField(upload_to='barcodes/', blank=True)
+
+    # Modify the generate_barcode method to generate a 12-digit numeric string for EAN-13
+    def generate_barcode(self):
+        # Generate a random UUID as the barcode
+        barcode_value = ''.join(random.choices(string.digits, k=12))
+
+        # Generate barcode using python-barcode library
+        ean = barcode.get_barcode_class('ean13')
+        code = ean(barcode_value, writer=ImageWriter())
+
+        # Save barcode to BytesIO buffer
+        buffer = BytesIO()
+        code.write(buffer)
+
+        # Create filename
+        filename = f'{barcode_value}.png'
+        filepath = os.path.join('barcodes', filename)
+
+        # Ensure the directory exists before saving the file
+        if not os.path.exists('barcodes'):
+            os.makedirs('barcodes')
+
+        # Save barcode image to ImageField
+        self.barcode.save(filename, File(buffer), save=False)
+
+
+    def save(self, *args, **kwargs):
+        if not self.barcode:
+            self.generate_barcode()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

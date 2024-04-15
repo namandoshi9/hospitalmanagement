@@ -57,7 +57,6 @@ class AppointmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['patient'].empty_label = "-------- Select patient --------"
-        self.fields['doctor'].empty_label = "-------- Select doctor --------"
 
 
 class PatientAppointmentForm(forms.ModelForm):
@@ -77,7 +76,7 @@ class ContactusForm(forms.Form):
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
-        fields = ['name', 'description']  # Add other fields as needed
+        fields = ['name', 'description', 'barcode']  # Add other fields as needed
 
 
 
