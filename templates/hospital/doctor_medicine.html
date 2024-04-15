@@ -128,6 +128,11 @@
             background-color: transparent;
             border-color: transparent;
         }
+        a.btn.btn-success.btn-sm{
+            color: #124852;
+            background-color: transparent;
+            border-color: transparent;
+        }
 
         button.btn.btn-danger {
             color: #cf0000;
@@ -171,7 +176,7 @@
                             <th>Name</th>
                             <th>Description</th>
                             <th>Barcode
-                                <button class="btn btn-primary" onclick="printAllBarcodes()">Print All Barcodes</button>
+                                <!-- <button class="btn btn-primary" onclick="printAllBarcodes()">Print All Barcodes</button> -->
                             </th>
                             <th>Action</th>
                         </tr>
@@ -189,7 +194,7 @@
                                 No barcode available
                                 {% endif %}
                             </td>
-                            <td style="text-align: left; width: 10rem;">
+                            <td style="text-align: left; width: 14rem;">
                                 
                                
                                 <a href="{% url 'update-medicine' pk=medicine.pk %}" class="btn btn-info"><i
