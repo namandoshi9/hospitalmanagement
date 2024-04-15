@@ -6,20 +6,19 @@
 
 <head>
   <meta charset="utf-8">
-
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
-
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
   <style type="text/css">
-    div {
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
     }
 
     a:link {
@@ -32,7 +31,10 @@
 
     h6 {
       color: white;
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
     }
+
 
     .order-card {
       color: #fff;
@@ -73,6 +75,46 @@
       font-size: 26px;
     }
 
+    a.btn.btn-primary {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    /* a.btn.btn-primary:hover {
+      color: #fff;
+      background-color: #4a748d;
+      border-color: #4a748d;
+    } */
+    a.btn.btn-primary:hover,
+    a.btn.btn-primary:active {
+      color: #fff;
+      background-color: #4a748d;
+      border-color: #4a748d;
+    }
+
+    .page-item.active .page-link {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    .pagination>li>a {
+      color: #1b4965;
+    }
+
+    button.btn.btn-info {
+      color: #048221;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    button.btn.btn-danger {
+      color: #cf0000;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
     .f-left {
       float: left;
     }
@@ -82,7 +124,7 @@
     }
 
     table {
-      font-family: arial, sans-serif;
+      font-family: "Open Sans", sans-serif !important;
       border-collapse: collapse;
       width: 99%;
     }
@@ -98,12 +140,6 @@
       background-color: rgba(0, 0, 0, .05);
     }
 
-    /* Custom color for specific rows */
-    tr.special-row {
-      background-color: #f5f5f5; /* Change this color as needed */
-    }
-
-    /* Header row style */
     th {
       background-color: white;
     }
@@ -120,51 +156,56 @@
             <a href="{% url 'doctor-add-patient' %}" class="btn btn-primary">Add Patients</a>
           </div>
           <div>
-            <label for="gsearch" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 100;">Search:</label>&nbsp;&nbsp;
-            <input type="search" id="gsearch" name="gsearch" onkeyup="searchTable()" style="border: 1px solid grey; border-radius: 4px; width: 17rem; padding: 0.25rem 0.5rem;">
+            <label for="gsearch" style=" font-size: 16px; font-weight: 400;">Search:</label>&nbsp;&nbsp;
+            <input type="search" id="gsearch" name="gsearch" onkeyup="searchTable()"
+              style="border: 1px solid grey; border-radius: 4px; width: 17rem; padding: 0.25rem 0.5rem;">
           </div>
         </div>
 
       </div>
 
       <table class="table table-hover" id="dev-table">
-
         <tr>
-          <th>id</th>
-          <th>Name</th>
-          <th>Symptoms</th>
-          <th>Mobile</th>
-          <th>Address</th>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Name</th>
+              <th>Symptoms</th>
+              <th>Mobile</th>
+              <th>Address</th>
 
-          <th>Action</th>
+              <th>Action</th>
 
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in patients %}
+            <tr class="{% if p.symptoms == 'Special' %}special-row{% endif %}">
+              <td>{{ p.id }}</td>
+              <td>{{ p.first_name }} {{ p.last_name }}</td>
+              <td>{{ p.symptoms }}</td>
+              <td>{{ p.mobile }}</td>
+              <td>{{ p.address }}</td>
+              <td style="text-align: left; width: 10rem;">
+                <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+                </form>
+                <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="delete_patient" value="from_dash" />
+                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
         </tr>
-        <tbody>
-          {% for p in patients %}
-          <tr class="{% if p.symptoms == 'Special' %}special-row{% endif %}">
-            <td>{{ p.id }}</td>
-            <td>{{ p.first_name }} {{ p.last_name }}</td>
-            <td>{{ p.symptoms }}</td>
-            <td>{{ p.mobile }}</td>
-            <td>{{ p.address }}</td>
-            <td>
-              <form action="{% url 'doctor-update-patient' p.id  %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-              </form>
-              <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <input type="hidden" name="delete_patient" value="from_dash" />
-                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
         </tr>
       </table>
       <nav aria-label="Page navigation example">
-        <ul class="pagination" id="pagination" style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;">
+        <ul class="pagination" id="pagination"
+          style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;">
           <!-- Pagination links will be dynamically added by JavaScript -->
         </ul>
       </nav>
@@ -253,7 +294,4 @@
     updatePagination(currentPage);
   }
 </script>
-
-
-
 {% endblock content %}

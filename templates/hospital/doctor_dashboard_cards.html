@@ -2,12 +2,19 @@
 <html lang="en" dir="ltr">
 
 <head>
+
   <meta charset="utf-8">
   <title>Hirani Homoeopathic Clinic</title>
 
   <style media="screen">
     body {
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
+    div {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 500 !important;
     }
 
     .market-update-block {
@@ -170,12 +177,18 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Open Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
-  <h1 style="font-weight: bold;color: black;text-align: center;padding: 5rem 1rem 0rem 29rem;font-family: Arial;">
+  <h1 style="font-family:Open Sans, sans-serif;color: black;text-align: center;padding: 5rem 1rem 0rem 29rem">
     Welcome</h1>
-  <h2 style="font-weight: bold;color: black;text-align: center;padding: 0rem 0rem 0rem 30rem;font-family: Arial;">
+  <h2
+    style="font-family:Open Sans, sans-serif;font-weight: bold;color: black;text-align: center;padding: 0rem 0rem 0rem 30rem;">
     Hirani Homoeopathic Clinic</h2>
   <div class="market-updates" style="margin-left: 40rem;  margin-top: 3rem;">
     <div class="col-md-5 market-update-gd" style="
@@ -184,8 +197,8 @@
       <a href="{% url 'doctor-patient' %}" style="text-decoration: none; color: inherit;">
         <div class="market-update-block clr-block-2">
           <div class="col-md-8 market-update-left">
-            <h3>{{ patient_count }}</h3>
-            <h4>Patient</h4>
+            <h3 style="font-family: Open Sans, sans-serif">{{ patient_count }}</h3>
+            <h4 style="font-family: Open Sans, sans-serif">Patient</h4>
           </div>
           <div class="col-md-4 market-update-right">
             <i class="fa fa-users"></i>
@@ -199,51 +212,51 @@
     margin-top: 20px;
 ">
       <a href="{% url 'doctor-medicine' %}" style="text-decoration: none; color: inherit;">
-      <div class="market-update-block clr-block-3">
-        <div class="col-md-8 market-update-left">
-          <h3>{{ medicine_count }}</h3>
-          <h4>Total Medicine</h4>
+        <div class="market-update-block clr-block-3">
+          <div class="col-md-8 market-update-left">
+            <h3 style="font-family: Open Sans, sans-serif">{{ medicine_count }}</h3>
+            <h4 style="font-family: Open Sans, sans-serif">Total Medicine</h4>
+          </div>
+          <div class="col-md-4 market-update-right">
+            <i class="fa fa-medkit" aria-hidden="true"></i>
+          </div>
+          <div class="clearfix"> </div>
         </div>
-        <div class="col-md-4 market-update-right">
-          <i class="fa fa-medkit" aria-hidden="true"></i>
-        </div>
-        <div class="clearfix"> </div>
-      </div>
       </a>
     </div>
 
     <div class="col-md-5 market-update-gd" style="
     margin-top: 20px;
 ">
-    <a href="{% url 'doctor-compounder' %}" style="text-decoration: none; color: inherit;">
-      <div class="market-update-block clr-block-1">
-        <div class="col-md-8 market-update-left">
-          <h3>{{ compounder_count }}</h3>
-          <h4>Compounder</h4>
+      <a href="{% url 'doctor-compounder' %}" style="text-decoration: none; color: inherit;">
+        <div class="market-update-block clr-block-1">
+          <div class="col-md-8 market-update-left">
+            <h3 style="font-family: Open Sans, sans-serif">{{ compounder_count }}</h3>
+            <h4 style="font-family: Open Sans, sans-serif">Compounder</h4>
+          </div>
+          <div class="col-md-4 market-update-right">
+            <i class="fa fa-user"> </i>
+          </div>
+          <div class="clearfix"> </div>
         </div>
-        <div class="col-md-4 market-update-right">
-          <i class="fa fa-user"> </i>
-        </div>
-        <div class="clearfix"> </div>
-      </div>
-    </a>
+      </a>
     </div>
 
     <div class="col-md-5 market-update-gd" style="
     margin-top: 20px;
 ">
-    <a href="{% url 'doctor-appointment' %}" style="text-decoration: none; color: inherit;">
-      <div class="market-update-block clr-block-0">
-        <div class="col-md-8 market-update-left">
-          <h3>{{ appointmentscount }}</h3>
-          <h4>Appointments</h4>
+      <a href="{% url 'doctor-appointment' %}" style="text-decoration: none; color: inherit;">
+        <div class="market-update-block clr-block-0">
+          <div class="col-md-8 market-update-left">
+            <h3 style="font-family: Open Sans, sans-serif">{{ appointmentscount }}</h3>
+            <h4 style="font-family: Open Sans, sans-serif">Appointments</h4>
+          </div>
+          <div class="col-md-4 market-update-right">
+            <i class="fa fa-calendar"> </i>
+          </div>
+          <div class="clearfix"> </div>
         </div>
-        <div class="col-md-4 market-update-right">
-          <i class="fa fa-calendar"> </i>
-        </div>
-        <div class="clearfix"> </div>
-      </div>
-    </a>
+      </a>
     </div>
   </div>
 
