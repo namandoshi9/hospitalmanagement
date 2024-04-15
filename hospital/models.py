@@ -91,10 +91,11 @@ class Patient(models.Model):
 
 class Appointment(models.Model):
     patient=models.ForeignKey(Patient,on_delete=models.CASCADE)
-    doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE)
+    doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE,blank=True,null=True)
     # patientName=models.CharField(max_length=40,null=True)
     # doctorName=models.CharField(max_length=40,null=True)
     appointmentDate=models.DateField()
+    appointmentTime=models.TimeField()
     description=models.TextField(max_length=500)
     status=models.BooleanField(default=False)
 

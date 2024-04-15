@@ -190,12 +190,11 @@
                                 {% endif %}
                             </td>
                             <td style="text-align: left; width: 10rem;">
-                                <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post"
-                                    style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-info"><i
-                                            class="fas fa-pencil-alt"></i></button>
-                                </form>
+                                
+                               
+                                <a href="{% url 'update-medicine' pk=medicine.pk %}" class="btn btn-info"><i
+                                        class="fas fa-pencil-alt"></i></a>
+                            
                                 <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post"
                                     style="display: inline;">
                                     {% csrf_token %}

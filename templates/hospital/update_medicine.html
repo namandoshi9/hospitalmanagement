@@ -69,10 +69,12 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              {% render_field form.name class="form-control" placeholder="Medicine Name" %}
+              <input type="text" class="form-control" name="name" value="{{medicine.name}}">
             </div>
             <div class="form-group">
-              {% render_field form.description class="form-control" placeholder="Description" %}
+              <Textarea class="form-control" cols="50" rows="5" name="description">
+                {{medicine.description}}
+              </Textarea>
             </div>
           </div>
           <!-- Add more fields as needed -->

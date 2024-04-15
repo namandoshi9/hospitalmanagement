@@ -292,13 +292,18 @@ def update_doctor_view(request,pk):
 def update_medicine_view(request, pk):
     medicine = get_object_or_404(Medicine, pk=pk)
     if request.method == 'POST':
-        form = MedicineForm(request.POST, instance=medicine)
-        if form.is_valid():
-            form.save()
-            return redirect('doctor-medicine')  # Redirect to doctor's dashboard after update
-    else:
-        form = MedicineForm(instance=medicine)
-    return render(request, 'hospital/update_medicine.html', {'form': form})
+        medicine.name= request.POST.get('name')
+        medicine.description= request.POST.get('description')
+        medicine.save()
+        return redirect('doctor-medicine')  # Redirect to doctor's dashboard after update
+    # if request.method == 'POST':
+    #     form = MedicineForm(request.POST, instance=medicine)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('doctor-medicine')  # Redirect to doctor's dashboard after update
+    # else:
+    #     form = MedicineForm(instance=medicine)
+    return render(request, 'hospital/update_medicine.html', {'medicine': medicine})
 
 
 
@@ -308,8 +313,10 @@ def update_appointment_view(request, pk):
     appointment = get_object_or_404(Appointment, pk=pk)
     if request.method == 'POST':
         
-        appointment_date = datetime.strptime(request.POST.get('appointmentDate'), '%B %d, %Y')
-        appointment.appointmentDate = appointment_date.strftime('%Y-%m-%d')
+        appointment_date = datetime.strptime(request.POST.get('appointmentDate'), '%Y-%m-%d')
+        appointment_time = request.POST.get('appointmentTime')
+        appointment.appointmentDate = appointment_date
+        appointment.appointmentTime = appointment_time
         appointment.description = request.POST.get('description')
         appointment.save()
         # form = AppointmentForm(request.POST, instance=appointment)
@@ -555,8 +562,12 @@ def com_add_patient_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_add_appointment_view(request):
+    doctor = Doctor.objects.filter(user = request.user)
+    patients = Patient.objects.filter(doctor = doctor.first())
     if request.method == 'POST':
         appointmentForm = AppointmentForm(request.POST)
+        if not doctor.exists():
+            messages.error(request,'Doctor does not exist!')
         print(appointmentForm.is_valid())
         print(appointmentForm.errors)
         if appointmentForm.is_valid():
@@ -566,12 +577,15 @@ def doctor_add_appointment_view(request):
             # appointment.appointmentDate = appointmentForm.cleaned_data['appointmentDate']  # Get the appointment date from the form
             # appointment.doctorName = appointmentForm.cleaned_data['doctorId'].user.username  # Set the doctorName to the selected doctor's username
             # appointment.patientName = appointmentForm.cleaned_data['patientId'].user.username  # Set the patientName to the selected patient's username
-            appointmentForm.save()
+            obj = appointmentForm.save(commit=False)
+            obj.doctor = doctor.first()
+            obj.save()
             return HttpResponseRedirect('doctor-appointment')  # Redirect after successful submission
+        
     else:
         appointmentForm = AppointmentForm()
         
-    return render(request, 'hospital/doctor_add_appointment.html', {'appointmentForm': appointmentForm})
+    return render(request, 'hospital/doctor_add_appointment.html', {'appointmentForm': appointmentForm,'patients':patients})
 
 
 # @login_required(login_url='doctorlogin')
@@ -603,26 +617,10 @@ def doctor_add_appointment_view(request):
 @user_passes_test(is_doctor)
 def update_patient_view_doctor(request, pk):
     patient = get_object_or_404(models.Patient, id=pk)
-    user = patient.doctor.user  # Retrieve associated user correctly
+    ch = [i[0] for i in models.Patient.SYMPTOM_CHOICES]
+    # return redirect('doctor-patient')
 
-    userForm = forms.PatientUserForm(request.POST or None, instance=user)  # Pass instance=user
-    patientForm = forms.PatientForm(request.POST or None, instance=patient)
-
-    if request.method == 'POST':
-        if userForm.is_valid() and patientForm.is_valid():
-            user_instance = userForm.save(commit=False)
-            password = userForm.cleaned_data.get('password')
-            if password:  # Check if password is provided
-                user_instance.set_password(password)
-            user_instance.save()
-            
-            patient_instance = patientForm.save(commit=False)
-            patient_instance.status = True
-            patient_instance.save()
-            
-            return redirect('doctor-patient')
-
-    mydict = {'userForm': userForm, 'patientForm': patientForm}
+    mydict = {'patient': patient,'ch':ch}
     return render(request, 'hospital/doctor_update_patient.html', context=mydict)
 
 
