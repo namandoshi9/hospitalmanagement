@@ -291,9 +291,10 @@ def update_doctor_view(request,pk):
 @user_passes_test(is_doctor)
 def update_medicine_view(request, pk):
     medicine = get_object_or_404(Medicine, pk=pk)
+    print(medicine)
     if request.method == 'POST':
         medicine.name= request.POST.get('name')
-        medicine.description= request.POST.get('description')
+        medicine.description = request.POST.get('description')
         medicine.save()
         return redirect('doctor-medicine')  # Redirect to doctor's dashboard after update
     # if request.method == 'POST':
