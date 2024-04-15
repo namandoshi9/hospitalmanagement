@@ -123,8 +123,13 @@
             color: #1b4965;
         }
 
-        button.btn.btn-info {
+        a.btn.btn-info {
             color: #048221;
+            background-color: transparent;
+            border-color: transparent;
+        }
+        a.btn.btn-success.btn-sm{
+            color: #124852;
             background-color: transparent;
             border-color: transparent;
         }
@@ -133,6 +138,12 @@
             color: #cf0000;
             background-color: transparent;
             border-color: transparent;
+        }
+        .barcode-img {
+            max-width: 200px;
+            /* Adjust according to your design */
+            max-height: 50px;
+            /* Adjust according to your design */
         }
     </style>
 
@@ -164,6 +175,9 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Barcode
+                                <!-- <button class="btn btn-primary" onclick="printAllBarcodes()">Print All Barcodes</button> -->
+                            </th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -173,13 +187,19 @@
                             <td>{{ medicine.id }}</td>
                             <td style="max-width: 15rem;">{{ medicine.name }}</td>
                             <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
-                            <td style="text-align: left; width: 10rem;">
-                                <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post"
-                                    style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-info"><i
-                                            class="fas fa-pencil-alt"></i></button>
-                                </form>
+                            <td>
+                                {% if medicine.barcode %}
+                                <img src="{{ medicine.barcode.url }}" alt="Barcode" class="barcode-img">
+                                {% else %}
+                                No barcode available
+                                {% endif %}
+                            </td>
+                            <td style="text-align: left; width: 14rem;">
+                                
+                               
+                                <a href="{% url 'update-medicine' pk=medicine.pk %}" class="btn btn-info"><i
+                                        class="fas fa-pencil-alt"></i></a>
+                            
                                 <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post"
                                     style="display: inline;">
                                     {% csrf_token %}
@@ -187,6 +207,9 @@
                                     <button type="submit" class="btn btn-danger"><i
                                             class="fas fa-trash-alt"></i></button>
                                 </form>
+                                <a href="#" class="btn btn-success btn-sm"
+                                onclick="printBarcode('{{ medicine.barcode.url }}')"><i class="fas fa-print"></i></a>
+
                             </td>
                         </tr>
                         {% endfor %}
@@ -204,6 +227,42 @@
 </div>
 
 <br><br><br><br><br><br><br>
+<script>
+    function printAllBarcodes() {
+        var barcodes = document.querySelectorAll('.barcode-img');
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print All Barcodes</title></head><body style="margin: 0;">');
+
+        var count = 0; // Initialize count to keep track of printed barcodes
+        var currentPage = 1; // Initialize page count
+        // Loop through all barcode images and append them to the print window
+        barcodes.forEach(function (barcode, index) {
+            if (index > 0 && index % 10 === 0) {
+                currentPage++; // Increment page count after every 10 barcodes
+                printWindow.document.write('<div style="page-break-after: always;"></div>'); // Add page break after every 10 barcodes
+            }
+            printWindow.document.write('<div style="float: left; width: 20%; margin-right: 5%; margin-bottom: 20px;">');
+            printWindow.document.write('<img src="' + barcode.src + '" style="max-width: 100%;">');
+            printWindow.document.write('</div>');
+            count++;
+        });
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>
+
+
+
+<script>
+    function printBarcode(barcodeUrl) {
+        var printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print Barcode</title></head><body style="margin: 0;"><img src="' + barcodeUrl + '" style="max-width: 100%;"></body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>
 
 <script>
     var currentPage = 1;
