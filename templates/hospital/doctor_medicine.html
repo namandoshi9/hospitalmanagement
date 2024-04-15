@@ -134,6 +134,12 @@
             background-color: transparent;
             border-color: transparent;
         }
+        .barcode-img {
+            max-width: 200px;
+            /* Adjust according to your design */
+            max-height: 50px;
+            /* Adjust according to your design */
+        }
     </style>
 
 </head>
@@ -164,6 +170,9 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Description</th>
+                            <th>Barcode
+                                <button class="btn btn-primary" onclick="printAllBarcodes()">Print All Barcodes</button>
+                            </th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -173,6 +182,13 @@
                             <td>{{ medicine.id }}</td>
                             <td style="max-width: 15rem;">{{ medicine.name }}</td>
                             <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
+                            <td>
+                                {% if medicine.barcode %}
+                                <img src="{{ medicine.barcode.url }}" alt="Barcode" class="barcode-img">
+                                {% else %}
+                                No barcode available
+                                {% endif %}
+                            </td>
                             <td style="text-align: left; width: 10rem;">
                                 <form action="{% url 'update-medicine' pk=medicine.pk %}" method="post"
                                     style="display: inline;">
@@ -187,6 +203,9 @@
                                     <button type="submit" class="btn btn-danger"><i
                                             class="fas fa-trash-alt"></i></button>
                                 </form>
+                                <a href="#" class="btn btn-success btn-sm"
+                                onclick="printBarcode('{{ medicine.barcode.url }}')"><i class="fas fa-print"></i></a>
+
                             </td>
                         </tr>
                         {% endfor %}
