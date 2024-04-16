@@ -128,7 +128,8 @@
             background-color: transparent;
             border-color: transparent;
         }
-        a.btn.btn-success.btn-sm{
+
+        a.btn.btn-success.btn-sm {
             color: #124852;
             background-color: transparent;
             border-color: transparent;
@@ -139,6 +140,7 @@
             background-color: transparent;
             border-color: transparent;
         }
+
         .barcode-img {
             max-width: 200px;
             /* Adjust according to your design */
@@ -187,7 +189,7 @@
                             <td>{{ medicine.id }}</td>
                             <td style="max-width: 15rem;">{{ medicine.name }}</td>
                             <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
-                            <td>
+                            <td style=" text-align: center;">
                                 {% if medicine.barcode %}
                                 <img src="{{ medicine.barcode.url }}" alt="Barcode" class="barcode-img">
                                 {% else %}
@@ -195,11 +197,11 @@
                                 {% endif %}
                             </td>
                             <td style="text-align: left; width: 14rem;">
-                                
-                               
+
+
                                 <a href="{% url 'update-medicine' pk=medicine.pk %}" class="btn btn-info"><i
                                         class="fas fa-pencil-alt"></i></a>
-                            
+
                                 <form action="{% url 'delete-medicine-from-doctor' pk=medicine.pk %}" method="post"
                                     style="display: inline;">
                                     {% csrf_token %}
@@ -208,7 +210,8 @@
                                             class="fas fa-trash-alt"></i></button>
                                 </form>
                                 <a href="#" class="btn btn-success btn-sm"
-                                onclick="printBarcode('{{ medicine.barcode.url }}')"><i class="fas fa-print"></i></a>
+                                    onclick="printBarcode('{{ medicine.barcode.url }}')"><i
+                                        class="fas fa-print"></i></a>
 
                             </td>
                         </tr>
