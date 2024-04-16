@@ -66,7 +66,9 @@
   {% csrf_token %}
   <div class="container register-form" style="
   margin-left: 33rem;width: 70%;
-">
+"> {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
     <div class="d-flex justify-content-end mb-3">
       <a href="{% url 'doctor-add-medicine' %}" class="btn btn-primary">Back</a>
     </div>

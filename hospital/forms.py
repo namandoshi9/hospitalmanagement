@@ -85,6 +85,14 @@ class MedicineForm(forms.ModelForm):
 #facebook : fb.com/sumit.luv
 #Youtube :youtube.com/lazycoders
 
+
+class CompounderUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
 class CompounderForm(forms.ModelForm):
     class Meta:
         model = Compounder

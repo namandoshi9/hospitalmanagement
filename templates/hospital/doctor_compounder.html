@@ -139,13 +139,13 @@
 </head>
 
 <div>
-  <h6 class="m-b-20" style="font-size: 20px; font-weight: 300; color: black; margin-left: 26rem;">Compounders</h6>
+  <h6 class="m-b-20" style="font-size: 20px; font-weight: 300; color: black; margin-left: 26rem;">Staff</h6>
   <div style="padding: 1px 2rem 10px 26rem;">
     <div class="card" style="padding: 2rem; max-width: 100%;">
       <div class="card-block">
         <div class="d-flex justify-content-between align-items-center mb-4 input" style="margin-right: 1.2rem;">
           <div>
-            <a href="{% url 'doctor-add-compounder' %}" class="btn btn-primary">Add Compounder</a>
+            <a href="{% url 'doctor-add-compounder' %}" class="btn btn-primary">Add staff</a>
           </div>
           <div>
             <label for="gsearch"
@@ -164,6 +164,7 @@
               <th>Id</th>
               <th>Name</th>
               <th>Mobile</th>
+              <th>Email</th>
               <th>Address</th>
               <th>Action</th>
             </tr>
@@ -175,6 +176,7 @@
               <td>{{ p.id }}</td>
               <td>{{ p.first_name }} {{ p.last_name }}</td>
               <td>{{ p.mobile }}</td>
+              <td>{{ p.email }}</td>
               <td>{{ p.address }}</td>
               <td style="text-align: left; width: 10rem;">
                 <form action="{% url 'doctor-update-compounder' p.id  %}" style="display: inline;">

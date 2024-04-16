@@ -168,9 +168,13 @@ class Compounder(models.Model):
     doctor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default=None)
     first_name = models.CharField(max_length=40, null=True)
     last_name = models.CharField(max_length=40, null=True)
+    email = models.CharField(max_length=40, null=True)
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=True)
     status = models.BooleanField(default=False)
+    username = models.CharField(max_length=150, unique=True, blank=True)  # Assuming max_length for username
+    password = models.CharField(max_length=128, blank=True)  # Storing password securely is crucial; consider using hashing algorithms
+
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
