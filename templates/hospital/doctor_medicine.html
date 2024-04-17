@@ -187,7 +187,7 @@
                         <tr>
                             <td style="max-width: 15rem;">{{ medicine.name }}</td>
                             <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
-                            <td>
+                            <td style=" text-align: center;">
                                 {% if medicine.barcode %}
                                 <img src="{{ medicine.barcode.url }}" alt="{{ medicine.name }}" class="barcode-img"
                                     data-medicine-name="{{ medicine.name }}">

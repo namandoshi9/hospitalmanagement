@@ -23,12 +23,19 @@ admin.site.register(Compounder)
 admin.site.register(Prescription)
 
 
-class MedicineAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'barcode_img')
+# class MedicineAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'description', 'barcode_img')
 
-    def barcode_img(self, obj):
-        return '<img src="{}" width="100" />'.format(obj.barcode.url)
+#     def barcode_img(self, obj):
+#         return '<img src="{}" width="100" />'.format(obj.barcode.url)
 
-    barcode_img.allow_tags = True
+#     barcode_img.allow_tags = True
 
-admin.site.register(Medicine, MedicineAdmin)
+# admin.site.register(Medicine, MedicineAdmin)
+
+
+from import_export.admin import ImportExportModelAdmin
+
+@admin.register(Medicine)
+class MedicineAdmin(ImportExportModelAdmin):
+    list_display = ("id" ,"barcode" ,)

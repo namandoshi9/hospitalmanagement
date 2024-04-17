@@ -4,7 +4,11 @@
 
 <head>
   <style media="screen">
-    /* Custom CSS for the update medicine form */
+     body {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
     .note {
       text-align: center;
       height: 80px;
@@ -14,24 +18,16 @@
       line-height: 80px;
     }
 
-    .form-content {
-      padding: 3%;
-      border: 1px solid #ced4da;
-      margin-bottom: 2%;
-    }
-
-    .form-control {
-      border-radius: 1.5rem;
-    }
-
+   
     .btnSubmit {
       border: none;
-      border-radius: 1.5rem;
+      border-radius: 0.5rem;
       padding: 1%;
       width: 20%;
       cursor: pointer;
-      background: #0062cc;
       color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
     }
 
     .container.register-form {
@@ -58,13 +54,14 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container register-form" style="margin-left: 32rem;width: 70%">
-    <div class="text-right">
+    <!-- <div class="text-right">
       <a href="{% url 'doctor-medicine' %}" class="btn btn-primary">Back</a>
-    </div>
+    </div> -->
     <div class="form">
-      <div class="note">
+      <!-- <div class="note">
         <p>Update Medicine Details</p>
-      </div>
+      </div> -->
+      <h2 style="font-family: Open Sans, sans-serif;" class="mb-5">Update Medicine Details</h2>
       <div class="form-content">
         <div class="row">
           <div class="col-md-6">
