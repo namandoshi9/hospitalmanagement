@@ -178,6 +178,20 @@ class Compounder(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+
+
+class Prescription(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    p_date = models.DateField(auto_now_add=True)
+    medications = models.ManyToManyField(Medicine, related_name='prescriptions')
+    notes = models.TextField(blank=True)
+    # Add other fields as needed
+
+    def __str__(self):
+        return f"Prescription for {self.patient} by Dr. {self.doctor} on {self.date}"
+
 
 #Developed By : sumit kumar
 #facebook : fb.com/sumit.luv

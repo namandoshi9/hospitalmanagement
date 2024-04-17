@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,reverse,get_object_or_404
 from . import forms, models
 from django.contrib.auth.forms import UserChangeForm
-from .models import Doctor, UserProfile, Medicine, Patient,Compounder, Appointment
+from .models import Doctor, UserProfile, Medicine, Patient,Compounder, Appointment, Prescription
 from django.db.models import Sum
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
@@ -18,6 +18,7 @@ from django.http import Http404
 from django.contrib import messages
 from .forms import DoctorForm  # Assuming you have a DoctorForm defined
 from django.contrib.auth import logout
+from .forms import PrescriptionForm
 
 def doctor_logout(request):
     if request.user.is_authenticated:
@@ -1244,6 +1245,33 @@ def com_patient_view(request):
     'patient_count': patient_count
     }
     return render(request,'hospital/com_patient.html',context=mydict)
+
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_prescription_view(request):
+    # patients = Patient.objects.all()
+    # patient_count = patients.count()
+    # mydict={
+    # 'patients':patients,
+    # 'patient_count': patient_count
+    # }
+    return render(request,'hospital/com_prescription.html')
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_add_prescription_view(request):
+    if request.method == 'POST':
+        form = PrescriptionForm(request.POST)
+        if form.is_valid():
+            prescription = form.save()
+            return redirect('com-prescription')  # Redirect to a success page
+    else:
+        form = PrescriptionForm()
+    return render(request, 'hospital/com_add_prescription.html', {'form': form})
+
 
 
 @login_required(login_url='doctorlogin')

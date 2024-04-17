@@ -4,7 +4,7 @@ from . import models
 from .models import Medicine,Compounder
 from django import forms
 from django.contrib.auth.models import User
-from .models import Doctor, Patient, Appointment
+from .models import Doctor, Patient, Appointment, Prescription
 
 
 #for admin signup
@@ -97,3 +97,9 @@ class CompounderForm(forms.ModelForm):
     class Meta:
         model = Compounder
         exclude = ['doctor']
+
+
+class PrescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Prescription
+        fields = '__all__'

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+{% extends 'hospital/com_base.html' %}
+{% load static %}
+{% block content %}
+<br><br>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <style type="text/css">
+    body {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .menu {
+      top: 50px;
+    }
+
+    h6 {
+      color: white;
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
+
+    .order-card {
+      color: #fff;
+    }
+
+    .bg-c-blue {
+      background: linear-gradient(45deg, #4099ff, #73b4ff);
+    }
+
+    .bg-c-green {
+      background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+    }
+
+    .bg-c-yellow {
+      background: linear-gradient(45deg, #FFB64D, #ffcb80);
+    }
+
+    .bg-c-pink {
+      background: linear-gradient(45deg, #FF5370, #ff869a);
+    }
+
+
+    .card {
+      border-radius: 5px;
+      -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+      box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+      border: none;
+      margin-bottom: 30px;
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .card .card-block {
+      padding: 0px;
+    }
+
+    .order-card i {
+      font-size: 26px;
+    }
+
+    a.btn.btn-primary {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    /* a.btn.btn-primary:hover {
+      color: #fff;
+      background-color: #4a748d;
+      border-color: #4a748d;
+    } */
+    a.btn.btn-primary:hover,
+    a.btn.btn-primary:active {
+      color: #fff;
+      background-color: #4a748d;
+      border-color: #4a748d;
+    }
+
+    .page-item.active .page-link {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    .pagination>li>a {
+      color: #1b4965;
+    }
+
+    a.btn.btn-info {
+      color: #048221;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    button.btn.btn-danger {
+      color: #cf0000;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    .f-left {
+      float: left;
+    }
+
+    .f-right {
+      float: right;
+    }
+
+    table {
+      font-family: "Open Sans", sans-serif !important;
+      border-collapse: collapse;
+      width: 99%;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 12px;
+    }
+
+    tr:nth-child(odd) {
+      background-color: rgba(0, 0, 0, .05);
+    }
+
+    th {
+      background-color: white;
+    }
+  </style>
+</head>
+
+<div>
+  <h6 class="m-b-20" style="font-size: 20px; font-weight: 300; color: black; margin-left: 26rem;">Prescription</h6>
+  <div style="padding: 1px 2rem 10px 26rem;">
+    <div class="card" style="padding: 2rem; max-width: 100%;">
+      <div class="card-block">
+        <div class="d-flex justify-content-between align-items-center mb-4 input" style="margin-right: 1.2rem;">
+          <div>
+            <a href="{% url 'com-add-prescription' %}" class="btn btn-primary">Add Prescription</a>
+          </div>
+          <div>
+            <label for="gsearch" style=" font-size: 16px; font-weight: 400;">Search:</label>&nbsp;&nbsp;
+            <input type="search" id="gsearch" name="gsearch" onkeyup="searchTable()"
+              style="border: 1px solid grey; border-radius: 4px; width: 17rem; padding: 0.25rem 0.5rem;">
+          </div>
+        </div>
+
+      </div>
+
+      <table class="table table-hover" id="dev-table">
+        <tr>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Name</th>
+              <th>Symptoms</th>
+              <th>Mobile</th>
+              <th>Address</th>
+
+              <th>Action</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in patients %}
+            <tr class="{% if p.symptoms == 'Special' %}special-row{% endif %}">
+              <td>{{ p.id }}</td>
+              <td>{{ p.first_name }} {{ p.last_name }}</td>
+              <td>{{ p.symptoms }}</td>
+              <td>{{ p.mobile }}</td>
+              <td>{{ p.address }}</td>
+              <td style="text-align: left; width: 10rem;">
+                
+                <a class="btn btn-info" href="{% url 'com-update-patient' p.id  %}"><i class="fas fa-pencil-alt"></i></a>
+                
+                <form action="{% url 'delete-patient-from-com' p.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="delete_patient" value="from_dash" />
+                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </tr>
+        </tr>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination" id="pagination"
+          style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;">
+          <!-- Pagination links will be dynamically added by JavaScript -->
+        </ul>
+      </nav>
+    </div>
+
+
+  </div>
+</div>
+
+<br><br><br><br><br><br><br>
+<script>
+  var currentPage = 1;
+  var itemsPerPage = 10;
+  var tableRows = $('#dev-table tbody tr');
+  var totalPages = Math.ceil(tableRows.length / itemsPerPage);
+  displayPage(currentPage);
+
+  function displayPage(pageNumber) {
+    // Hide all rows
+    tableRows.hide();
+    // Calculate the start and end index of the items to display
+    var startIndex = (pageNumber - 1) * itemsPerPage;
+    var endIndex = Math.min(startIndex + itemsPerPage, tableRows.length);
+    // Display the rows for the current page
+    for (var i = startIndex; i < endIndex; i++) {
+      $(tableRows[i]).show();
+    }
+    // Update pagination links
+    updatePagination(pageNumber);
+  }
+
+  function updatePagination(currentPage) {
+    var paginationElement = $('#pagination');
+    paginationElement.empty();
+    // Previous page link
+    if (currentPage > 1) {
+      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + (currentPage - 1) + ')">Previous</a></li>');
+    } else {
+      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>');
+    }
+    // Numbered pages
+    for (var i = 1; i <= totalPages; i++) {
+      if (i === currentPage) {
+        paginationElement.append('<li class="page-item active"><a class="page-link" href="#">' + i + '</a></li>');
+      } else {
+        paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>');
+      }
+    }
+    // Next page link
+    if (currentPage < totalPages) {
+      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + (currentPage + 1) + ')">Next</a></li>');
+    } else {
+      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>');
+    }
+  }
+
+  function searchTable() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("gsearch");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("dev-table");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td");
+      var found = false;
+      for (var j = 0; j < td.length; j++) {
+        if (td[j]) {
+          txtValue = td[j].textContent || td[j].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (found) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    // Reset pagination to page 1 after search
+    currentPage = 1;
+    updatePagination(currentPage);
+  }
+</script>
+{% endblock content %}

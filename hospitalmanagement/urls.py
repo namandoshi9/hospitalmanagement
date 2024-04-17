@@ -158,7 +158,8 @@ urlpatterns +=[
 
     # path('doctor-view-discharge-patient',views.doctor_view_discharge_patient_view,name='doctor-view-discharge-patient'),
 
-    # path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
+    path('com-prescription', views.com_prescription_view,name='com-prescription'),
+    path('com-add-prescription', views.com_add_prescription_view,name='com-add-prescription'),
     # path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
     # path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
     # path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
