@@ -176,7 +176,7 @@
                         <tr style="background-color: white;">
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Barcode
+                            <th style="text-align: center;">
                                 <button class="btn btn-primary" onclick="printAllBarcodes()">Barcodes</button>
                             </th>
                             <th>Action</th>
@@ -187,7 +187,7 @@
                         <tr>
                             <td style="max-width: 15rem;">{{ medicine.name }}</td>
                             <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
-                            <td style=" text-align: center;">
+                            <td style=" text-align: center; width: 15rem;">
                                 {% if medicine.barcode %}
                                 <img src="{{ medicine.barcode.url }}" alt="{{ medicine.name }}" class="barcode-img"
                                     data-medicine-name="{{ medicine.name }}">
