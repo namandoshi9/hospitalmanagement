@@ -419,6 +419,28 @@ def delete_patient_from_doctor_view(request, pk):
 
 
 
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def delete_prescription_from_com_view(request, pk):
+    if request.method == 'POST':
+        prescription = get_object_or_404(Prescription, id=pk)
+        dtype = request.POST.get('delete_prescription')
+        if dtype == 'from_dash':
+            prescription.delete()
+            return redirect('com-prescription')
+        elif dtype=='from_view':
+            prescription.delete()
+            return redirect('com-view-prescription')
+        elif dtype=='from_dash1':
+            prescription.delete()
+            return redirect('com-dashboard')
+        else:
+            return redirect('com-prescription')
+
+
+
+
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def delete_patient_from_com_view(request, pk):
@@ -674,6 +696,28 @@ def update_patient_view_com(request, patient_id):
         
     return render(request, 'hospital/com_update_patient.html', {'patientForm': patientForm, 'patient': patient})
 
+
+
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def update_prescription_view_com(request, prescription_id):
+    # Retrieve the prescription object
+    prescription = get_object_or_404(Prescription, id=prescription_id)
+    
+    if request.method == 'POST':
+        # Populate the form with the prescription's current data
+        form = PrescriptionForm(request.POST, instance=prescription)
+        if form.is_valid():
+            # Save the updated prescription data
+            form.save()
+            return redirect('com-prescription')  # Redirect to compounder prescription page
+    else:
+        # Populate the form with the prescription's current data
+        form = PrescriptionForm(instance=prescription)
+        
+    return render(request, 'hospital/com_update_prescription.html', {'form': form, 'prescription': prescription})
 
 
 
@@ -1251,13 +1295,11 @@ def com_patient_view(request):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_prescription_view(request):
-    # patients = Patient.objects.all()
-    # patient_count = patients.count()
-    # mydict={
-    # 'patients':patients,
-    # 'patient_count': patient_count
-    # }
-    return render(request,'hospital/com_prescription.html')
+    prescription = Prescription.objects.all()
+    mydict={
+    'prescription':prescription,
+    }
+    return render(request,'hospital/com_prescription.html',context=mydict)
 
 
 @login_required(login_url='compounderlogin')
@@ -1267,6 +1309,7 @@ def com_add_prescription_view(request):
         form = PrescriptionForm(request.POST)
         if form.is_valid():
             prescription = form.save()
+            # Optionally, you can perform additional actions here, such as sending notifications or processing the data further.
             return redirect('com-prescription')  # Redirect to a success page
     else:
         form = PrescriptionForm()

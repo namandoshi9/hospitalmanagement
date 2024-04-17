@@ -102,4 +102,4 @@ class CompounderForm(forms.ModelForm):
 class PrescriptionForm(forms.ModelForm):
     class Meta:
         model = Prescription
-        fields = '__all__'
+        fields = ['patient', 'doctor', 'medications', 'notes']

@@ -160,6 +160,8 @@ urlpatterns +=[
 
     path('com-prescription', views.com_prescription_view,name='com-prescription'),
     path('com-add-prescription', views.com_add_prescription_view,name='com-add-prescription'),
+    path('delete-prescription-from-com/<int:pk>', views.delete_prescription_from_com_view,name='delete-prescription-from-com'),
+    path('com-update-prescription/<int:prescription_id>', views.update_prescription_view_com,name='com-update-prescription'),
     # path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
     # path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
     # path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
