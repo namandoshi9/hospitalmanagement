@@ -60,11 +60,11 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container register-form" style="
-  margin-left: 33rem;width: 70%;
+  margin-left: 28rem;width: 70%;
 "> {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
+    <p style="color: red;">{{ error_message }}</p>
     {% endif %}
-    <div class="d-flex justify-content-end mb-3">
+    <!-- <div class="d-flex justify-content-end mb-3">
       <a href="{% url 'doctor-add-medicine' %}" class="btn btn-primary">Back</a>
     </div> -->
     <div class="form">
