@@ -20,10 +20,17 @@ admin.site.register(PatientDischargeDetails, PatientDischargeDetailsAdmin)
 
 admin.site.register(Compounder)
 
+from django.contrib import admin
+from .models import Prescription
+
 @admin.register(Prescription)
 class PrescriptionAdmin(admin.ModelAdmin):
-    list_display = ['patient',  'notes']
+    list_display = ['patient', 'get_medications', 'notes']
 
+    def get_medications(self, obj):
+        return ", ".join([medication.name for medication in obj.medications.all()])
+
+    get_medications.short_description = 'Medications'
 
 # class MedicineAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'description', 'barcode_img')

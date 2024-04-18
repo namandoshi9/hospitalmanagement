@@ -106,7 +106,7 @@ class CompounderForm(forms.ModelForm):
 
 
 class PrescriptionForm(forms.ModelForm):
-    medications = forms.ModelChoiceField(queryset=Medicine.objects.all(), widget=forms.Select)
+    medications = forms.ModelMultipleChoiceField(queryset=Medicine.objects.all(), widget=forms.SelectMultiple)
 
     class Meta:
         model = Prescription

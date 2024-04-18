@@ -1,27 +1,118 @@
-<!-- add_prescription.html -->
+{% extends 'hospital/com_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Prescription</title>
+  <style media="screen">
+    body {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+      background-color: #1b4965;
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    a.btn.btn-primary {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 0.5rem;
+      padding: 1%;
+      width: 20%;
+      cursor: pointer;
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    .menu {
+      top: 50px;
+    }
+
+    .msg {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 </head>
-<body>
-    <h1>Add Prescription</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
+<br><br><br>
 
-        <!-- Multi-select field for medications -->
-        <label for="id_medications">Medications:</label><br>
-        <select name="medications" id="id_medications" multiple>
-            {% for medication in medications %}
-            <option value="{{ medication.pk }}">{{ medication.name }}</option>
-            {% endfor %}
-        </select><br><br>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container register-form" style="margin-left: 28rem; width: 70%;">
+    <div class="form">
+      <h2 style="font-family: Open Sans, sans-serif;" class="mb-5">Add Prescription</h2>
 
-        <button type="submit">Add Prescription</button>
-    </form>
-</body>
-</html>
+      <div class="form-content">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <select class="form-control select2" name="patient">
+                {% for patient in patients %}
+                <option value="{{ patient.id }}">{{ patient }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- <div class="form-group">
+                <select class="form-control select2" name="medications" multiple>
+                    {% for medication in medications %}
+                        <option value="{{ medication.id }}">{{ medication }}</option>
+                    {% endfor %}
+                </select>
+            </div> -->
+            <div class="form-group">
+                <select class="form-control select2" name="medications" multiple>
+                    {% for medication in medications %}
+                        <option value="{{ medication.id }}">{{ medication }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            
+            
+            
+            
+            <div class="form-group">
+              <textarea class="form-control" name="notes" placeholder="Notes"></textarea>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btnSubmit">Add</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+      $('.select2').select2({
+          placeholder: 'Select medicines',
+          allowClear: true, // Allows clearing the selection
+          minimumResultsForSearch: Infinity // Disables the search box
+      });
+    });
+  </script>
+
+{% endblock content %}

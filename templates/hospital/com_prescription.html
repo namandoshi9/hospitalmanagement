@@ -175,13 +175,20 @@
             </tr>
           </thead>
           <tbody>
-            {% for p in prescription %}
+            {% for p in prescriptions %}
             <tr>
               <td>{{ p.patient }}</td>
-              <td>{{ p.medications }}</td>
+              <td>
+                {% for medication in p.medications.all %}
+                {{ medication }}
+                {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </td>
+
               <td>{{ p.notes }}</td>
               <td>
-                <a href="{% url 'com-update-prescription' p.id %}" class="btn btn-info"><i class="fas fa-pencil-alt"></i></a>
+                <a href="{% url 'com-update-prescription' p.id %}" class="btn btn-info"><i
+                    class="fas fa-pencil-alt"></i></a>
                 <form action="{% url 'delete-prescription-from-com' p.id %}" method="post" style="display: inline;">
                   {% csrf_token %}
                   <input type="hidden" name="delete_prescription" value="from_dash" />
