@@ -34,14 +34,20 @@ class DoctorForm(forms.ModelForm):
 
 
 class PatientUserForm(forms.ModelForm):
+    
     class Meta:
         model = User
         fields = ['first_name', 'last_name']
 
 class PatientForm(forms.ModelForm):
+
     class Meta:
         model = Patient
         fields = ['first_name','last_name','address', 'mobile', 'symptoms']
+
+    
+
+        
 
 
 
@@ -100,6 +106,8 @@ class CompounderForm(forms.ModelForm):
 
 
 class PrescriptionForm(forms.ModelForm):
+    medications = forms.ModelChoiceField(queryset=Medicine.objects.all(), widget=forms.Select)
+
     class Meta:
         model = Prescription
-        fields = ['patient', 'doctor', 'medications', 'notes']
+        fields = ['patient', 'medications', 'notes']

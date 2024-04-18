@@ -63,6 +63,7 @@ class Patient(models.Model):
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=False)
     SYMPTOM_CHOICES = [
+        ('', '-------- Select symptom --------'),
         ('Fever', 'Fever'),
         ('Cough', 'Cough'),
         ('Headache', 'Headache'),
@@ -72,7 +73,7 @@ class Patient(models.Model):
     ]
     symptoms = models.CharField(max_length=100, choices=SYMPTOM_CHOICES)
     # assignedDoctorId = models.PositiveIntegerField(null=True)
-    admitDate = models.DateField(auto_now=True)
+    admitDate = models.DateField(auto_now=True,blank=True,null=True)
     status = models.BooleanField(default=False)
     
     @property
@@ -84,7 +85,7 @@ class Patient(models.Model):
         return self.user.id
     
     def __str__(self):
-        return f" {self.first_name} {self.last_name} ({self.symptoms})"
+        return f" {self.first_name} {self.last_name}"
     
 
 
@@ -94,8 +95,8 @@ class Appointment(models.Model):
     doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE,blank=True,null=True)
     # patientName=models.CharField(max_length=40,null=True)
     # doctorName=models.CharField(max_length=40,null=True)
-    appointmentDate=models.DateField()
-    appointmentTime=models.TimeField()
+    appointmentDate = models.DateField(auto_now_add=True,blank=True,null=True)  # Automatically set to current date when the object is created
+    appointmentTime = models.TimeField(auto_now_add=True,blank=True,null=True)
     description=models.TextField(max_length=500)
     status=models.BooleanField(default=False)
 
@@ -183,13 +184,12 @@ class Compounder(models.Model):
 
 class Prescription(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     medications = models.ManyToManyField(Medicine, related_name='prescriptions')
     notes = models.TextField(blank=True)
-    # Add other fields as needed
+    
 
     def __str__(self):
-        return f"Prescription for {self.patient} by Dr. {self.doctor}"
+        return f"Prescription for {self.patient}"
 
 #Developed By : sumit kumar
 #facebook : fb.com/sumit.luv

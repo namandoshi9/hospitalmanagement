@@ -22,7 +22,7 @@ admin.site.register(Compounder)
 
 @admin.register(Prescription)
 class PrescriptionAdmin(admin.ModelAdmin):
-    list_display = ['patient', 'doctor', 'notes']
+    list_display = ['patient',  'notes']
 
 
 # class MedicineAdmin(admin.ModelAdmin):
@@ -40,4 +40,4 @@ from import_export.admin import ImportExportModelAdmin
 
 @admin.register(Medicine)
 class MedicineAdmin(ImportExportModelAdmin):
-    list_display = ("id" ,"barcode" ,"name" ,)
+    list_display = ("id" ,"barcode" ,"name" , "description",)

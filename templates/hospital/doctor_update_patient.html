@@ -76,29 +76,28 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <input type="date" class="form-control" name="admitDate" value="{{patient.admitDate|default_if_none:''}}"
-                id="">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <select class="form-select form-control">
+              <select class="form-select form-control" name="symptoms">
                 <option selected>Open this select menu</option>
                 {% for i in ch %}
-                {% if patient.symptoms == i %}
-                <option value="{{i}}" selected>{{i}}</option>
-                {% endif %}
+                <option value="{{i}}" {% if patient.symptoms == i %} selected {% endif %}>{{i}}</option>
                 {% endfor %}
               </select>
             </div>
           </div>
+          <!-- <div class="col-md-6">
+            <div class="form-group">
+              <input type="date" class="form-control" name="admitDate" value="{{patient.admitDate|date:'Y-m-d'}}"
+                id="">
+            </div>
+          </div> -->
+        </div>
+        <div class="row">
+          
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <Textarea class="form-control">{{patient.address}}</Textarea>
+              <Textarea name="address" class="form-control">{{patient.address}}</Textarea>
             </div>
           </div>
         </div>
