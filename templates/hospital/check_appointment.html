@@ -10,7 +10,8 @@
   <title>Appointment Details</title>
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <style>
     body {
@@ -28,6 +29,16 @@
 
     h6 {
       color: white;
+    }
+
+    h2 {
+      color: #1b4965;
+      font-family: "Open Sans", sans-serif !important;
+    }
+
+    h3 {
+      color: #1b4965;
+      font-family: "Open Sans", sans-serif !important;
     }
 
     .order-card {
@@ -50,6 +61,7 @@
       margin-bottom: 30px;
       -webkit-transition: all 0.3s ease-in-out;
       transition: all 0.3s ease-in-out;
+      padding: 2rem;
     }
 
     .card .card-block {
@@ -71,14 +83,14 @@
     table {
       font-family: "Open Sans", sans-serif !important;
       border-collapse: collapse;
-      width: 100%;
+      /* width: 50% !important; */
     }
 
     td,
     th {
       border: 1px solid #dddddd;
       text-align: left;
-      padding: 12px;
+      padding: 8px;
     }
 
     tr:nth-child(odd) {
@@ -137,44 +149,99 @@
       max-height: 200px;
       overflow-y: auto;
     }
+
+    p {
+      text-align: left;
+      font-size: 16px;
+    }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Appointment Details</h1>
+  <div class="container" style="margin-left: 26rem; margin-top: 5rem;">
+    <h2>Appointment Details</h2>
     <div class="appointment-details">
-      <div class="left-section">
-        <h2>Section 1</h2>
-        <p>Patient Name: John Doe</p>
-        <p>Mobile: 123-456-7890</p>
-        <p>Address: 123 Main St, City</p>
-        <p>Symptoms: Fever, Cough</p>
+      <div class="current">
+        <h3>Current Details:</h3>
+        <div class="card" style="
+        width: 50%;
+    ">
+          <p><strong>Name:</strong>
+            John Doe
+          </p>
 
-        <h2>Section 2</h2>
-        <p>Current Appointment Date: {{ current_appointment_date }}</p>
-        <p>Current Appointment Time: {{ current_appointment_time }}</p>
-        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p><strong>Mobile:</strong> 123-456-7890</p>
+          <p><strong>Address:</strong> 123 Main St, City</p>
+          <p><strong>Symptoms:</strong> Fever, Cough</p>
+          <p><strong>Date:</strong> 18-04-2024</p>
+          <p><strong>Time:</strong> 12:40</p>
+          <!-- <p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit
+            amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
+            dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
+            ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing
+            elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
+        </div>
 
-        <h2>Section 3</h2>
-        <p>All Past Appointments:</p>
-        <ul>
-          <li>Date: 2024-04-17, Time: 10:00 AM, Description: Lorem ipsum dolor sit amet</li>
-          <li>Date: 2024-04-15, Time: 11:00 AM, Description: Consectetur adipiscing elit</li>
-        </ul>
+        <h2>Patient previous data:</h2>
+
+        <div class="card" style="
+        width: 70%;
+    ">
+          <p>All Past Appointments:</p>
+          <table class="table table-hover" id="dev-table">
+            <tr>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th style="
+                  width: 8rem;
+              ">Time</th>
+                  <th style="
+                  width: 65rem;
+              ">Prescription</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <td>07/04/2024</td>
+                <td>8:30 am</td>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit
+                  amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
+                  dolor
+                  sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
+                  ipsum
+                  dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing
+                  elit.Lorem
+                  ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing
+                  elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+
+            </tr>
+            </tbody>
+            </tr>
+            </tr>
+          </table>
+        </div>
       </div>
       <div class="right-section">
-        <h2>Medicine List</h2>
-        <div class="medicine-list">
-          <input type="checkbox" id="medicine1" name="medicine1">
-          <label for="medicine1">Medicine 1</label><br>
-          <input type="checkbox" id="medicine2" name="medicine2">
-          <label for="medicine2">Medicine 2</label><br>
-          <input type="checkbox" id="medicine3" name="medicine3">
-          <label for="medicine3">Medicine 3</label><br>
-          <!-- Add more medicines as needed -->
+        <h2>Medicine Lists</h2>
+        <div class="card">
+          <div class="medicine-list">
+            <div>
+              <input type="search" id="gsearch" name="gsearch" onkeyup="searchTable()"
+                style="border: 1px solid grey; border-radius: 4px; width: 17rem; padding: 0.25rem 0.5rem;">
+            </div>
+            <input type="checkbox" id="medicine1" name="medicine1">
+            <label for="medicine1">Medicine 1</label><br>
+            <input type="checkbox" id="medicine2" name="medicine2">
+            <label for="medicine2">Medicine 2</label><br>
+            <input type="checkbox" id="medicine3" name="medicine3">
+            <label for="medicine3">Medicine 3</label><br>
+
+          </div>
+
+          <button class="btn btn-primary">Checkout</button>
         </div>
-        <button class="btn btn-primary">Checkout</button>
       </div>
     </div>
   </div>
