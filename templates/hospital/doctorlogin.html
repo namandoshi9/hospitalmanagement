@@ -6,13 +6,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>LazyCoder || sumit</title>
+  <title>Hirani Homoeopathic Clinic</title>
 
   <style type="text/css">
     body {
-      color: #aa082e;
-      background-color: #007bff; /* Change to blue color */
-      font-family: 'Roboto', sans-serif;
+      color: black;
+      background-color: #e9ecef;
+      /* Slightly darker background */
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     a:link {
@@ -24,55 +27,87 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      text-align: center;
     }
 
     .logo {
-      flex: 0 0 30%; /* Adjust the width of the logo */
-      padding: 20px; /* Add some padding around the logo */
+      flex: 0 0 20%;
+      padding: 0px 0px 20px 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Added to vertically center the logo and clinic name */
+      flex-direction: column;
+      /* Added to stack the logo and clinic name vertically */
     }
 
     .logo img {
-      width: 100%; /* Set the width to 100% to fill the container */
-      height: auto; /* Maintain the aspect ratio */
+      width: 150px;
+      height: 150px;
+      margin-bottom: 10px;
+      /* Added margin to create space between logo and clinic name */
+    }
+
+    .clinic-name {
+      font-size: 24px;
+      /* Adjust font size as needed */
+      color: #1b4965;
+      /* Adjust color as needed */
+      margin: 0;
+      /* Remove default margin */
     }
 
     .form-container {
-      flex: 0 0 70%; /* Adjust the width of the form */
+      flex: 0 0 36%;
       background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-    }
-
-    .note {
-      text-align: center;
-      background-color: #007bff; /* Change to blue color */
-      color: #fff;
-      font-weight: bold;
-      line-height: 80px;
-      margin-bottom: 20px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
+      padding: 10px;
+      border-radius: 0px;
+      /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); */
+      /* Enhanced box-shadow */
     }
 
     .form-content {
-      padding: 5%;
-      border: 1px solid #ced4da;
+      /* padding: 5%; */
       margin-bottom: 2%;
     }
 
+    .form-group {
+      margin-bottom: 15px;
+    }
+
     .form-control {
-      border-radius: 1.5rem;
+      border-radius: 0.3rem;
+      width: 70%;
+      padding: 13px;
+      border: 1px solid #ced4da;
+      background-color: #f8f9fa;
+      /* Change background color */
     }
 
     .btnSubmit {
       border: none;
-      border-radius: 1.5rem;
-      padding: 1%;
-      width: 100%;
+      border-radius: 0.3rem;
+      padding: 13px;
       cursor: pointer;
-      background: #0062cc;
+
+      background: #1b4965;
       color: #fff;
+      font-size: 17px;
+      width: 20%;
+      margin-left: 275px;
+    }
+
+    .btnSubmit:hover {
+      background: #2c5269;
+      /* Darker shade for hover effect */
+    }
+
+    .form-control:hover {
+      border-color: #1b4965;
+    }
+
+    .form-control::placeholder {
+      font-weight: bold;
     }
   </style>
 
@@ -80,45 +115,30 @@
 </head>
 
 <body>
-  {% include "hospital/navbar.html" %}
 
   <div class="container">
-    <div class="logo">
-      <img src="{% static 'images/h_logo.png' %}" alt="Logo">
-    </div>
-
     <div class="form-container">
       <form method="post">
         {% csrf_token %}
-        <div class="note">
-          <p>LogIn</p>
+        <div class="logo">
+          <img src="{% static 'images/h_logo.png' %}" alt="Logo">
+          <h1 class="clinic-name">Hirani Homoeopathic Clinic</h1>
         </div>
-
         <div class="form-content">
-          <div class="row">
-            <div class="col-md-6">
-
-              <div class="form-group">
-                {% render_field form.username class="form-control" placeholder="Username" %}
-              </div>
-
-            </div>
-            <div class="col-md-6">
-
-              <div class="form-group">
-                {% render_field form.password class="form-control" placeholder="Password" %}
-              </div>
-
-            </div>
+          <div class="form-group">
+            {% render_field form.username class="form-control" placeholder="Username" id="id_username" %}
           </div>
+
+          <div class="form-group">
+            {% render_field form.password class="form-control" placeholder="Password" id="id_password" %}
+          </div>
+
           <button type="submit" class="btnSubmit">Login</button>
-          <!-- <div class="text-center">Do not have account? <a href="doctorsignup">Signup here</a></div> -->
         </div>
       </form>
     </div>
   </div>
 
-  <!-- {% include "hospital/footer.html" %} -->
 </body>
 
 </html>

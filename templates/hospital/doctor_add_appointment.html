@@ -1,8 +1,14 @@
 {% extends 'hospital/doctor_base.html' %}
 {% load widget_tweaks %}
 {% block content %}
+
 <head>
   <style media="screen">
+    body {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
     a:link {
       text-decoration: none;
     }
@@ -10,31 +16,30 @@
     .note {
       text-align: center;
       height: 80px;
-      background-color: #007bff;
+      background-color: #1b4965;
       color: #fff;
       font-weight: bold;
       line-height: 80px;
     }
 
-    .form-content {
-      padding: 5%;
-      border: 1px solid #ced4da;
-      margin-bottom: 2%;
-    }
 
-    .form-control {
-      border-radius: 1.5rem;
+    a.btn.btn-primary {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
     }
 
     .btnSubmit {
       border: none;
-      border-radius: 1.5rem;
+      border-radius: 0.5rem;
       padding: 1%;
       width: 20%;
       cursor: pointer;
-      background: #0062cc;
       color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
     }
+    
 
     .menu {
       top: 50px;
@@ -44,49 +49,58 @@
       text-align: center;
       margin-bottom: 10px;
     }
-
   </style>
 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 </head>
 <br><br><br>
 
-<div class="msg">
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-success" role="alert">
-        {{ message }}
-      </div>
-    {% endfor %}
-  {% endif %}
-</div>
 
 <!------ signup page for doctor by admin(sumit)  ---------->
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="container register-form">
-    <div class="d-flex justify-content-end mb-3">
+  <div class="container register-form" style="
+  margin-left: 28rem;
+  width: 70%;
+">
+    <!-- <div class="d-flex justify-content-end mb-3">
       <a href="/doctor-patient" class="btn btn-primary">Back</a>
-    </div>
+    </div> -->
     <div class="form">
-      <div class="note">
+      <!-- <div class="note">
         <p>Appointment</p>
-      </div>
+      </div> -->
+      <h2 style="font-family: Open Sans, sans-serif;" class="mb-5">Add Appointment</h2>
+
       <div class="form-content">
         <div class="row">
           <div class="col-md-6">
-            <div class="form-group">
+            <!-- <div class="form-group">
               {% render_field appointmentForm.doctor class="form-control" placeholder="Doctor ID" %}
-            </div>
+            </div> -->
             <div class="form-group">
-              {% render_field appointmentForm.patient class="form-control" placeholder="Patient ID" %}
+              <select class="form-control select2" name="patient">
+                {% for patient in patients %}
+                <option value="{{ patient.id }}">{{ patient }}</option>
+                {% endfor %}
+              </select>
             </div>
+
             <div class="form-group">
-              {% render_field appointmentForm.appointmentDate type='date' class="form-control" placeholder="Doctor ID" %}
+              <input type="date" id="appointmentDate" name="appointmentDate" class="form-control" placeholder="Date">
             </div>
+            
+            <div class="form-group">
+              <input type="time" id="appointmentTime" name="appointmentTime" class="form-control" placeholder="Time">
+            </div>
+            
+            
             <div class="form-group">
               {% render_field appointmentForm.description class="form-control" placeholder="Description" %}
             </div>
@@ -103,4 +117,35 @@ developed By : sumit kumar
 facebook : fb.com/sumit.luv
 youtube : youtube.com/lazycoders
 -->
+<script>
+  // Get today's date
+  var today = new Date();
+
+  // Format the date as YYYY-MM-DD (required by <input type="date">)
+  var formattedDate = today.toISOString().substr(0, 10);
+
+  // Set the value of the input field to today's date
+  document.getElementById("appointmentDate").value = formattedDate;
+</script>
+
+<script>
+  // Get the current time
+  var currentTime = new Date();
+
+  // Format the time as HH:MM
+  var hours = currentTime.getHours().toString().padStart(2, '0');
+  var minutes = currentTime.getMinutes().toString().padStart(2, '0');
+  var formattedTime = hours + ':' + minutes;
+
+  // Set the value of the input field to the current time
+  document.getElementById("appointmentTime").value = formattedTime;
+</script>
+
+
+<script>
+  $(document).ready(function () {
+    $('.select2').select2();
+  });
+</script>
+
 {% endblock content %}

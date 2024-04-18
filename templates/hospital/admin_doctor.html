@@ -10,7 +10,7 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans|Varela+Round">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -82,7 +82,7 @@
     }
 
     .card .card-block {
-      padding: 25px;
+      padding: 20px;
     }
 
     .order-card i {
@@ -385,7 +385,8 @@
       <div class="card bg-c-blue order-card">
         <div class="card-block">
           <a href="/admin-view-doctor">
-            <h6 class="m-b-20">Total Record</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Total Record</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-nurse f-left"></i></h2>
@@ -398,7 +399,8 @@
       <div class="card bg-c-green order-card">
         <div class="card-block">
           <a href="/admin-add-patient">
-            <h6 class="m-b-20">Admit Patient</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Admit Patient</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-plus f-left"></i></h2>
@@ -411,7 +413,8 @@
       <div class="card bg-c-green order-card">
         <div class="card-block">
           <a href="/admin-add-doctor">
-            <h6 class="m-b-20">Register Doctor</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Register Doctor</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-plus f-left"></i></h2>
@@ -424,7 +427,8 @@
       <div class="card bg-c-yellow order-card">
         <div class="card-block">
           <a href="/admin-approve-doctor">
-            <h6 class="m-b-20">Approve Doctor</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Approve Doctor</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-check-circle f-left"></i></h2>
@@ -436,7 +440,8 @@
       <div class="card bg-c-pink order-card">
         <div class="card-block">
           <a href="/admin-view-doctor-specialisation">
-            <h6 class="m-b-20">Doctor Specialisation</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Doctor Specialisation</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-md f-left"></i></h2>
@@ -444,7 +449,7 @@
       </div>
     </div> -->
 
-    <div class="col-md-12">
+    <div class="col-lg-11">
       <div class="card">
         <div class="card-block">
           <div class="d-flex justify-content-end mb-3">
@@ -475,8 +480,8 @@
                       class="glyphicon glyphicon-edit"></span></a></td>
                 <td>
                   <form action="{% url 'delete-doctor-from-hospital' d.id  %}">
-                  <input type="hidden" name="delete_doctor" value="from_dash"/>
-                  <button type="submit">D</button>
+                    <input type="hidden" name="delete_doctor" value="from_dash" />
+                    <button type="submit">D</button>
                   </form>
                   <!-- <button t class="btn btn-danger btn-xs" ><span
                       class="glyphicon glyphicon-trash"></span></a> -->
@@ -491,10 +496,11 @@
 
 
 
-    <div class="col-md-12">
+    <div class="col-lg-11">
       <div class="card">
         <div class="card-block">
-          <h6 class="m-b-20">All Patients</h6>
+          <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">All Patients</h6>
           <div class="d-flex justify-content-end mb-3">
             <!-- Button to add a new patient -->
             <a href="/admin-add-patient" class="btn btn-primary">Add Patient</a>
@@ -530,7 +536,7 @@
         </div>
       </div>
     </div>
-    
+
 
   </div>
 </div>
@@ -545,11 +551,7 @@
 </body>
 
 </html>
-<!--
-  developed By : sumit kumar
-  facebook : fb.com/sumit.luv
-  youtube : youtube.com/lazycoders
-  -->
+
 
 <br><br><br><br><br><br><br>
 {% endblock content %}

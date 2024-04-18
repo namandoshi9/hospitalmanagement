@@ -1,0 +1,27 @@
+<!-- add_prescription.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Prescription</title>
+</head>
+<body>
+    <h1>Add Prescription</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <!-- Multi-select field for medications -->
+        <label for="id_medications">Medications:</label><br>
+        <select name="medications" id="id_medications" multiple>
+            {% for medication in medications %}
+            <option value="{{ medication.pk }}">{{ medication.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Add Prescription</button>
+    </form>
+</body>
+</html>

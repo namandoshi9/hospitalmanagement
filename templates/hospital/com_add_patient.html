@@ -1,0 +1,109 @@
+{% extends 'hospital/com_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <style media="screen">
+    body {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+      background-color: #1b4965;
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    a.btn.btn-primary {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 0.5rem;
+      padding: 1%;
+      width: 20%;
+      cursor: pointer;
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    .menu {
+      top: 50px;
+    }
+
+    .msg {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<br><br><br>
+
+<!------ signup page for doctor by admin(sumit)  ---------->
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container register-form" style="margin-left: 28rem;width: 70%;">
+    <div class="d-flex justify-content-end mb-3">
+      
+    </div>
+    <div class="form">
+      <div class="form-content">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              {% render_field patientForm.first_name class="form-control" placeholder="First Name" %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {% render_field patientForm.last_name class="form-control" placeholder="Last Name" %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              {% render_field patientForm.mobile class="form-control" placeholder="Mobile" %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {% render_field patientForm.symptoms class="form-control" placeholder="Symptoms" %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              {% render_field patientForm.address class="form-control" placeholder="Address" %}
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btnSubmit">Add</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}

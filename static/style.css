@@ -1,5 +1,4 @@
 body {
-
   padding-left: 240px;
 }
 main {
@@ -115,7 +114,7 @@ main {
     transition: all 0.15s ease-in-out;
   }
   .menu ul li span:before {
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     position: absolute;
@@ -150,7 +149,7 @@ main {
   }
   .menu .smartphone-menu-trigger:before,
   .menu .smartphone-menu-trigger:after {
-    content: '';
+    content: "";
     width: 50%;
     height: 2px;
     background: #fff;

@@ -4,7 +4,7 @@ from . import models
 from .models import Medicine,Compounder
 from django import forms
 from django.contrib.auth.models import User
-from .models import Doctor, Patient, Appointment
+from .models import Doctor, Patient, Appointment, Prescription
 
 
 #for admin signup
@@ -34,14 +34,20 @@ class DoctorForm(forms.ModelForm):
 
 
 class PatientUserForm(forms.ModelForm):
+    
     class Meta:
         model = User
         fields = ['first_name', 'last_name']
 
 class PatientForm(forms.ModelForm):
+
     class Meta:
         model = Patient
         fields = ['first_name','last_name','address', 'mobile', 'symptoms']
+
+    
+
+        
 
 
 
@@ -77,7 +83,7 @@ class ContactusForm(forms.Form):
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
-        fields = ['name', 'description']  # Add other fields as needed
+        fields = ['name', 'description', 'barcode']  # Add other fields as needed
 
 
 
@@ -85,7 +91,23 @@ class MedicineForm(forms.ModelForm):
 #facebook : fb.com/sumit.luv
 #Youtube :youtube.com/lazycoders
 
+
+class CompounderUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
 class CompounderForm(forms.ModelForm):
     class Meta:
         model = Compounder
         exclude = ['doctor']
+
+
+class PrescriptionForm(forms.ModelForm):
+    medications = forms.ModelChoiceField(queryset=Medicine.objects.all(), widget=forms.Select)
+
+    class Meta:
+        model = Prescription
+        fields = ['patient', 'medications', 'notes']

@@ -32,7 +32,7 @@ facebook : fb.com/sumit.luv
     <a href="/admin-add-doctor" class="btn btn-primary">Add doctor</a>
     <a href="{% url 'admin-doctor' %}" class="btn btn-primary">Back</a>
   </div>
-  
+
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h6 class="panel-title">Doctors</h6>
@@ -57,12 +57,13 @@ facebook : fb.com/sumit.luv
         <td>{{d.mobile}}</td>
         <td>{{d.address}}</td>
         <td>{{d.department}}</td>
-        <td><a class="btn btn-primary btn-xs" href="{% url 'update-doctor' d.id  %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+        <td><a class="btn btn-primary btn-xs" href="{% url 'update-doctor' d.id  %}"><span
+              class="glyphicon glyphicon-edit"></span></a></td>
         <td>
           <form action="{% url 'delete-doctor-from-hospital' d.id  %}">
-            <input type="hidden" name="delete_doctor" value="from_view"/>
+            <input type="hidden" name="delete_doctor" value="from_view" />
             <button type="submit">D</button>
-            </form>
+          </form>
         </td>
       </tr>
       {% endfor %}
@@ -72,10 +73,6 @@ facebook : fb.com/sumit.luv
 
 
 
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
+
 
 {% endblock content %}

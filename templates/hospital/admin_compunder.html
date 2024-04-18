@@ -11,7 +11,7 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans|Varela+Round">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -83,7 +83,7 @@
     }
 
     .card .card-block {
-      padding: 25px;
+      padding: 20px;
     }
 
     .order-card i {
@@ -386,7 +386,8 @@
       <div class="card bg-c-blue order-card">
         <div class="card-block">
           <a href="/admin-view-doctor">
-            <h6 class="m-b-20">Total Compunder</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Total Compunder</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-nurse f-left"></i></h2>
@@ -394,12 +395,13 @@
         </div>
       </div>
     </div>
-<!-- 
+    <!-- 
     <div class="col-md-4 col-xl-3">
       <div class="card bg-c-green order-card">
         <div class="card-block">
           <a href="/admin-add-patient">
-            <h6 class="m-b-20">Admit Compunder</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Admit Compunder</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-plus f-left"></i></h2>
@@ -412,7 +414,8 @@
       <div class="card bg-c-green order-card">
         <div class="card-block">
           <a href="/admin-add-doctor">
-            <h6 class="m-b-20">Register Doctor</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Register Doctor</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-plus f-left"></i></h2>
@@ -425,7 +428,8 @@
       <div class="card bg-c-yellow order-card">
         <div class="card-block">
           <a href="/admin-approve-doctor">
-            <h6 class="m-b-20">Approve Doctor</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Approve Doctor</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-check-circle f-left"></i></h2>
@@ -437,7 +441,8 @@
       <div class="card bg-c-pink order-card">
         <div class="card-block">
           <a href="/admin-view-doctor-specialisation">
-            <h6 class="m-b-20">Doctor Specialisation</h6>
+            <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">Doctor Specialisation</h6>
           </a>
           <br>
           <h2 class="text-right"><i class="fas fa-user-md f-left"></i></h2>
@@ -445,75 +450,74 @@
       </div>
     </div> -->
     <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-block">
-                <h6 class="m-b-20">All Compounders</h6>
-                <div class="d-flex justify-content-end mb-3">
-                  <!-- Button to add a new compounder -->
-                  <a href="/admin-add-compunder" class="btn btn-primary">Add Compounder</a>
-                </div>
-                <div class="table-responsive">
-                  <table class="table table-hover" id="compounder-table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Profile Picture</th>
-                        <th>Mobile</th>
-                        <th>Address</th>
-                        <th>Department</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for c in mydict.compounder %}
-                      <tr>
-                        <td>{{ c.get_name }}</td>
-                        <td><img src="{{ c.profile_pic.url }}" alt="Profile Pic" height="40px" width="40px" /></td>
-                        <td>{{ c.mobile }}</td>
-                        <td>{{ c.address }}</td>
-                        <td>{{ c.department }}</td>
-                        <td><a class="btn btn-primary btn-xs" href=""><span class="glyphicon glyphicon-edit"></span></a></td>
-                        <td>
-                          <form action="" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
-                          </form>
-                        </td>
-                      </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
+      <div class="row">
+        <div class="col-lg-11">
+          <div class="card">
+            <div class="card-block">
+              <h6 class="m-b-20" style="font-size: 15px;
+            font-weight: 600;">All Compounders</h6>
+              <div class="d-flex justify-content-end mb-3">
+                <!-- Button to add a new compounder -->
+                <a href="/admin-add-compunder" class="btn btn-primary">Add Compounder</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover" id="compounder-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Profile Picture</th>
+                      <th>Mobile</th>
+                      <th>Address</th>
+                      <th>Department</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for c in mydict.compounder %}
+                    <tr>
+                      <td>{{ c.get_name }}</td>
+                      <td><img src="{{ c.profile_pic.url }}" alt="Profile Pic" height="40px" width="40px" /></td>
+                      <td>{{ c.mobile }}</td>
+                      <td>{{ c.address }}</td>
+                      <td>{{ c.department }}</td>
+                      <td><a class="btn btn-primary btn-xs" href=""><span class="glyphicon glyphicon-edit"></span></a>
+                      </td>
+                      <td>
+                        <form action="" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-danger btn-xs"><span
+                              class="glyphicon glyphicon-trash"></span></button>
+                        </form>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-      
-
-
-
-    
-
-  </div>
-</div>
+        </div>
 
 
 
 
 
-<script src="{static 'js/jquery.js'}"></script>
-<script src="{static 'js/popper.js'}"></script>
-<script src="{static 'js/bootstrap.js'}"></script>
-</body>
 
-</html>
-<!--
-  developed By : sumit kumar
-  facebook : fb.com/sumit.luv
-  youtube : youtube.com/lazycoders
-  -->
+      </div>
+    </div>
 
-<br><br><br><br><br><br><br>
-{% endblock content %}
+
+
+
+
+    <script src="{static 'js/jquery.js'}"></script>
+    <script src="{static 'js/popper.js'}"></script>
+    <script src="{static 'js/bootstrap.js'}"></script>
+    </body>
+
+    </html>
+
+
+    <br><br><br><br><br><br><br>
+    {% endblock content %}

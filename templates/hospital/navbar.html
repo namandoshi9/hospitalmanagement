@@ -4,16 +4,23 @@
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
   <style type="text/css">
+    body {
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
+    }
+
     .bs-example {
       margin: 0px;
-
+      position: fixed;
     }
 
     .navbar-brand {
@@ -24,11 +31,11 @@
 
     .navbar-brand img {
       width: 50px;
-      /* Set the width of the logo */
+
       height: auto;
-      /* Let the height adjust automatically to maintain aspect ratio */
+
       margin-right: 10px;
-      /* Add some space between the logo and the text */
+
     }
   </style>
 </head>
@@ -38,10 +45,10 @@
 
 
   <div class="bs-example">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background:#337AB7;">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background:#1b4965;">
       <a href="" class="navbar-brand">
-        <img src="{% static 'images/logo.png' %}" alt="Logo"> <!-- Add the path to your logo image here -->
-         Management System
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+        Hirani Homoeopathic Clinic
       </a>
       <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -66,11 +73,7 @@
     </nav>
   </div>
 
-  <!--
-  developed By : sumit kumar
-  facebook : fb.com/sumit.luv
-  youtube : youtube.com/lazycoders
-  -->
+
 
 </body>
 

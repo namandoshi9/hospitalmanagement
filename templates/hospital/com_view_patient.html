@@ -1,0 +1,112 @@
+{% extends 'hospital/com_base.html' %}
+{% block content %}
+{% load static %}
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style media="screen">
+    div {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    h6 {
+      text-align: center;
+    }
+
+    .row {
+      margin-top: 50px;
+    }
+
+    .search-box {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .btn-search {
+      margin-left: 10px;
+    }
+
+    .btn-group {
+      margin-top: 20px;
+    }
+
+    .menu {
+      top: 50px;
+    }
+  </style>
+</head>
+<!--
+written By : sumit kumar
+facebook : fb.com/sumit.luv
+-->
+
+<div class="container" style="margin-left: 30rem;">
+
+  <div class="row">
+    <div class="col-md-4">
+      <a href="/com-add-patient" class="btn btn-primary">Add Patient</a>
+      <a href="/com-patient" class="btn btn-primary">Back</a>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-responsive">
+            <table class="table table-hover" id="dev-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Symptoms</th>
+                  <th>Mobile</th>
+                  <th>Address</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in patients %}
+                <tr>
+                  <td>{{ p.first_name }} {{ p.last_name }}</td>
+                  <td>{{ p.symptoms }}</td>
+                  <td>{{ p.mobile }}</td>
+                  <td>{{ p.address }}</td>
+                  <td><a class="btn btn-primary btn-xs" href="{% url 'doctor-update-patient' p.id  %}"><span
+                        class="glyphicon glyphicon-edit"></span></a></td>
+                  <td>
+                    <form action="{% url 'delete-patient-from-doctor' p.id %}" method="post">
+                      {% csrf_token %}
+                      <input type="hidden" name="delete_patient" value="from_view" />
+                      <button type="submit" class="btn btn-danger btn-xs"><span
+                          class="glyphicon glyphicon-trash"></span></button>
+                    </form>
+                  </td>
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

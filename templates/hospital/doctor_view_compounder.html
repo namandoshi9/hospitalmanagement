@@ -3,103 +3,108 @@
 {% load static %}
 
 <head>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-  <style media="screen">
-    a:link {
-      text-decoration: none;
-    }
+    <style media="screen">
+        div {
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-    h6 {
-      text-align: center;
-    }
+        a:link {
+            text-decoration: none;
+        }
 
-    .row {
-      margin-top: 50px;
-    }
+        h6 {
+            text-align: center;
+        }
 
-    .search-box {
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-    }
+        .row {
+            margin-top: 50px;
+        }
 
-    .search-input {
-      flex: 1;
-      margin-right: 10px;
-    }
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
 
-    .btn-search {
-      margin-left: 10px;
-    }
+        .search-input {
+            flex: 1;
+            margin-right: 10px;
+        }
 
-    .btn-group {
-      margin-top: 20px;
-    }
-  </style>
+        .btn-search {
+            margin-left: 10px;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+        }
+
+        .menu {
+            top: 50px;
+        }
+    </style>
 </head>
+<!--
+written By : sumit kumar
+facebook : fb.com/sumit.luv
+-->
 
-<div class="container">
+<div class="container" style="margin-left: 30rem;">
 
-  <div class="row">
-    <div class="col-md-8">
-      <div class="search-box">
-        <!-- Search bar -->
-        <input type="text" class="form-control search-input" placeholder="Search here...">
-        <!-- Search button -->
-        <button class="btn btn-primary btn-search">Search</button>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <a href="/doctor-add-compounder" class="btn btn-primary">Add Compounder</a>
-      <a href="/doctor-compounder" class="btn btn-primary">Back</a>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-block">
-          <div class="table-responsive">
-            <table class="table table-hover" id="dev-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Mobile</th>
-                  <th>Address</th>
-                  <th>Update</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for compounder in compounders %}
-                <tr>
-                  <td>{{ compounder.first_name }} {{ compounder.last_name }}</td>
-                  <td>{{ compounder.mobile }}</td>
-                  <td>{{ compounder.address }}</td>
-                  <td><a class="btn btn-primary btn-xs" href=""><span
-                        class="glyphicon glyphicon-edit"></span></a></td>
-                  <td>
-                    <form action="" method="post">
-                      {% csrf_token %}
-                      <input type="hidden" name="delete_compounder" value="from_view" />
-                      <button type="submit" class="btn btn-danger btn-xs"><span
-                          class="glyphicon glyphicon-trash"></span></button>
-                    </form>
-                  </td>
-
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="/doctor-add-compounder" class="btn btn-primary">Add Compounder</a>
+            <a href="/doctor-compounder" class="btn btn-primary">Back</a>
         </div>
-      </div>
     </div>
-  </div>
+
+
+    <div class="row">
+        <div class="col-lg-11">
+            <div class="card">
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="dev-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Address</th>
+                                    <th>Update</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in compounders %}
+                                <tr>
+                                    <td>{{ p.first_name }} {{ p.last_name }}</td>
+                                    <td>{{ p.mobile }}</td>
+                                    <td>{{ p.address }}</td>
+
+                                    <td><a class="btn btn-primary btn-xs"
+                                            href="{% url 'doctor-update-compounder' p.id  %}"><span
+                                                class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td>
+                                        <form action="{% url 'delete-compounder-from-doctor' p.id %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="delete_compounder" value="from_view" />
+                                            <button type="submit" class="btn btn-danger btn-xs"><span
+                                                    class="glyphicon glyphicon-trash"></span></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
