@@ -18,7 +18,7 @@ class PatientDischargeDetailsAdmin(admin.ModelAdmin):
 admin.site.register(PatientDischargeDetails, PatientDischargeDetailsAdmin)
 
 
-admin.site.register(Compounder)
+
 
 from django.contrib import admin
 from .models import Prescription
@@ -47,8 +47,12 @@ from import_export.admin import ImportExportModelAdmin
 
 @admin.register(Medicine)
 class MedicineAdmin(ImportExportModelAdmin):
-    list_display = ("id" ,"barcode" ,"name" , "description",)
+    list_display = ("id" ,"barcode" ,"name" , "description", "created_at", )
+
+@admin.register(Compounder)
+class CompounderAdmin(ImportExportModelAdmin):
+    list_display = ("id" ,"first_name" , "last_name", "mobile", "created_at", )
 
 @admin.register(Patient)
 class PatientAdmin(ImportExportModelAdmin):
-    list_display = ("id" , )   
+    list_display = ("id" , "first_name", "last_name", "symptoms", "admitDate",)   

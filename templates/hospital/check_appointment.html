@@ -83,7 +83,7 @@
     table {
       font-family: "Open Sans", sans-serif !important;
       border-collapse: collapse;
-      /* width: 50% !important; */
+      /* / width: 50% !important; / */
     }
 
     td,
@@ -166,15 +166,12 @@
         <div class="card" style="
         width: 50%;
     ">
-          <p><strong>Name:</strong>
-            John Doe
-          </p>
-
-          <p><strong>Mobile:</strong> 123-456-7890</p>
-          <p><strong>Address:</strong> 123 Main St, City</p>
-          <p><strong>Symptoms:</strong> Fever, Cough</p>
-          <p><strong>Date:</strong> 18-04-2024</p>
-          <p><strong>Time:</strong> 12:40</p>
+          <p><strong>Name:</strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
+          <p><strong>Mobile:</strong> {{ appointment.patient.mobile }}</p>
+          <p><strong>Address:</strong> {{ appointment.patient.address }}</p>
+          <p><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
+          <p><strong>Date:</strong> {{ appointment.appointmentDate }}</p>
+          <p><strong>Time:</strong> {{ appointment.appointmentTime }}</p>
           <!-- <p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit
             amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor
             sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
@@ -203,20 +200,13 @@
                 </tr>
               </thead>
               <tbody>
-
-                <td>07/04/2024</td>
-                <td>8:30 am</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit
-                  amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-                  dolor
-                  sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-                  ipsum
-                  dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit.Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing
-                  elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
-
-            </tr>
+                {% for past_appointment in past_appointments %}
+                <tr>
+                    <td>{{ past_appointment.appointmentDate }}</td>
+                    <td>{{ past_appointment.appointmentTime }}</td>
+                    <td>{{ past_appointment.description }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
             </tr>
             </tr>
@@ -231,13 +221,13 @@
               <input type="search" id="gsearch" name="gsearch" onkeyup="searchTable()"
                 style="border: 1px solid grey; border-radius: 4px; width: 17rem; padding: 0.25rem 0.5rem;">
             </div>
-            <input type="checkbox" id="medicine1" name="medicine1">
-            <label for="medicine1">Medicine 1</label><br>
-            <input type="checkbox" id="medicine2" name="medicine2">
-            <label for="medicine2">Medicine 2</label><br>
-            <input type="checkbox" id="medicine3" name="medicine3">
-            <label for="medicine3">Medicine 3</label><br>
-
+            {% for medicine in medicines %}
+            <div>
+                <input type="checkbox" id="medicine{{ medicine.id }}" name="medicine{{ medicine.id }}">
+                <label for="medicine{{ medicine.id }}">{{ medicine.name }}</label><br>
+            </div>
+            {% endfor %}
+            <!-- Add more medicines as needed -->
           </div>
 
           <button class="btn btn-primary">Checkout</button>

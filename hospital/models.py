@@ -129,6 +129,7 @@ class Medicine(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     barcode = models.ImageField(upload_to='barcodes/', blank=True)
+    created_at = models.DateField(auto_now_add=True,blank=True,null=True)
 
     # Modify the generate_barcode method to generate a 12-digit numeric string for EAN-13
     def generate_barcode(self):
@@ -175,7 +176,7 @@ class Compounder(models.Model):
     status = models.BooleanField(default=False)
     username = models.CharField(max_length=150, unique=True, blank=True)  # Assuming max_length for username
     password = models.CharField(max_length=128, blank=True)  # Storing password securely is crucial; consider using hashing algorithms
-
+    created_at = models.DateField(auto_now_add=True,blank=True,null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
