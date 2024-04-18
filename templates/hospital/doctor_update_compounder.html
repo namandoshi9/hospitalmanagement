@@ -4,10 +4,11 @@
 
 <head>
   <style media="screen">
-     body {
+    body {
       font-family: "Open Sans", sans-serif !important;
       font-weight: 400 !important;
     }
+
     a:link {
       text-decoration: none;
     }
@@ -23,7 +24,7 @@
 
     .form-content {
       padding: 3%;
-      border: 1px solid #ced4da;
+      /* border: 1px solid #ced4da; */
       margin-bottom: 2%;
     }
 
@@ -37,12 +38,17 @@
       padding: 1%;
       width: 20%;
       cursor: pointer;
-      background: #0062cc;
+      background: #1b4965;
+      /* Changed button background color */
       color: #fff;
     }
 
     .menu {
       top: 50px;
+    }
+
+    textarea.form-control {
+      height: 34px;
     }
   </style>
 
@@ -55,12 +61,12 @@
 <!------ update page for doctor by admin(sumit)  ---------->
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <div class="container register-form" style="margin-left: 32rem; margin-top: 5rem; width: 70%;">
+  <div class="container register-form" style="margin-left: 28rem; margin-top: 1rem; width: 70%">
     <div class="form">
       <!-- <div class="note">
         <p>Update Compounder Details</p>
       </div> -->
-      <h2 style="font-family: Open Sans, sans-serif;" class="mb-5">Update Compounder Details</h2>
+      <h2 style="font-family: Open Sans, sans-serif;" class="mb-5">Update Staff Details</h2>
 
       <div class="form-content">
         <div class="row">
@@ -68,20 +74,26 @@
             <div class="form-group">
               <input type="text" name="first_name" class="form-control" value="{{compounder.first_name}}">
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
               <input type="text" name="last_name" class="form-control" value="{{compounder.last_name}}">
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col-md-6">
             <div class="form-group">
               <input type="text" name="mobile" class="form-control" value="{{compounder.mobile}}">
             </div>
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
-              <Textarea name="address" class="form-control">{{compounder.address}}</Textarea>
+              <Textarea style="height: 34px;" name="address" class="form-control">{{compounder.address}}</Textarea>
             </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btnSubmit">Update</button> <!-- Changed button class to match the first form -->
       </div>
     </div>
   </div>

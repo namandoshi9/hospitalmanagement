@@ -68,7 +68,7 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="container register-form" style="
-  margin-left: 28rem; width: 70%;
+  margin-left: 28rem; width: 100%;
 ">
     <!-- <div class="d-flex justify-content-start mb-3">
       <a href="/doctor-compounder" class="btn btn-primary">Back</a>
@@ -113,7 +113,9 @@
               {% render_field compounderForm.password class="form-control" placeholder="Password" %}
             </div> -->
       <div class="form-content">
+
         <div class="row">
+
           <div class="col-md-6">
             <div class="form-group">
               {% render_field compounderForm.username class="form-control" placeholder="username" %}
@@ -121,14 +123,12 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              {% render_field compounderForm.mobile class="form-control" placeholder="Mobile" %}
+              {% render_field compounderForm.first_name class="form-control" placeholder="First Name" %}
             </div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              {% render_field compounderForm.first_name class="form-control" placeholder="First Name" %}
+              {% render_field compounderForm.password class="form-control" placeholder="Password" %}
             </div>
           </div>
           <div class="col-md-6">
@@ -137,19 +137,32 @@
             </div>
           </div>
         </div>
-        <!-- <div class="row">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              {% render_field compounderForm.email class="form-control" placeholder="Email" %}
+            </div>
+          </div>
           <div class="col-md-6">
             <div class="form-group">
               {% render_field compounderForm.mobile class="form-control" placeholder="Mobile" %}
             </div>
           </div>
-          <div class="col-md-6">
+        </div>
+
+        <!-- <div class="row"> -->
+        <!-- <div class="col-md-6">
             <div class="form-group">
-              {% render_field compounderForm.password class="form-control" placeholder="Password" %}
+              {% render_field compounderForm.mobile class="form-control" placeholder="Mobile" %}
             </div>
+          </div> -->
+        <!-- <div class="col-md-6">
+
           </div>
 
         </div> -->
+
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -157,7 +170,6 @@
               <!-- {% render_field patientForm.address %} -->
             </div>
           </div>
-
         </div>
 
 

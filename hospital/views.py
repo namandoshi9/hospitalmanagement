@@ -18,7 +18,10 @@ from django.http import Http404
 from django.contrib import messages
 from .forms import DoctorForm  # Assuming you have a DoctorForm defined
 from django.contrib.auth import logout
-from .forms import PrescriptionForm
+from .forms import PrescriptionForm,CompounderUserForm
+
+
+
 
 def doctor_logout(request):
     if request.user.is_authenticated:
@@ -307,6 +310,28 @@ def update_medicine_view(request, pk):
     #     form = MedicineForm(instance=medicine)
     return render(request, 'hospital/update_medicine.html', {'medicine': medicine})
 
+
+
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def update_medicine_com_view(request, pk):
+    medicine = get_object_or_404(Medicine, pk=pk)
+    print(medicine)
+    if request.method == 'POST':
+        medicine.name= request.POST.get('name')
+        medicine.description = request.POST.get('description')
+        medicine.save()
+        return redirect('com-medicine')  # Redirect to doctor's dashboard after update
+    # if request.method == 'POST':
+    #     form = MedicineForm(request.POST, instance=medicine)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('doctor-medicine')  # Redirect to doctor's dashboard after update
+    # else:
+    #     form = MedicineForm(instance=medicine)
+    return render(request, 'hospital/com_update_medicine.html', {'medicine': medicine})
 
 
 @login_required(login_url='doctorlogin')
@@ -665,15 +690,30 @@ def doctor_add_appointment_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def update_patient_view_doctor(request, pk):
-    patient = get_object_or_404(models.Patient, id=pk)
-    ch = [i[0] for i in models.Patient.SYMPTOM_CHOICES]
-    # return redirect('doctor-patient')
+    patient = get_object_or_404(Patient, id=pk)
+    ch = [i[0] for i in Patient.SYMPTOM_CHOICES]
 
-    mydict = {'patient': patient,'ch':ch}
+    if request.method == 'POST':
+        form = PatientForm(request.POST, instance=patient)
+        print(form.is_valid())
+        print(form.errors)
+        if form.is_valid():
+            # print(form.cleaned_data['admitDate'],"RRRRRRRrrrr")
+            form.save()
+            messages.success(request, 'Patient information updated successfully.')
+            return redirect('doctor-patient')  # Redirect to the desired URL after successful update
+        else:
+            messages.error(request, 'Failed to update patient information. Please correct the errors below.')
+    else:
+        form = PatientForm(instance=patient)
+
+    mydict = {'form': form, 'ch': ch, 'patient': patient}
     return render(request, 'hospital/doctor_update_patient.html', context=mydict)
 
 
 
+
+    
 
 from django.urls import reverse
 
@@ -1295,25 +1335,26 @@ def com_patient_view(request):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_prescription_view(request):
-    prescription = Prescription.objects.all()
-    mydict={
-    'prescription':prescription,
-    }
-    return render(request,'hospital/com_prescription.html',context=mydict)
+    prescriptions = Prescription.objects.all() 
+    return render(request,'hospital/com_prescription.html', {'prescriptions': prescriptions})
 
+
+from .models import Medicine
 
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_add_prescription_view(request):
+    patients = Patient.objects.all()  # Fetch all patients
+    medications = Medicine.objects.all()  # Fetch all medications
+
     if request.method == 'POST':
         form = PrescriptionForm(request.POST)
         if form.is_valid():
-            prescription = form.save()
-            # Optionally, you can perform additional actions here, such as sending notifications or processing the data further.
-            return redirect('com-prescription')  # Redirect to a success page
+            form.save()
+            return redirect('com-prescription')
     else:
         form = PrescriptionForm()
-    return render(request, 'hospital/com_add_prescription.html', {'form': form})
+    return render(request, 'hospital/com_add_prescription.html', {'form': form, 'patients': patients, 'medications': medications})
 
 
 
@@ -1369,11 +1410,6 @@ def doctor_compounder_view(request):
 
 
 
-from django.contrib.auth.models import Group
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from .forms import CompounderUserForm
-
 
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
@@ -1404,6 +1440,8 @@ def doctor_add_compounder(request):
             return HttpResponseRedirect('doctor-compounder')
 
     return render(request, 'hospital/doctor_add_compounder.html', context=mydict)
+
+
 
 
 
@@ -1455,6 +1493,47 @@ def doctor_appointment_view(request):
     }
     
     return render(request, 'hospital/doctor_appointment.html', context)
+
+
+
+
+from .models import Appointment
+
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def check_appointment_view(request):
+    # Fetch current appointment details
+    current_appointment = Appointment.objects.filter(doctor=request.user.doctor, appointmentDate=date.today()).first()
+    
+    # Fetch past appointments
+    past_appointments = Appointment.objects.filter(doctor=request.user.doctor, appointmentDate__lt=date.today())
+    
+    return render(request, 'hospital/check_appointment.html', {
+        'current_appointment': current_appointment,
+        'past_appointments': past_appointments
+    })
+
+
+
+
+from datetime import date
+
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
+def doctor_today_appointment_view(request):
+    doctor = request.user.doctor  # Retrieve the logged-in doctor
+    current_date = date.today()  # Get the current date
+    appointments = Appointment.objects.filter(doctor=doctor, appointmentDate=current_date)
+    appointmentscount = appointments.count()
+    context = {
+        'doctor': doctor,
+        'appointments': appointments,
+        'appointmentscount': appointmentscount,
+    }
+    return render(request, 'hospital/doctor_today_appointment.html', context)
+
+
+
 
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)

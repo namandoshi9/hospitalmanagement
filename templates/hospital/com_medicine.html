@@ -128,7 +128,8 @@
             background-color: transparent;
             border-color: transparent;
         }
-        a.btn.btn-success.btn-sm{
+
+        a.btn.btn-success.btn-sm {
             color: #124852;
             background-color: transparent;
             border-color: transparent;
@@ -139,11 +140,11 @@
             background-color: transparent;
             border-color: transparent;
         }
+
         .barcode-img {
             max-width: 200px;
-            /* Adjust according to your design */
-            max-height: 50px;
-            /* Adjust according to your design */
+            / Adjust according to your design / max-height: 50px;
+            / Adjust according to your design /
         }
     </style>
 
@@ -157,7 +158,7 @@
             <div class="card-block">
                 <div class="d-flex justify-content-between align-items-center mb-4 input" style="margin-right: 1.2rem;">
                     <div>
-                        <a href="/com-add-medicine" class="btn btn-primary">Add Medicine</a>
+                        <a href="/doctor-add-medicine" class="btn btn-primary">Add Medicine</a>
                     </div>
                     <div>
                         <label for="gsearch"
@@ -172,11 +173,12 @@
                 <tr>
                     <thead>
                         <tr style="background-color: white;">
-                            <th>ID</th>
-                            <th>Name</th>
+                            <th style="
+                            width: 30rem;
+                        ">Name</th>
                             <th>Description</th>
-                            <th>Barcode
-                                <!-- <button class="btn btn-primary" onclick="printAllBarcodes()">Print All Barcodes</button> -->
+                            <th style="text-align: center;">
+                                <button class="btn btn-primary" onclick="printAllBarcodes()">Barcodes</button>
                             </th>
                             <th>Action</th>
                         </tr>
@@ -184,22 +186,23 @@
                     <tbody>
                         {% for medicine in medicine %}
                         <tr>
-                            <td>{{ medicine.id }}</td>
                             <td style="max-width: 15rem;">{{ medicine.name }}</td>
                             <td style="max-width: 50rem; max-height: 20rem;">{{ medicine.description }}</td>
-                            <td>
+                            <td style=" text-align: center; width: 15rem;">
                                 {% if medicine.barcode %}
-                                <img src="{{ medicine.barcode.url }}" alt="Barcode" class="barcode-img">
+                                <img src="{{ medicine.barcode.url }}" alt="{{ medicine.name }}" class="barcode-img"
+                                    data-medicine-name="{{ medicine.name }}">
                                 {% else %}
                                 No barcode available
                                 {% endif %}
                             </td>
+
                             <td style="text-align: left; width: 14rem;">
-                                
-                               
-                                <a href="{% url 'update-medicine' pk=medicine.pk %}" class="btn btn-info"><i
+
+
+                                <a href="{% url 'update-medicine-com' pk=medicine.pk %}" class="btn btn-info"><i
                                         class="fas fa-pencil-alt"></i></a>
-                            
+
                                 <form action="{% url 'delete-medicine-from-com' pk=medicine.pk %}" method="post"
                                     style="display: inline;">
                                     {% csrf_token %}
@@ -208,7 +211,8 @@
                                             class="fas fa-trash-alt"></i></button>
                                 </form>
                                 <a href="#" class="btn btn-success btn-sm"
-                                onclick="printBarcode('{{ medicine.barcode.url }}')"><i class="fas fa-print"></i></a>
+                                    onclick="printBarcode('{{ medicine.name }}', '{{ medicine.barcode.url }}')"><i
+                                        class="fas fa-print"></i></a>
 
                             </td>
                         </tr>
@@ -233,18 +237,16 @@
         var printWindow = window.open('', '_blank');
         printWindow.document.write('<html><head><title>Print All Barcodes</title></head><body style="margin: 0;">');
 
-        var count = 0; // Initialize count to keep track of printed barcodes
-        var currentPage = 1; // Initialize page count
         // Loop through all barcode images and append them to the print window
         barcodes.forEach(function (barcode, index) {
-            if (index > 0 && index % 10 === 0) {
-                currentPage++; // Increment page count after every 10 barcodes
+            var medicineName = barcode.getAttribute('data-medicine-name'); // Get the medicine name associated with the barcode
+            if (index > 0 && index % 28 === 0) {
                 printWindow.document.write('<div style="page-break-after: always;"></div>'); // Add page break after every 10 barcodes
             }
-            printWindow.document.write('<div style="float: left; width: 20%; margin-right: 5%; margin-bottom: 20px;">');
+            printWindow.document.write('<div style="float: left; width: 20%; height: 20%; margin-right: 5%; margin-bottom: 10px;">');
             printWindow.document.write('<img src="' + barcode.src + '" style="max-width: 100%;">');
+            printWindow.document.write('<h2 style="text-align: center; font-size: 14px;">' + medicineName + '</h2>'); // Set the font size of the medicine name
             printWindow.document.write('</div>');
-            count++;
         });
 
         printWindow.document.write('</body></html>');
@@ -254,15 +256,20 @@
 </script>
 
 
-
 <script>
-    function printBarcode(barcodeUrl) {
+    function printBarcode(medicineName, barcodeUrl) {
         var printWindow = window.open('', '_blank');
-        printWindow.document.write('<html><head><title>Print Barcode</title></head><body style="margin: 0;"><img src="' + barcodeUrl + '" style="max-width: 100%;"></body></html>');
+        printWindow.document.write('<html><head><title>Print Barcode</title></head><body style="margin: 0;">');
+        printWindow.document.write('<div style="text-align: center;">');
+        printWindow.document.write('<img src="' + barcodeUrl + '" style="max-width: 100%;">');
+        printWindow.document.write('<h2>' + medicineName + '</h2>');
+        printWindow.document.write('</div>');
+        printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.print();
     }
 </script>
+
 
 <script>
     var currentPage = 1;
@@ -293,13 +300,39 @@
             paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>');
         }
         // Numbered pages
-        for (var i = 1; i <= totalPages; i++) {
+        var totalPages = Math.ceil(tableRows.length / itemsPerPage);
+        if (totalPages <= 1) {
+            return; // If only one page, no need to display pagination
+        }
+        var pageLinks = '';
+        if (currentPage === 1) {
+            pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(1)">1</a></li>';
+        } else {
+            pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(1)">1</a></li>';
+        }
+        if (currentPage > 3) {
+            pageLinks += '<li class="page-item"><span class="page-link">...</span></li>';
+        }
+        var startPage = Math.max(currentPage - 2, 2);
+        var endPage = Math.min(currentPage + 2, totalPages - 1);
+        for (var i = startPage; i <= endPage; i++) {
             if (i === currentPage) {
-                paginationElement.append('<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>');
+                pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>';
             } else {
-                paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>');
+                pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>';
             }
         }
+        if (currentPage < totalPages - 2) {
+            pageLinks += '<li class="page-item"><span class="page-link">...</span></li>';
+        }
+        if (totalPages > 1) {
+            if (currentPage === totalPages) {
+                pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + totalPages + ')">' + totalPages + '</a></li>';
+            } else {
+                pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + totalPages + ')">' + totalPages + '</a></li>';
+            }
+        }
+        paginationElement.append(pageLinks);
         // Next page link
         if (currentPage < totalPages) {
             paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="nextPage()">Next</a></li>');

@@ -39,6 +39,7 @@
       background-color: #1b4965;
       border-color: #1b4965;
     }
+    
 
     .menu {
       top: 50px;
@@ -92,11 +93,14 @@
             </div>
 
             <div class="form-group">
-              {% render_field appointmentForm.appointmentDate type='date' class="form-control" placeholder="date"%}
+              <input type="date" id="appointmentDate" name="appointmentDate" class="form-control" placeholder="Date">
             </div>
+            
             <div class="form-group">
-              {% render_field appointmentForm.appointmentTime type='time' class="form-control" placeholder="time"%}
+              <input type="time" id="appointmentTime" name="appointmentTime" class="form-control" placeholder="Time">
             </div>
+            
+            
             <div class="form-group">
               {% render_field appointmentForm.description class="form-control" placeholder="Description" %}
             </div>
@@ -113,6 +117,30 @@ developed By : sumit kumar
 facebook : fb.com/sumit.luv
 youtube : youtube.com/lazycoders
 -->
+<script>
+  // Get today's date
+  var today = new Date();
+
+  // Format the date as YYYY-MM-DD (required by <input type="date">)
+  var formattedDate = today.toISOString().substr(0, 10);
+
+  // Set the value of the input field to today's date
+  document.getElementById("appointmentDate").value = formattedDate;
+</script>
+
+<script>
+  // Get the current time
+  var currentTime = new Date();
+
+  // Format the time as HH:MM
+  var hours = currentTime.getHours().toString().padStart(2, '0');
+  var minutes = currentTime.getMinutes().toString().padStart(2, '0');
+  var formattedTime = hours + ':' + minutes;
+
+  // Set the value of the input field to the current time
+  document.getElementById("appointmentTime").value = formattedTime;
+</script>
+
 
 <script>
   $(document).ready(function () {
