@@ -168,9 +168,7 @@
                   max-width: 40rem;
                   max-height: 25rem;
               ">{{ appointment.description }}</td>
-              <td>
-                <a href="/check-appointment">Check</a>
-              </td>
+                <td><a href="{% url 'check-appointment' appointment.id %}">Check</a></td>
             </tr>
             {% endfor %}
           </tbody>

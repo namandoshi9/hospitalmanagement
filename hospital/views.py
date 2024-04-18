@@ -856,7 +856,7 @@ def doctor_view_medicine_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_medicine_view(request):
-    medicine = Medicine.objects.all()
+    medicine = Medicine.objects.all().order_by('-created_at')   
     medicine_count = medicine.count()
     mydict={
     'medicine':medicine,
@@ -1310,7 +1310,7 @@ def compounder_dashboard_card_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_patient_view(request):
-    patients = Patient.objects.all()
+    patients = Patient.objects.all().order_by('-admitDate')
     patient_count = patients.count()
     mydict={
     'patients':patients,
@@ -1361,7 +1361,7 @@ def com_add_prescription_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_compounder_view(request):
-    compounder = Compounder.objects.all()
+    compounder = Compounder.objects.all().order_by('-created_at')
     compounder_count = compounder.count()
     mydict={
     'compounder':compounder,
@@ -1497,22 +1497,20 @@ def doctor_appointment_view(request):
 
 
 
+from django.shortcuts import render, get_object_or_404
 from .models import Appointment
 
-@login_required(login_url='doctorlogin')
-@user_passes_test(is_doctor)
-def check_appointment_view(request):
-    # Fetch current appointment details
-    current_appointment = Appointment.objects.filter(doctor=request.user.doctor, appointmentDate=date.today()).first()
-    
-    # Fetch past appointments
-    past_appointments = Appointment.objects.filter(doctor=request.user.doctor, appointmentDate__lt=date.today())
-    
-    return render(request, 'hospital/check_appointment.html', {
-        'current_appointment': current_appointment,
-        'past_appointments': past_appointments
-    })
-
+def check_appointment_view(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
+    medicines = Medicine.objects.all()
+    # Additional processing of the appointment details
+    context = {
+        'appointment': appointment,
+        'past_appointments': past_appointments,
+        'medicines': medicines,
+    }
+    return render(request, 'hospital/check_appointment.html', context)
 
 
 

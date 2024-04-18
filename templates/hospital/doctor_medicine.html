@@ -143,9 +143,9 @@
 
         .barcode-img {
             max-width: 200px;
-            / Adjust according to your design /
+            /* Adjust according to your design  */
             max-height: 50px;
-            / Adjust according to your design /
+            /* / Adjust according to your design / */
         }
     </style>
 
@@ -178,8 +178,12 @@
                             width: 30rem;
                         ">Name</th>
                             <th>Description</th>
-                            <th style="text-align: center;">
-                                <button class="btn btn-primary" onclick="printAllBarcodes()">Barcodes</button>
+                            <th style="text-align: left;">
+                                <a onclick="printAllBarcodes()">
+                                     <!-- Font Awesome download icon -->
+                                    Barcodes
+                                    <i class="fas fa-download"></i>
+                                </a>
                             </th>
                             <th>Action</th>
                         </tr>
