@@ -5,9 +5,9 @@ class DoctorAdmin(admin.ModelAdmin):
     pass
 admin.site.register(Doctor, DoctorAdmin)
 
-class PatientAdmin(admin.ModelAdmin):
-    pass
-admin.site.register(Patient, PatientAdmin)
+# class PatientAdmin(admin.ModelAdmin):
+#     pass
+# admin.site.register(Patient, PatientAdmin)
 
 class AppointmentAdmin(admin.ModelAdmin):
     pass
@@ -48,3 +48,7 @@ from import_export.admin import ImportExportModelAdmin
 @admin.register(Medicine)
 class MedicineAdmin(ImportExportModelAdmin):
     list_display = ("id" ,"barcode" ,"name" , "description",)
+
+@admin.register(Patient)
+class PatientAdmin(ImportExportModelAdmin):
+    list_display = ("id" , )   

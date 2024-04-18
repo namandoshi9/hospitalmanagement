@@ -316,14 +316,40 @@
     } else {
       paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>');
     }
-    // Numbered page links
-    for (var i = 1; i <= totalPages; i++) {
+    // Numbered pages
+    var totalPages = Math.ceil(tableRows.length / itemsPerPage);
+    if (totalPages <= 1) {
+      return; // If only one page, no need to display pagination
+    }
+    var pageLinks = '';
+    if (currentPage === 1) {
+      pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(1)">1</a></li>';
+    } else {
+      pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(1)">1</a></li>';
+    }
+    if (currentPage > 3) {
+      pageLinks += '<li class="page-item"><span class="page-link">...</span></li>';
+    }
+    var startPage = Math.max(currentPage - 2, 2);
+    var endPage = Math.min(currentPage + 2, totalPages - 1);
+    for (var i = startPage; i <= endPage; i++) {
       if (i === currentPage) {
-        paginationElement.append('<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>');
+        pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>';
       } else {
-        paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>');
+        pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>';
       }
     }
+    if (currentPage < totalPages - 2) {
+      pageLinks += '<li class="page-item"><span class="page-link">...</span></li>';
+    }
+    if (totalPages > 1) {
+      if (currentPage === totalPages) {
+        pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + totalPages + ')">' + totalPages + '</a></li>';
+      } else {
+        pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + totalPages + ')">' + totalPages + '</a></li>';
+      }
+    }
+    paginationElement.append(pageLinks);
     // Next page link
     if (currentPage < totalPages) {
       paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="nextPage()">Next</a></li>');
