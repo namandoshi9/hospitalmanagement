@@ -312,6 +312,16 @@ def update_medicine_view(request, pk):
 
 
 
+# In a file named custom_filters.py in your app's templatetags directory
+from django import template
+
+register = template.Library()
+
+@register.filter
+def split_notes(notes):
+    if notes:
+        return notes.split(", ")
+    return []
 
 
 @login_required(login_url='compounderlogin')
@@ -345,6 +355,7 @@ def update_appointment_view(request, pk):
         appointment.appointmentDate = appointment_date
         appointment.appointmentTime = appointment_time
         appointment.description = request.POST.get('description')
+        appointment.a_note = request.POST.get('note')
         appointment.save()
         # form = AppointmentForm(request.POST, instance=appointment)
         # print(form.is_valid())
@@ -637,7 +648,7 @@ def com_add_patient_view(request):
 @user_passes_test(is_doctor)
 def doctor_add_appointment_view(request):
     doctor = Doctor.objects.filter(user = request.user)
-    patients = Patient.objects.filter(doctor = doctor.first())
+    patients = Patient.objects.all()
     if request.method == 'POST':
         appointmentForm = AppointmentForm(request.POST)
         if not doctor.exists():
@@ -1497,21 +1508,32 @@ def doctor_appointment_view(request):
 
 
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Appointment
+from .forms import AppointmentForm  # Import the form
 
+@login_required(login_url='doctorlogin')
+@user_passes_test(is_doctor)
 def check_appointment_view(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id)
     past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
     medicines = Medicine.objects.all()
-    # Additional processing of the appointment details
+
+    if request.method == 'POST':
+        print(request.POST.get('note'))
+        appointment.a_note = request.POST.get('note')
+        appointment.save()
+        return redirect('doctor-appointment')
+    else:
+        form = AppointmentForm(instance=appointment)
+
     context = {
         'appointment': appointment,
         'past_appointments': past_appointments,
         'medicines': medicines,
+        'form': form,
     }
     return render(request, 'hospital/check_appointment.html', context)
-
 
 
 from datetime import date

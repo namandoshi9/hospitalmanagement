@@ -36,3 +36,6 @@ def generate_barcode(sender, instance, created, **kwargs):
 
         # Update the instance to save the changes
         instance.save()
+
+
+

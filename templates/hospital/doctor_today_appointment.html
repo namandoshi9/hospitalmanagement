@@ -10,7 +10,8 @@
   <title>Today's Appointments</title>
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <style>
     body {
@@ -149,7 +150,6 @@
         <table class="table table-hover" id="dev-table">
           <thead>
             <tr style="background-color: white;">
-              <th>ID</th>
               <th>Patient Name</th>
               <th>Appointment Date</th>
               <th>Appointment Time</th>
@@ -158,21 +158,25 @@
             </tr>
           </thead>
           <tbody>
+            {% if appointments %}
             {% for appointment in appointments %}
             <tr>
-              <td>{{ appointment.id }}</td>
               <td>{{ appointment.patient }}</td>
               <td>{{ appointment.appointmentDate }}</td>
               <td>{{ appointment.appointmentTime }}</td>
-              <td style="
-                  max-width: 40rem;
-                  max-height: 25rem;
-              ">{{ appointment.description }}</td>
-                <td><a href="{% url 'check-appointment' appointment.id %}">Check</a></td>
+              <td style="max-width: 40rem; max-height: 25rem;">{{ appointment.description }}</td>
+              <td><a href="{% url 'check-appointment' appointment.id %}">Check</a></td>
             </tr>
             {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="6" style="text-align: center;">No appointments for the current date.</td>
+            </tr>
+            {% endif %}
           </tbody>
         </table>
+
+
         <div class="pagination-container">
           <nav aria-label="Page navigation example">
             <ul class="pagination" id="pagination"

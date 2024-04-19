@@ -105,7 +105,7 @@ urlpatterns +=[
     
     path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
     # path('check-appointment', views.check_appointment_view,name='check-appointment'),
-    path('check-appointment/<int:appointment_id>/', views.check_appointment_view, name='check-appointment'),
+    path('check-appointment/<int:appointment_id>', views.check_appointment_view, name='check-appointment'),
     path('doctor-today-appointment', views.doctor_today_appointment_view,name='doctor-today-appointment'),
     path('doctor-add-appointment', views.doctor_add_appointment_view,name='doctor-add-appointment'),
     path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),

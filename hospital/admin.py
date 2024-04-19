@@ -9,9 +9,9 @@ admin.site.register(Doctor, DoctorAdmin)
 #     pass
 # admin.site.register(Patient, PatientAdmin)
 
-class AppointmentAdmin(admin.ModelAdmin):
-    pass
-admin.site.register(Appointment, AppointmentAdmin)
+# class AppointmentAdmin(admin.ModelAdmin):
+#     pass
+# admin.site.register(Appointment, AppointmentAdmin)
 
 class PatientDischargeDetailsAdmin(admin.ModelAdmin):
     pass
@@ -56,3 +56,7 @@ class CompounderAdmin(ImportExportModelAdmin):
 @admin.register(Patient)
 class PatientAdmin(ImportExportModelAdmin):
     list_display = ("id" , "first_name", "last_name", "symptoms", "admitDate",)   
+
+@admin.register(Appointment)
+class AppointmentAdmin(ImportExportModelAdmin):
+    list_display = ("id" , "patient", "appointmentDate", "appointmentTime", "description", "a_note",)   

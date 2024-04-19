@@ -3,6 +3,7 @@
 {% block content %}
 <br><br>
 
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -241,6 +242,7 @@
               <th>Appointment Date</th>
               <th>Appointment Time</th>
               <th>Description</th>
+              <th>Note</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -255,6 +257,17 @@
                   max-width: 40rem;
                   max-height: 25rem;
               ">{{ appointment.description }}</td>
+    
+              <td style="max-width: 40rem; max-height: 25rem;">
+                {% if appointment.a_note %}
+                {{ appointment.a_note }}
+                {% else %}
+                No notes available.
+                {% endif %}
+              </td>
+
+
+
               <td>
                 <form action="{% url 'update-appointment' appointment.id %}" style="display: inline;">
                   {% csrf_token %}
