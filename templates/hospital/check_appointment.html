@@ -83,7 +83,7 @@
     table {
       font-family: "Open Sans", sans-serif !important;
       border-collapse: collapse;
-      width: 100% !important;
+      /* / / width: 50% !important; / / */
     }
 
     td,
@@ -173,8 +173,9 @@
 
     .card p strong {
       min-width: 100px;
+      /* Adjust as needed */
       margin-right: 10px;
-
+      /* Adjust as needed */
     }
 
     .current,
@@ -189,6 +190,10 @@
     .container {
       margin-left: 26rem;
       margin-top: 3rem;
+    }
+
+    .right-section {
+      width: 35rem;
     }
   </style>
 </head>
@@ -275,28 +280,33 @@
 
 
       </div>
-      <div class="right-section">
+      <div class="right-section" style="width: 30%;">
         <h4>Medicine Lists</h4>
         <div class="card">
           <div style="margin-bottom: 1rem;">
-            <input type="search" style="width: 100%;border-radius: 0.8rem;border: 0.2px solid grey;padding: 0.5rem;"
-              id="medicine-search" name="medicine-search" placeholder="Search Medicine.." onkeyup="searchMedicine()">
+            <input type="search" style="width: 98%; border-radius: 3px;" id="medicine-search" name="medicine-search"
+              placeholder="search Medicine.." onkeyup="searchMedicine()">
           </div>
-          <div class="medicine-list" id="medicine-list" style="max-height: 41rem;">
+          <div class="medicine-list" id="medicine-list" style="max-height: 39rem;">
             {% for medicine in medicines %}
             <div>
-              <input type="checkbox" id="medicine{{ medicine.id }}" name="{{ medicine.id }}">
-              <label for="medicine{{ medicine.id }}">{{ medicine.name }}</label><br>
+              <input type="checkbox" id="medicine{{ medicine.id }}" name="{{ medicine.id }}"
+                data-barcode="{{ medicine.barcode_value }}">
+              <label for="medicine{{ medicine.id }}">{{ medicine.name }} - {{ medicine.barcode_value }}</label><br>
             </div>
             {% endfor %}
             <!-- Add more medicines as needed -->
-
           </div>
           <button type="submit" class="btn btn-primary">Checkout</button>
           </form>
+
         </div>
       </div>
+
+
+
     </div>
+
   </div>
 </body>
 

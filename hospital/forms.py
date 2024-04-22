@@ -47,14 +47,8 @@ class PatientForm(forms.ModelForm):
 
     
 
-        
-
-
 
 class AppointmentForm(forms.ModelForm):
-    # patientId = forms.ModelChoiceField(queryset=Patient.objects.filter(status=True), empty_label="Select Patient", to_field_name="id")
-    # doctorId = forms.ModelChoiceField(queryset=Doctor.objects.filter(status=True), empty_label="Select Doctor", to_field_name="id")
-
     class Meta:
         model = Appointment
         # fields = ['patientId', 'doctorId',  'description', 'status']
@@ -83,13 +77,9 @@ class ContactusForm(forms.Form):
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
-        fields = ['name', 'description', 'barcode']  # Add other fields as needed
+        fields = ['name', 'description', 'barcode', 'barcode_value']  # Add other fields as needed
 
 
-
-#Developed By : sumit kumar
-#facebook : fb.com/sumit.luv
-#Youtube :youtube.com/lazycoders
 
 
 class CompounderUserForm(forms.ModelForm):
@@ -103,6 +93,8 @@ class CompounderForm(forms.ModelForm):
     class Meta:
         model = Compounder
         exclude = ['doctor']
+
+
 
 
 class PrescriptionForm(forms.ModelForm):

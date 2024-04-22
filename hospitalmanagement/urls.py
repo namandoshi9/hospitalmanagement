@@ -1,15 +1,3 @@
-"""
-
-Developed By : sumit kumar
-facebook : fb.com/sumit.luv
-Youtube :youtube.com/lazycoders
-
-
-"""
-
-
-
-
 from django.contrib import admin
 from django.urls import path
 from hospital import views
@@ -105,13 +93,14 @@ urlpatterns +=[
     
     path('doctor-appointment', views.doctor_appointment_view,name='doctor-appointment'),
     # path('check-appointment', views.check_appointment_view,name='check-appointment'),
-    path('check-appointment/<int:appointment_id>/', views.check_appointment_view, name='check-appointment'),
+    path('check-appointment/<int:appointment_id>', views.check_appointment_view, name='check-appointment'),
     path('doctor-today-appointment', views.doctor_today_appointment_view,name='doctor-today-appointment'),
     path('doctor-add-appointment', views.doctor_add_appointment_view,name='doctor-add-appointment'),
     path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
     path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
     path('delete-appointment/<int:pk>', views.delete_appointment_from_doctor_view,name='delete-appointment'),
     path('update-appointment/<int:pk>', views.update_appointment_view,name='update-appointment'),
+    
 
 
     path('doctor-medicine', views.doctor_medicine_view,name='doctor-medicine'),
@@ -165,23 +154,23 @@ urlpatterns +=[
     path('com-add-prescription', views.com_add_prescription_view,name='com-add-prescription'),
     path('delete-prescription-from-com/<int:pk>', views.delete_prescription_from_com_view,name='delete-prescription-from-com'),
     path('com-update-prescription/<int:prescription_id>', views.update_prescription_view_com,name='com-update-prescription'),
-    # path('doctor-view-appointment', views.doctor_view_appointment_view,name='doctor-view-appointment'),
-    # path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
-    # path('delete-appointment/<int:pk>', views.delete_appointment_view,name='delete-appointment'),
+
 
     path('com-medicine', views.com_medicine_view,name='com-medicine'),
     path('com-add-medicine', views.com_add_medicine_view,name='com-add-medicine'),
     path('delete-medicine-from-com/<int:pk>', views.delete_medicine_from_com_view,name='delete-medicine-from-com'),
     path('update-medicine-com/<int:pk>', views.update_medicine_com_view,name='update-medicine-com'),
+
+
+    path('com-appointment', views.com_appointment_view,name='com-appointment'),
+    path('com-add-appointment', views.com_add_appointment_view,name='com-add-appointment'),
+    path('com-update-appointment/<int:pk>/', views.com_update_appointment_view, name='com-update-appointment'),
+    path('com-delete-appointment/<int:pk>', views.delete_appointment_from_com_view,name='com-delete-appointment'),
+
+
+    path('com-receipts', views.com_receipts_view,name='com-receipts'),
+    path('com-get-receipts/<int:appointment_id>/', views.com_get_receipts_view,name='com-get-receipts'),
 ]
 
 
 
-
-###########################
-
-
-
-#Developed By : sumit kumar
-#facebook : fb.com/sumit.luv
-#Youtube :youtube.com/lazycoders

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .notes-container {
+      margin-top: 20px;
+    }
+
+    .note-item {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Appointment Details</h1>
+    <h2>Appointment ID: {{ appointment.id }}</h2>
+    <p>Patient Name: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
+    <p>Appointment Date: {{ appointment.appointmentDate }}</p>
+    <p>Appointment Time: {{ appointment.appointmentTime }}</p>
+
+    <h3>Appointment Notes</h3>
+    <div class="notes-container">
+      {% if appointment_notes %}
+      {% for medicine_name in appointment_notes %}
+      <div class="note-item">
+        <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
+        <label for="medicine{{ forloop.counter }}">{{ medicine_name }}</label>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p>No notes available.</p>
+      {% endif %}
+    </div>
+  
+    <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
+    <p id="medicineMatch"></p>
+
+    <script>
+      document.getElementById('barcodeInput').addEventListener('input', function () {
+        var input = this.value.trim().toLowerCase(); // Assuming input is lowercase for consistency
+        var medicineNames = document.querySelectorAll('[name="medicine"]');
+        var matchFound = false;
+
+        medicineNames.forEach(function (medicine) {
+          var medicineName = medicine.value.trim().toLowerCase(); // Assuming medicine name is lowercase for consistency
+
+          // Extract number from medicine name
+          var medicineNumber = medicineName.match(/\d+/);
+          if (medicineNumber !== null && medicineNumber[0] === input) {
+            matchFound = true;
+            // Clear input box
+            document.getElementById('barcodeInput').value = "";
+            // Check corresponding checkbox
+            medicine.checked = true;
+            return; // Exit forEach loop if match found
+          }
+        });
+
+        var message = matchFound ? "Yes" : "No";
+        document.getElementById('medicineMatch').innerText = message;
+      });
+    </script>
+  </div>
+</body>
+
+</html>

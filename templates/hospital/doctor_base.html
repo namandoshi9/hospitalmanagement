@@ -304,6 +304,20 @@
       .menu:focus .smartphone-menu-trigger {
         pointer-events: none;
       }
+
+      /* Style for the counter badge */
+      .badge-counter {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        background-color: #1b4965;
+        /* Color similar to navbar */
+        color: white;
+        padding: 3px 8px;
+        border-radius: 50%;
+      }
+
     }
   </style>
 </head>
@@ -345,10 +359,14 @@
         </a>
       </li>
       <li tabindex="0" class="icon-calendar">
-        <a href="/doctor-today-appointment" style="color:  #1b4965;  display:block;text-decoration: none;">
-          <span>Today Appointments</span>
+        <a href="/doctor-today-appointment"
+          style="color: #1b4965; display:block;text-decoration: none; position: relative;">
+          <span>Today Appointments </span>
+          <!-- Counter Badge -->
+          
         </a>
       </li>
+
     </ul>
 
   </nav>
