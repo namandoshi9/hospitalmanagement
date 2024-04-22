@@ -627,6 +627,26 @@ def doctor_add_appointment_view(request):
 
 
 
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_add_appointment_view(request):
+    patients = Patient.objects.all()
+    if request.method == 'POST':
+        appointmentForm = AppointmentForm(request.POST)
+        if appointmentForm.is_valid():
+            appointment = appointmentForm.save(commit=False)
+            compounder_username = request.user.username
+            compounder = Compounder.objects.get(username=compounder_username)
+            appointment.compounder = compounder
+            appointment.save()
+
+            return HttpResponseRedirect('com-appointment')  # Redirect after successful submission
+    else:
+        appointmentForm = AppointmentForm()
+        
+    return render(request, 'hospital/com_add_appointment.html', {'appointmentForm': appointmentForm, 'patients':patients})
+
+
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def update_patient_view_doctor(request, pk):
@@ -1351,6 +1371,50 @@ def com_appointment_view(request):
         'appointmentscount': appointmentscount,
     }
     return render(request, 'hospital/com_appointment.html', context)
+
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_receipts_view(request):
+    current_date = date.today()  # Get the current date
+    appointments = Appointment.objects.filter(appointmentDate=current_date)
+    appointmentscount = appointments.count()
+    context = {
+        'appointments': appointments,
+        'appointmentscount': appointmentscount,
+    }
+    return render(request, 'hospital/receipts.html',context)
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_get_receipts_view(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
+    medicines = Medicine.objects.all()
+
+    if request.method == 'POST':
+        print(request.POST.get('note'))
+        appointment.a_note = request.POST.get('note')
+        appointment.save()
+        return redirect('doctor-appointment')
+    else:
+        form = AppointmentForm(instance=appointment)
+
+    appointment_notes = appointment.a_note.split(',') if appointment.a_note else []
+
+    context = {
+        'appointment': appointment,
+        'past_appointments': past_appointments,
+        'medicines': medicines,
+        'form': form,
+        'appointment_notes': appointment_notes,  # e
+    }
+    return render(request, 'hospital/get_receipt.html', context)
+
+
+
 
 
 @login_required(login_url='doctorlogin')

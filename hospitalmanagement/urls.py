@@ -163,8 +163,13 @@ urlpatterns +=[
 
 
     path('com-appointment', views.com_appointment_view,name='com-appointment'),
+    path('com-add-appointment', views.com_add_appointment_view,name='com-add-appointment'),
     path('com-update-appointment/<int:pk>/', views.com_update_appointment_view, name='com-update-appointment'),
     path('com-delete-appointment/<int:pk>', views.delete_appointment_from_com_view,name='com-delete-appointment'),
+
+
+    path('com-receipts', views.com_receipts_view,name='com-receipts'),
+    path('com-get-receipts/<int:appointment_id>/', views.com_get_receipts_view,name='com-get-receipts'),
 ]
 
 
