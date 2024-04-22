@@ -36,7 +36,7 @@
       font-family: "Open Sans", sans-serif !important;
     }
 
-    h3 {
+    h4 {
       color: #1b4965;
       font-family: "Open Sans", sans-serif !important;
     }
@@ -83,7 +83,7 @@
     table {
       font-family: "Open Sans", sans-serif !important;
       border-collapse: collapse;
-      /* / width: 50% !important; / */
+      width: 100% !important;
     }
 
     td,
@@ -93,18 +93,19 @@
       padding: 8px;
     }
 
-    tr:nth-child(odd) {
+    tr:nth-child(even) {
       background-color: rgba(0, 0, 0, .05);
     }
 
-    a.btn.btn-primary {
+    button.btn.btn-primary {
       color: #fff;
       background-color: #1b4965;
       border-color: #1b4965;
+      margin: 1rem;
     }
 
-    a.btn.btn-primary:hover,
-    a.btn.btn-primary:active {
+    button.btn.btn-primary:hover,
+    button.btn.btn-primary:active {
       color: #fff;
       background-color: #4a748d;
       border-color: #4a748d;
@@ -143,6 +144,8 @@
 
     .right-section {
       width: 30%;
+      margin-left: 2rem;
+
     }
 
     .medicine-list {
@@ -153,89 +156,293 @@
     p {
       text-align: left;
       font-size: 16px;
+      padding: 0.6rem;
+    }
+
+    .note_section {
+      border-radius: 5px;
+      -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+      box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+      border: none;
+    }
+
+    .card p {
+      display: flex;
+      align-items: center;
+    }
+
+    .card p strong {
+      min-width: 100px;
+      margin-right: 10px;
+
+    }
+
+    .current,
+    .note-section {
+      width: 50%;
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 10px;
+
+    }
+
+    .container {
+      margin-left: 26rem;
+      margin-top: 3rem;
     }
   </style>
 </head>
 
 <body>
-  <div class="container" style="margin-left: 26rem; margin-top: 5rem;">
+  <div class="container" style="margin-left: 26rem; margin-top: 3rem;">
     <h2>Appointment Details</h2>
-    <div class="appointment-details">
-      <div class="current">
-        <h3>Current Details:</h3>
-        <div class="card" style="
-        width: 50%;
+    <div class="appointment-details" style="width: 100%;">
+      <div style="width: 70%;">
+
+        <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
+          <div style="width: 46%; margin-right: 10px;">
+            <h4>Current Details:</h4>
+
+            <div class="card" style="
+        
+        display: flex;
+        padding: 1rem;
     ">
-          <p><strong>Name:</strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
-          <p><strong>Mobile:</strong> {{ appointment.patient.mobile }}</p>
-          <p><strong>Address:</strong> {{ appointment.patient.address }}</p>
-          <p><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
-          <p><strong>Date:</strong> {{ appointment.appointmentDate }}</p>
-          <p><strong>Time:</strong> {{ appointment.appointmentTime }}</p>
-          <!-- <p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor
-            sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-            ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
+              <div>
+                <p><strong>Name:</strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
+                <p><strong>Mobile:</strong>{{ appointment.patient.mobile }}</p>
+                <p><strong>Address:</strong>{{ appointment.patient.address }}</p>
+                <p><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
+                <p><strong>Date:</strong>{{ appointment.appointmentDate }}</p>
+                <p><strong>Time:</strong>{{ appointment.appointmentTime }}</p>
+              </div>
+
+            </div>
+          </div>
+          <div class="note-section" style="width: 50%;">
+            <h4>Add Notes:</h4>
+            <form method="post" action="{% url 'check-appointment' appointment.id %}">
+              {% csrf_token %}
+              <textarea
+                style="width: 100%;height: 80%;border-radius: 5px;box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);border: none;padding: 0.5rem;"
+                id=note name="note" rows="14" placeholder="Add medicines or Write note here..."></textarea>
+              <!-- <button class="btn btn-primary" type="submit">Save Note</button> -->
+          </div>
+
+
+
         </div>
-
-        <h2>Patient previous data:</h2>
+        <h4>Patient previous data:</h4>
 
         <div class="card" style="
-        width: 70%;
+        width: 98%;
     ">
-          <p>All Past Appointments:</p>
+          <p>All Past Appointments</p>
           <table class="table table-hover" id="dev-table">
             <tr>
-              <thead>
+              <thead style="background-color:rgba(0, 0, 0, .05);;">
                 <tr>
-                  <th>Date</th>
                   <th style="
-                  width: 8rem;
+                  width: 18rem;
+              ">Date</th>
+                  <th style="
+                  width:11rem;
               ">Time</th>
                   <th style="
-                  width: 65rem;
+                  width: 70rem;
               ">Prescription</th>
                 </tr>
               </thead>
               <tbody>
                 {% for past_appointment in past_appointments %}
                 <tr>
-                    <td>{{ past_appointment.appointmentDate }}</td>
-                    <td>{{ past_appointment.appointmentTime }}</td>
-                    <td>{{ past_appointment.description }}</td>
+                  <td>{{ past_appointment.appointmentDate }}</td>
+                  <td>{{ past_appointment.appointmentTime }}</td>
+                  <td>{{ past_appointment.description }}</td>
                 </tr>
                 {% endfor %}
-            </tbody>
+              </tbody>
             </tr>
             </tr>
           </table>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination"
+              style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;">
+              <!-- Pagination links will be dynamically added by JavaScript -->
+            </ul>
+          </nav>
         </div>
+
+
       </div>
       <div class="right-section">
-        <h2>Medicine Lists</h2>
+        <h4>Medicine Lists</h4>
         <div class="card">
-          <div class="medicine-list">
-            <div>
-              <input type="search" id="gsearch" name="gsearch" onkeyup="searchTable()"
-                style="border: 1px solid grey; border-radius: 4px; width: 17rem; padding: 0.25rem 0.5rem;">
-            </div>
+          <div style="margin-bottom: 1rem;">
+            <input type="search" style="width: 100%;border-radius: 0.8rem;border: 0.2px solid grey;padding: 0.5rem;"
+              id="medicine-search" name="medicine-search" placeholder="Search Medicine.." onkeyup="searchMedicine()">
+          </div>
+          <div class="medicine-list" id="medicine-list" style="max-height: 41rem;">
             {% for medicine in medicines %}
             <div>
-                <input type="checkbox" id="medicine{{ medicine.id }}" name="medicine{{ medicine.id }}">
-                <label for="medicine{{ medicine.id }}">{{ medicine.name }}</label><br>
+              <input type="checkbox" id="medicine{{ medicine.id }}" name="{{ medicine.id }}">
+              <label for="medicine{{ medicine.id }}">{{ medicine.name }}</label><br>
             </div>
             {% endfor %}
             <!-- Add more medicines as needed -->
-          </div>
 
-          <button class="btn btn-primary">Checkout</button>
+          </div>
+          <button type="submit" class="btn btn-primary">Checkout</button>
+          </form>
         </div>
       </div>
+
+
+
     </div>
+
   </div>
 </body>
+
+
+<script>
+  // Function to update note section with selected medicines
+  function updateNoteSection() {
+    var checkboxes = document.querySelectorAll('.medicine-list input[type="checkbox"]'); // Get all checkboxes
+    var noteTextarea = document.getElementById('note'); // Get the note textarea
+
+    // Add event listener to checkboxes to update note section on change
+    checkboxes.forEach(function (checkbox) {
+      checkbox.addEventListener('change', function () {
+        var medicineName = checkbox.nextElementSibling.textContent.trim();
+        if (checkbox.checked) {
+          // Add medicine to note textarea
+          noteTextarea.value += medicineName + ',' + '\n';
+        } else {
+          // Remove medicine from note textarea
+          var noteValue = noteTextarea.value;
+          noteValue = noteValue.replace(medicineName + '\n', '');
+          noteTextarea.value = noteValue;
+        }
+      });
+    });
+  }
+
+  // Call the function to initialize the note section
+  updateNoteSection();
+
+  // Function to handle checkout button click
+  document.querySelector('.btn-primary').addEventListener('click', function () {
+    // Add any additional checkout functionality here
+  });
+</script>
+<script>
+  var currentPage = 1;
+  var itemsPerPage = 6;
+
+  var tableRows = $('#dev-table tbody tr');
+  var totalPages = Math.ceil(tableRows.length / itemsPerPage);
+  displayPage(currentPage);
+
+  function displayPage(pageNumber) {
+    // Hide all rows
+    tableRows.hide();
+    // Calculate the start and end index of the items to display
+    var startIndex = (pageNumber - 1) * itemsPerPage;
+    var endIndex = Math.min(startIndex + itemsPerPage, tableRows.length);
+    // Display the rows for the current page
+    for (var i = startIndex; i < endIndex; i++) {
+      $(tableRows[i]).show();
+    }
+    // Update pagination links
+    updatePagination(pageNumber);
+  }
+
+  function updatePagination(currentPage) {
+    var paginationElement = $('#pagination');
+    paginationElement.empty();
+    // Previous page link
+    if (currentPage > 1) {
+      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="previousPage()">Previous</a></li>');
+    } else {
+      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>');
+    }
+    // Numbered pages
+    var totalPages = Math.ceil(tableRows.length / itemsPerPage);
+    if (totalPages <= 1) {
+      return; // If only one page, no need to display pagination
+    }
+    var pageLinks = '';
+    if (currentPage === 1) {
+      pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(1)">1</a></li>';
+    } else {
+      pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(1)">1</a></li>';
+    }
+    if (currentPage > 3) {
+      pageLinks += '<li class="page-item"><span class="page-link">...</span></li>';
+    }
+    var startPage = Math.max(currentPage - 2, 2);
+    var endPage = Math.min(currentPage + 2, totalPages - 1);
+    for (var i = startPage; i <= endPage; i++) {
+      if (i === currentPage) {
+        pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>';
+      } else {
+        pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + i + ')">' + i + '</a></li>';
+      }
+    }
+    if (currentPage < totalPages - 2) {
+      pageLinks += '<li class="page-item"><span class="page-link">...</span></li>';
+    }
+    if (totalPages > 1) {
+      if (currentPage === totalPages) {
+        pageLinks += '<li class="page-item active"><a class="page-link" href="#" onclick="displayPage(' + totalPages + ')">' + totalPages + '</a></li>';
+      } else {
+        pageLinks += '<li class="page-item"><a class="page-link" href="#" onclick="displayPage(' + totalPages + ')">' + totalPages + '</a></li>';
+      }
+    }
+    paginationElement.append(pageLinks);
+    // Next page link
+    if (currentPage < totalPages) {
+      paginationElement.append('<li class="page-item"><a class="page-link" href="#" onclick="nextPage()">Next</a></li>');
+    } else {
+      paginationElement.append('<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>');
+    }
+  }
+
+  function previousPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      displayPage(currentPage);
+    }
+  }
+
+  function nextPage() {
+    if (currentPage < totalPages) {
+      currentPage++;
+      displayPage(currentPage);
+    }
+  }
+</script>
+<script>
+  function searchMedicine() {
+    // Declare variables
+    var input, filter, div, label, txtValue;
+    input = document.getElementById('medicine-search');
+    filter = input.value.toUpperCase();
+    div = document.getElementById('medicine-list');
+    label = div.getElementsByTagName('label');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (var i = 0; i < label.length; i++) {
+      txtValue = label[i].textContent || label[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        label[i].parentNode.style.display = "";
+      } else {
+        label[i].parentNode.style.display = "none";
+      }
+    }
+  }
+</script>
 
 </html>
 {% endblock content %}

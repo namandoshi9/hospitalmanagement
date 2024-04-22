@@ -161,7 +161,7 @@
         <tr>
           <thead>
             <tr>
-              <th>Id</th>
+              <!-- <th>Id</th> -->
               <th>Name</th>
               <th>Mobile</th>
               <th>Email</th>
@@ -173,7 +173,7 @@
           <tbody>
             {% for p in compounder %}
             <tr>
-              <td>{{ p.id }}</td>
+              <!-- <td>{{ p.id }}</td> -->
               <td>{{ p.first_name }} {{ p.last_name }}</td>
               <td>{{ p.mobile }}</td>
               <td>{{ p.email }}</td>
@@ -209,7 +209,7 @@
 <br><br><br><br><br><br><br>
 <script>
   var currentPage = 1;
-  var itemsPerPage = 10;
+  var itemsPerPage = 11;
   var tableRows = $('#dev-table tbody tr');
   var totalPages = Math.ceil(tableRows.length / itemsPerPage);
   displayPage(currentPage);

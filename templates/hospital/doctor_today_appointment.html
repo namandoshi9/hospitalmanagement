@@ -8,9 +8,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Today's Appointments</title>
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
   <style>
     body {
@@ -78,11 +81,15 @@
     th {
       border: 1px solid #dddddd;
       text-align: left;
-      padding: 12px;
+      padding: 12px !important;
     }
 
     tr:nth-child(odd) {
       background-color: rgba(0, 0, 0, .05);
+    }
+
+    th {
+      background-color: white;
     }
 
     a.btn.btn-primary {
@@ -114,16 +121,30 @@
       border-color: transparent;
     }
 
+    a {
+      color: #27b03a;
+    }
+
+    a:hover,
+    a:active {
+      color: #097c18;
+    }
+
     button.btn.btn-danger {
       color: #cf0000;
       background-color: transparent;
       border-color: transparent;
+    }
+
+    input[type=search]:focus {
+      border: 1px solid rgb(183, 96, 96);
     }
   </style>
 </head>
 
 <body>
   <br><br>
+
   <div>
     <h6 class="m-b-20" style="font-size: 20px;
                 font-weight: 300; color: black; margin-left: 26rem;">Today Appointments</h6>
@@ -147,31 +168,35 @@
         </div>
 
         <table class="table table-hover" id="dev-table">
-          <thead>
-            <tr style="background-color: white;">
-              <th>ID</th>
-              <th>Patient Name</th>
-              <th>Appointment Date</th>
-              <th>Appointment Time</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for appointment in appointments %}
-            <tr>
-              <td>{{ appointment.id }}</td>
-              <td>{{ appointment.patient }}</td>
-              <td>{{ appointment.appointmentDate }}</td>
-              <td>{{ appointment.appointmentTime }}</td>
-              <td style="
+          <tr>
+            <thead>
+              <tr>
+                <!-- <th>ID</th> -->
+                <th>Patient Name</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Description</th>
+                <th style="width: 11rem;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for appointment in appointments %}
+              <tr>
+                <!-- <td>{{ appointment.id }}</td> -->
+                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.appointmentDate }}</td>
+                <td>{{ appointment.appointmentTime }}</td>
+                <td style="
                   max-width: 40rem;
                   max-height: 25rem;
               ">{{ appointment.description }}</td>
-                <td><a href="{% url 'check-appointment' appointment.id %}">Check</a></td>
-            </tr>
-            {% endfor %}
-          </tbody>
+                <td style="text-align: center;"><a href="{% url 'check-appointment' appointment.id %}"><i
+                      class="fa fa-check"></i>
+                  </a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </tr>
         </table>
         <div class="pagination-container">
           <nav aria-label="Page navigation example">
@@ -187,7 +212,7 @@
 
   <script>
     var currentPage = 1;
-    var itemsPerPage = 10;
+    var itemsPerPage = 11;
 
     var tableRows = $('#dev-table tbody tr');
     var totalPages = Math.ceil(tableRows.length / itemsPerPage);
