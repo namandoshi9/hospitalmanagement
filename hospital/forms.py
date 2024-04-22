@@ -77,7 +77,7 @@ class ContactusForm(forms.Form):
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
-        fields = ['name', 'description', 'barcode']  # Add other fields as needed
+        fields = ['name', 'description', 'barcode', 'barcode_value']  # Add other fields as needed
 
 
 

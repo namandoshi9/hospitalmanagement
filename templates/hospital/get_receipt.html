@@ -72,29 +72,36 @@
       <p>No notes available.</p>
       {% endif %}
     </div>
-    <input type="text" id="barcodeInput" name="barcode">
-  </div>
-  <script>
-    document.getElementById('barcodeInput').addEventListener('change', function() {
-      var barcode = this.value.trim();
-      var medicineNames = document.querySelectorAll('[name="medicine"]');
-      var predefinedBarcode = "";
+  
+    <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
+    <p id="medicineMatch"></p>
 
-      medicineNames.forEach(function(medicine) {
-        if (medicine.value === barcode) {
-          predefinedBarcode = barcode;
-          return;
-        }
+    <script>
+      document.getElementById('barcodeInput').addEventListener('input', function () {
+        var input = this.value.trim().toLowerCase(); // Assuming input is lowercase for consistency
+        var medicineNames = document.querySelectorAll('[name="medicine"]');
+        var matchFound = false;
+
+        medicineNames.forEach(function (medicine) {
+          var medicineName = medicine.value.trim().toLowerCase(); // Assuming medicine name is lowercase for consistency
+
+          // Extract number from medicine name
+          var medicineNumber = medicineName.match(/\d+/);
+          if (medicineNumber !== null && medicineNumber[0] === input) {
+            matchFound = true;
+            // Clear input box
+            document.getElementById('barcodeInput').value = "";
+            // Check corresponding checkbox
+            medicine.checked = true;
+            return; // Exit forEach loop if match found
+          }
+        });
+
+        var message = matchFound ? "Yes" : "No";
+        document.getElementById('medicineMatch').innerText = message;
       });
-
-      if (predefinedBarcode !== "") {
-        alert('Medicine available.');
-      } else {
-        alert('Medicine not available.');
-      }
-    });
-  </script>
-
+    </script>
+  </div>
 </body>
 
 </html>

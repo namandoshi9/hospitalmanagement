@@ -286,15 +286,16 @@
           <div class="medicine-list" id="medicine-list" style="max-height: 39rem;">
             {% for medicine in medicines %}
             <div>
-              <input type="checkbox" id="medicine{{ medicine.id }}" name="{{ medicine.id }}">
-              <label for="medicine{{ medicine.id }}">{{ medicine.name }}</label><br>
+              <input type="checkbox" id="medicine{{ medicine.id }}" name="{{ medicine.id }}"
+                data-barcode="{{ medicine.barcode_value }}">
+              <label for="medicine{{ medicine.id }}">{{ medicine.name }} - {{ medicine.barcode_value }}</label><br>
             </div>
             {% endfor %}
             <!-- Add more medicines as needed -->
-
           </div>
           <button type="submit" class="btn btn-primary">Checkout</button>
-        </form>
+          </form>
+
         </div>
       </div>
 
@@ -318,7 +319,7 @@
         var medicineName = checkbox.nextElementSibling.textContent.trim();
         if (checkbox.checked) {
           // Add medicine to note textarea
-          noteTextarea.value += medicineName + ',' + '\n' ;
+          noteTextarea.value += medicineName + ',' + '\n';
         } else {
           // Remove medicine from note textarea
           var noteValue = noteTextarea.value;

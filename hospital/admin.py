@@ -31,7 +31,7 @@ from import_export.admin import ImportExportModelAdmin
 
 @admin.register(Medicine)
 class MedicineAdmin(ImportExportModelAdmin):
-    list_display = ("id" ,"barcode" ,"name" , "description", "created_at", )
+    list_display = ("id" ,"barcode" ,"name" , "description", "barcode_value", "created_at", )
 
 @admin.register(Compounder)
 class CompounderAdmin(ImportExportModelAdmin):

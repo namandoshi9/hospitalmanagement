@@ -130,11 +130,12 @@ class Medicine(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     barcode = models.ImageField(upload_to='barcodes/', blank=True)
+    barcode_value = models.CharField(max_length=13, blank=True)
     created_at = models.DateField(auto_now_add=True,blank=True,null=True)
 
     # Modify the generate_barcode method to generate a 12-digit numeric string for EAN-13
     def generate_barcode(self):
-        # Generate a random UUID as the barcode
+        # Generate a random 12-digit numeric string for EAN-13 barcode
         barcode_value = ''.join(random.choices(string.digits, k=12))
 
         # Generate barcode using python-barcode library
@@ -156,6 +157,8 @@ class Medicine(models.Model):
         # Save barcode image to ImageField
         self.barcode.save(filename, File(buffer), save=False)
 
+        # Update the barcode value
+        self.barcode_value = barcode_value
 
     def save(self, *args, **kwargs):
         if not self.barcode:
