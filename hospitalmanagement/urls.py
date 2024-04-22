@@ -100,6 +100,7 @@ urlpatterns +=[
     path('doctor-delete-appointment',views.doctor_delete_appointment_view,name='doctor-delete-appointment'),
     path('delete-appointment/<int:pk>', views.delete_appointment_from_doctor_view,name='delete-appointment'),
     path('update-appointment/<int:pk>', views.update_appointment_view,name='update-appointment'),
+    
 
 
     path('doctor-medicine', views.doctor_medicine_view,name='doctor-medicine'),
@@ -162,6 +163,8 @@ urlpatterns +=[
 
 
     path('com-appointment', views.com_appointment_view,name='com-appointment'),
+    path('com-update-appointment/<int:pk>/', views.com_update_appointment_view, name='com-update-appointment'),
+    path('com-delete-appointment/<int:pk>', views.delete_appointment_from_com_view,name='com-delete-appointment'),
 ]
 
 

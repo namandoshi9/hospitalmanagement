@@ -188,11 +188,11 @@
 
 
               <td>
-                <form action="{% url 'update-appointment' appointment.id %}" style="display: inline;">
+                <form action="{% url 'com-update-appointment' appointment.id %}" style="display: inline;">
                   {% csrf_token %}
                   <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
                 </form>
-                <form action="{% url 'delete-appointment' appointment.id %}" method="post" style="display: inline;">
+                <form action="{% url 'com-delete-appointment' appointment.id %}" method="post" style="display: inline;">
                   {% csrf_token %}
                   <input type="hidden" name="delete_appointment" value="from_dash" />
                   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>

@@ -322,6 +322,29 @@ def update_appointment_view(request, pk):
     return render(request, 'hospital/update_appointment.html', {'appointment': appointment})
 
 
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def com_update_appointment_view(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    if request.method == 'POST':
+        
+        appointment_date = datetime.strptime(request.POST.get('appointmentDate'), '%Y-%m-%d')
+        appointment_time = request.POST.get('appointmentTime')
+        appointment.appointmentDate = appointment_date
+        appointment.appointmentTime = appointment_time
+        appointment.description = request.POST.get('description')
+        appointment.a_note = request.POST.get('note')
+        appointment.save()
+        return redirect('com-appointment')  # Redirect to doctor's dashboard after update
+    
+    return render(request, 'hospital/com_update_appointment.html', {'appointment': appointment})
+
+
+
+
+
+
+
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def delete_medicine_from_doctor_view(request, pk):
@@ -770,7 +793,6 @@ def com_medicine_view(request):
 
 
 
-
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def admin_approve_doctor_view(request):
@@ -1133,6 +1155,8 @@ def compounder_dashboard_view(request):
     patient_count = patients.count()
     medicine = Medicine.objects.all()
     medicine_count = medicine.count()
+    appointments = Appointment.objects.all()
+    appointmentscount = appointments.count()
     context = {
         'first_name': user.first_name,
         'last_name': user.last_name,
@@ -1140,6 +1164,8 @@ def compounder_dashboard_view(request):
         'patient_count':patient_count,
         'medicine':medicine,
         'medicine_count': medicine_count,
+        'appointments': appointments,
+        'appointmentscount':appointmentscount,
     }
     return render(request,'hospital/com_dashboard.html',context)
 
@@ -1318,16 +1344,13 @@ def doctor_appointment_view(request):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_appointment_view(request):
-    # doctor = request.user.doctor  # Retrieve the logged-in doctor
     appointments = Appointment.objects.all()
     appointmentscount = appointments.count()
     context = {
-        # 'doctor': doctor,
         'appointments': appointments,
         'appointmentscount': appointmentscount,
     }
     return render(request, 'hospital/com_appointment.html', context)
-
 
 
 @login_required(login_url='doctorlogin')
@@ -1425,6 +1448,26 @@ def delete_appointment_from_doctor_view(request, pk):
         return redirect('doctor-view-appointment')
     else:
         return redirect('doctor-appointment')
+
+
+
+
+
+@login_required(login_url='compounderlogin')
+@user_passes_test(is_compounder)
+def delete_appointment_from_com_view(request, pk):
+    appointment = get_object_or_404(Appointment, id=pk)
+    dtype = request.POST.get('delete_appointment')
+    if dtype == 'from_dash':
+        appointment.delete()
+        return redirect('com-appointment')
+    elif dtype=='from_view':
+        appointment.delete()
+        return redirect('com-view-appointment')
+    else:
+        return redirect('com-appointment')
+
+
 
 
 
