@@ -131,7 +131,7 @@
   <br><br>
   <div>
     <h6 class="m-b-20" style="font-size: 20px;
-                font-weight: 300; color: black; margin-left: 26rem;">Today Appointments</h6>
+                font-weight: 300; color: black; margin-left: 26rem;">Today Appointments Receipts</h6>
     <div style="padding: 1px 2rem 10px 26rem;">
       <div class="card" style="
         padding: 2rem;
@@ -152,40 +152,31 @@
         </div>
 
         <table class="table table-hover" id="dev-table">
-          <tr>
-            <thead>
-              <tr>
-                <th>Patient Name</th>
-                <th>Appointment Date</th>
-                <th>Appointment Time</th>
-                <th>Description</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% if appointments %}
-              {% for appointment in appointments %}
-              <tr>
-                <td>{{ appointment.patient }}</td>
-                <td>{{ appointment.appointmentDate }}</td>
-                <td>{{ appointment.appointmentTime }}</td>
-                <td style="max-width: 40rem; max-height: 25rem;">{{ appointment.description }}</td>
-                <td><a href="{% url 'com-get-receipts' appointment.id %}">Get Receipt</a></td>
-                <td>
-                  <form action="{% url 'com-update-appointment' appointment.id %}" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-                  </form>
-                  <!-- <a href="" class="btn-success"><i class="fas fa-check"></i></a> -->
-                </td>
-              </tr>
-          </tr>
-          {% endfor %}
-          {% else %}
-          <tr>
-            <td colspan="6" style="text-align: center;">No appointments for the current date.</td>
-          </tr>
-          {% endif %}
+          <thead>
+            <tr style="background-color: white;">
+              <th>Patient Name</th>
+              <th>Appointment Date</th>
+              <th>Appointment Time</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if appointments %}
+            {% for appointment in appointments %}
+            <tr>
+              <td>{{ appointment.patient }}</td>
+              <td>{{ appointment.appointmentDate }}</td>
+              <td>{{ appointment.appointmentTime }}</td>
+              <td style="max-width: 40rem; max-height: 25rem;">{{ appointment.description }}</td>
+              <td><a href="{% url 'com-get-receipts' appointment.id %}"><i class="fas fa-pencil-alt"></a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="6" style="text-align: center;">No appointments for the current date.</td>
+            </tr>
+            {% endif %}
           </tbody>
         </table>
 

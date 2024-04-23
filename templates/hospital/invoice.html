@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INVOICE</title>
+</head>
+<style>
+    table {
+        width: 80%;
+    }
+
+    p {
+        font-size: 16px;
+    }
+</style>
+
+<body>
+    <table style="border-bottom: 2px solid #1b4965;">
+        <tr>
+            <td>
+                <img src="/static/images/H_logo.png" alt="Profile Pic" />
+            </td>
+            <td style="text-align: right;
+                color: rgb(10, 10, 10);
+                padding-bottom: 25px;">
+                <p>Suryan Organic</p>
+                <p>Block No 25, Beside VRL logistics, Nr Zydus Biotach Park,</p>
+                <p>Opp. Ramdev Masala, Changodar</p>
+                <p>Ahmedabad 382213</p>
+                <p>Gujarat GJ</p>
+                <p>India</p>
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <p><strong>Name:</strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
+        <p><strong>Mobile:</strong>{{ appointment.patient.mobile }}</p>
+        <p><strong>Address:</strong>{{ appointment.patient.address }}</p>
+        <p><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
+        <p><strong>Date:</strong>{{ appointment.appointmentDate }}</p>
+        <p><strong>Time:</strong>{{ appointment.appointmentTime }}</p>
+    </table>
+</body>
+
+</html>

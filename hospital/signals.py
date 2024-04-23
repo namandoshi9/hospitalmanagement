@@ -15,6 +15,10 @@ def generate_barcode(sender, instance, created, **kwargs):
         # Generate a random 12-digit numeric string for the barcode
         barcode_value = ''.join(random.choices(string.digits, k=12))
 
+       
+        if barcode_value.startswith('0'):
+            barcode_value = '1' + barcode_value[1:]
+
         # Generate barcode using python-barcode library
         ean = barcode.get_barcode_class('ean13')
         code = ean(barcode_value, writer=ImageWriter())
@@ -34,8 +38,9 @@ def generate_barcode(sender, instance, created, **kwargs):
         # Save barcode image to ImageField
         instance.barcode.save(filename, File(buffer), save=True)
 
-        # Update the instance to save the changes
+        # Save barcode value to the model
+        instance.barcode_value = barcode_value
         instance.save()
 
 
-
+        

@@ -800,16 +800,60 @@ def doctor_medicine_view(request):
 
 
 
+# views.py
+
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.shortcuts import get_object_or_404, redirect
+from xhtml2pdf import pisa
+from .models import Appointment, Medicine
+from .forms import AppointmentForm
+
+def download_invoice_pdf(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+
+    # Fetch related data
+    past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
+    medicines = Medicine.objects.all()
+
+    # Prepare context data for rendering the invoice template
+    context = {
+        'appointment': appointment,
+        'past_appointments': past_appointments,
+        'medicines': medicines,
+    }
+
+    # Get the HTML template for the invoice
+    template_path = 'hospital/invoice.html'
+    template = get_template(template_path)
+
+    # Render the HTML template with the context data
+    html = template.render(context)
+
+    # Create a PDF from the HTML content
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Failed to generate PDF: %s' % pisa_status.err)
+
+    return response
+
+
+
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_medicine_view(request):
-    medicine = Medicine.objects.all()
+    medicine = Medicine.objects.all().order_by('-id')
     medicine_count = medicine.count()
     mydict={
     'medicine':medicine,
     'medicine_count': medicine_count
     }
     return render(request,'hospital/com_medicine.html',context=mydict)
+
+
 
 
 
@@ -1231,7 +1275,7 @@ def doctor_patient_view(request):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_patient_view(request):
-    patients = Patient.objects.all()
+    patients = Patient.objects.all().order_by('-admitDate')
     patient_count = patients.count()
     mydict={
     'patients':patients,
@@ -1349,7 +1393,7 @@ def doctor_view_discharge_patient_view(request):
 @user_passes_test(is_doctor)
 def doctor_appointment_view(request):
     doctor = request.user.doctor  # Retrieve the logged-in doctor
-    appointments = Appointment.objects.filter(doctor=doctor)
+    appointments = Appointment.objects.filter(doctor=doctor).order_by('-id')
     appointmentscount = appointments.count()
     context = {
         'doctor': doctor,
@@ -1364,7 +1408,7 @@ def doctor_appointment_view(request):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_appointment_view(request):
-    appointments = Appointment.objects.all()
+    appointments = Appointment.objects.all().order_by('-id')
     appointmentscount = appointments.count()
     context = {
         'appointments': appointments,
@@ -1446,12 +1490,10 @@ def check_appointment_view(request, appointment_id):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_today_appointment_view(request):
-    doctor = request.user.doctor  # Retrieve the logged-in doctor
     current_date = date.today()  # Get the current date
-    appointments = Appointment.objects.filter(doctor=doctor, appointmentDate=current_date)
+    appointments = Appointment.objects.filter(appointmentDate=current_date).order_by('-id')
     appointmentscount = appointments.count()
     context = {
-        'doctor': doctor,
         'appointments': appointments,
         'appointmentscount': appointmentscount,
     }
