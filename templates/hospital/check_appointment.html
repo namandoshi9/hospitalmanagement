@@ -319,20 +319,23 @@
 
     // Add event listener to checkboxes to update note section on change
     checkboxes.forEach(function (checkbox) {
-      checkbox.addEventListener('change', function () {
-        var medicineName = checkbox.nextElementSibling.textContent.trim();
-        if (checkbox.checked) {
-          // Add medicine to note textarea
-          noteTextarea.value += medicineName + ',' + '\n';
-        } else {
-          // Remove medicine from note textarea
-          var noteValue = noteTextarea.value;
-          noteValue = noteValue.replace(medicineName + '\n', '');
-          noteTextarea.value = noteValue;
-        }
-      });
+        checkbox.addEventListener('change', function () {
+            var medicineName = checkbox.nextElementSibling.textContent.trim();
+            if (checkbox.checked) {
+                // Add medicine to note textarea without newline if it's not the first item
+                if (noteTextarea.value !== '') {
+                    noteTextarea.value += ', ';
+                }
+                noteTextarea.value += medicineName;
+            } else {
+                // Remove medicine from note textarea
+                var regex = new RegExp('(,\\s*' + medicineName + '\\s*|\\s*' + medicineName + '\\s*,)', 'g');
+                noteTextarea.value = noteTextarea.value.replace(regex, '');
+            }
+        });
     });
-  }
+}
+
 
   // Call the function to initialize the note section
   updateNoteSection();
