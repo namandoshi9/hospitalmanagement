@@ -1465,12 +1465,14 @@ def com_get_receipts_view(request, appointment_id):
 @user_passes_test(is_doctor)
 def check_appointment_view(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id)
+    appointment.visited = True
     past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
     medicines = Medicine.objects.all()
 
     if request.method == 'POST':
         print(request.POST.get('note'))
         appointment.a_note = request.POST.get('note')
+        appointment.visited = True
         appointment.save()
         return redirect('doctor-appointment')
     else:

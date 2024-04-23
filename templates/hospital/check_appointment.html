@@ -256,6 +256,7 @@
                   <th style="
                   width: 70rem;
               ">Prescription</th>
+                  <th style="width: 50rem;">Note</th>
                 </tr>
               </thead>
               <tbody>
@@ -264,6 +265,14 @@
                   <td>{{ past_appointment.appointmentDate }}</td>
                   <td>{{ past_appointment.appointmentTime }}</td>
                   <td>{{ past_appointment.description }}</td>
+                  <td>
+                    {% if past_appointment.a_note %}
+                    {{ past_appointment.a_note }}
+                    {% else %}
+                    No note available
+                    {% endif %}
+                  </td>
+
                 </tr>
                 {% endfor %}
               </tbody>
@@ -319,22 +328,22 @@
 
     // Add event listener to checkboxes to update note section on change
     checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            var medicineName = checkbox.nextElementSibling.textContent.trim();
-            if (checkbox.checked) {
-                // Add medicine to note textarea without newline if it's not the first item
-                if (noteTextarea.value !== '') {
-                    noteTextarea.value += ', ';
-                }
-                noteTextarea.value += medicineName;
-            } else {
-                // Remove medicine from note textarea
-                var regex = new RegExp('(,\\s*' + medicineName + '\\s*|\\s*' + medicineName + '\\s*,)', 'g');
-                noteTextarea.value = noteTextarea.value.replace(regex, '');
-            }
-        });
+      checkbox.addEventListener('change', function () {
+        var medicineName = checkbox.nextElementSibling.textContent.trim();
+        if (checkbox.checked) {
+          // Add medicine to note textarea without newline if it's not the first item
+          if (noteTextarea.value !== '') {
+            noteTextarea.value += ', ';
+          }
+          noteTextarea.value += medicineName;
+        } else {
+          // Remove medicine from note textarea
+          var regex = new RegExp('(,\\s*' + medicineName + '\\s*|\\s*' + medicineName + '\\s*,)', 'g');
+          noteTextarea.value = noteTextarea.value.replace(regex, '');
+        }
+      });
     });
-}
+  }
 
 
   // Call the function to initialize the note section

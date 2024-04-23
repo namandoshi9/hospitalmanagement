@@ -172,65 +172,13 @@
 
 <body>
   <br><br>
-  <!-- <div>
-    <h6 class="m-b-20" style="font-size: 20px;
-    font-weight: 300; color: black; margin-left: 26rem;">Today Appointments</h6>
-    <div style="padding: 1px 2rem 10px 26rem;">
-      <div class="card">
-        <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
-          <div>
-            <h6>Appointment ID: {{ appointment.id }}</h6>
-            <p>Patient Name: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
-            <p>Appointment Date: {{ appointment.appointmentDate }}</p>
-            <p>Appointment Time: {{ appointment.appointmentTime }}</p>
-          </div>
-        </div>
-
-
-        <h3>Appointment Notes</h3>
-        <div class="notes-container">
-          {% if appointment_notes %}
-          {% for medicine_name in appointment_notes %}
-          <div class="note-item">
-            <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
-            <label for="medicine{{ forloop.counter }}">{{ medicine_name }}</label>
-          </div>
-          {% endfor %}
-          {% else %}
-          <p>No notes available.</p>
-          {% endif %}
-        </div>
-
-        <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
-        <p id="medicineMatch"></p>
-
-      </div> -->
   <div class="container" style="margin-left: 26rem; margin-top: 3rem;">
     <h2>Appointment Details</h2>
     <div class="appointment-details" style="width: 100%;">
       <div>
 
         <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
-          <!-- <div>
-            <h4>Current Details:</h4>
-
-            <div class="card" style="
-            
-            display: flex;
-            padding: 1rem;
-        ">
-              <div>
-                <p><strong style="margin-right: 3.5rem !important;">Appointment ID:</strong> {{ appointment.id }}</p>
-                <p><strong style="margin-right: 7rem !important;"> Name:</strong> {{ appointment.patient.first_name }}
-                  {{ appointment.patient.last_name }}</p>
-                <p><strong>Appointment Date:</strong> {{ appointment.appointmentDate }}</p>
-                <p><strong> Appointment Time:</strong> {{ appointment.appointmentTime }}</p>
-              </div>
-
-
-
-            </div>
-          </div> -->
+          
           <div class="card" style="
         width: 98%;
     ">
@@ -280,43 +228,9 @@
       <div>
 
         <h2>Appointment Notes</h2>
-        <!-- <div class="card" style="
-        
-        display: flex;
-        padding: 1rem;
-    ">
-          <div class="note-section" style="width: 50%;">
-            <h4>Additional Notes:</h4>
-            <form method="post" action="{% url 'check-appointment' appointment.id %}">
-              {% csrf_token %}
-              <textarea
-                style="width: 100%;height: 28.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
-                id=note name="note" rows="14" placeholder="Add medicines or Write note here..."></textarea>
-          </div>
-          <div class="notes-container">
-            {% if appointment_notes %}
-            {% for medicine_name in appointment_notes %}
-            <div class="note-item">
-              <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
-              <label for="medicine{{ forloop.counter }}">{{ medicine_name }}</label>
-            </div>
-            {% endfor %}
-            {% else %}
-            <p>No notes available.</p>
-            {% endif %}
 
-          </div>
-          <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
-          <p id="medicineMatch"></p>
-          <button class="btn btn-primary">Download Invoice</button>
-        </div>
-      </div> -->
         <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
-          <div style=" margin-right: 10px;">
-
-
-
-          </div>
+          <div style=" margin-right: 10px;"></div>
           <div class="note-section" style="width: 50%;">
             <h4>Additional Notes:</h4>
             <textarea
@@ -324,43 +238,55 @@
               id=note name="note" rows="14" placeholder="Add medicines or Write note here..."></textarea>
             <!-- <button class="btn btn-primary" type="submit">Save Note</button> -->
           </div>
+
+          
           <div class="card" style="display: flex; padding: 1rem; width: 50%; margin-top: 4rem; margin-left: 3rem;">
             <h4>Prescription</h4>
             <div class="notes-container">
-              {% if appointment_notes %}
-              {% for medicine_name in appointment_notes %}
-              <div class="note-item">
-                <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
-                <label for="medicine{{ forloop.counter }}">{{ medicine_name }}</label>
-              </div>
-              {% endfor %}
-              {% else %}
-              <p>No notes available.</p>
-              {% endif %}
+                {% if appointment_notes %}
+                {% for medicine_name in appointment_notes %}
+                <div class="note-item">
+                    <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
+                    <label for="medicine{{ forloop.counter }}">
+                        {% for char in medicine_name %}
+                        {% if not char.isdigit and char != '-' %}
+                        {{ char }}
+                        {% endif %}
+                        {% endfor %}
+                    </label>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No notes available.</p>
+                {% endif %}
             </div>
-            <!-- Barcode input field -->
-            <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
-            <p id="medicineMatch"></p>
-            <p id="matchMessage"></p>
-            <!-- get_receipt.html -->
+        
+        
 
-            <!-- Your existing HTML content -->
+          <!-- Barcode input field -->
+          <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
+          <p id="medicineMatch"></p>
+          <p id="matchMessage"></p>
+          <!-- get_receipt.html -->
 
-            <!-- Add a link to trigger the download of the invoice PDF -->
-            <form action="{% url 'download_invoice_pdf' appointment_id=appointment.id %}" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-primary">Download Invoice</button>
-            </form>
+          <!-- Your existing HTML content -->
 
-
-          </div>
-
-
-
+          <!-- Add a link to trigger the download of the invoice PDF -->
+          <form action="{% url 'download_invoice_pdf' appointment_id=appointment.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Download Invoice</button>
+          </form>
 
 
         </div>
+
+
+
+
+
       </div>
+    </div>
+  </div>
 </body>
 <script>
   document.getElementById('barcodeInput').addEventListener('input', function () {
