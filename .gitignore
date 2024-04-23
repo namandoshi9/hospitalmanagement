@@ -5,9 +5,15 @@
 __pycache__
 db.sqlite3
 media
-
+/venv
+venv/
 # Backup files #
 *.bak
+
+/static
+static
+staticfiles
+/staticfiles
 
 # If you are using PyCharm #
 .idea/**/workspace.xml

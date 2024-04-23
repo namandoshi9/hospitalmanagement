@@ -1,3 +1,6 @@
+{% extends 'hospital/com_base.html' %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,76 +8,312 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Appointment Details</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 400 !important;
     }
 
     p {
-      margin: 5px 0;
+      text-align: left;
+      font-size: 16px;
+      padding: 0.6rem;
     }
 
-    h3 {
-      font-size: 18px;
-      margin-bottom: 10px;
+    .card p {
+      display: flex;
+      align-items: center;
+    }
+
+    .card p strong {
+      min-width: 100px;
+      /* Adjust as needed */
+      margin-right: 17px;
+      /* Adjust as needed */
+    }
+
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .menu {
+      top: 50px;
+    }
+
+    h6 {
+      color: white;
+    }
+
+    .order-card {
+      color: #fff;
+    }
+
+    .bg-c-blue {
+      background: linear-gradient(45deg, #4099ff, #73b4ff);
+    }
+
+    .bg-c-green {
+      background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+    }
+
+    .card {
+      border-radius: 5px;
+      -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      border: none;
+      margin-bottom: 30px;
+      -webkit-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      padding: 2rem;
+    }
+
+    .card .card-block {
+      padding: 0px;
+    }
+
+    .order-card i {
+      font-size: 26px;
+    }
+
+    .f-left {
+      float: left;
+    }
+
+    .f-right {
+      float: right;
+    }
+
+
+    button.btn.btn-primary {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    button.btn.btn-primary:hover,
+    button.btn.btn-primary:active {
+      color: #fff;
+      background-color: #4a748d;
+      border-color: #4a748d;
+    }
+
+    .page-item.active .page-link {
+      color: #fff;
+      background-color: #1b4965;
+      border-color: #1b4965;
+    }
+
+    .pagination>li>a {
+      color: #1b4965;
+    }
+
+    button.btn.btn-info {
+      color: #048221;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    a {
+      color: #27b03a;
+    }
+
+    a:hover,
+    a:active {
+      color: #097c18;
+    }
+
+    button.btn.btn-danger {
+      color: #cf0000;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    h6 {
+      color: black;
+      font-family: "Open Sans", sans-serif !important;
+      font-weight: 500 !important;
     }
 
     .notes-container {
-      margin-top: 20px;
+      margin-left: 2rem;
+      margin: 3rem;
     }
 
-    .note-item {
-      margin-bottom: 10px;
+    input {
+      border: 0.5px solid lightgray;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    table {
+      font-family: "Open Sans", sans-serif !important;
+      border-collapse: collapse;
+      
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, .05);
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Appointment Details</h1>
-    <h2>Appointment ID: {{ appointment.id }}</h2>
-    <p>Patient Name: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
-    <p>Appointment Date: {{ appointment.appointmentDate }}</p>
-    <p>Appointment Time: {{ appointment.appointmentTime }}</p>
+  <br><br>
+  <!-- <div>
+    <h6 class="m-b-20" style="font-size: 20px;
+    font-weight: 300; color: black; margin-left: 26rem;">Today Appointments</h6>
+    <div style="padding: 1px 2rem 10px 26rem;">
+      <div class="card">
+        <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
+          <div>
+            <h6>Appointment ID: {{ appointment.id }}</h6>
+            <p>Patient Name: {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
+            <p>Appointment Date: {{ appointment.appointmentDate }}</p>
+            <p>Appointment Time: {{ appointment.appointmentTime }}</p>
+          </div>
+        </div>
 
-    <h3>Appointment Notes</h3>
-    <div class="notes-container">
-      {% if appointment_notes %}
-      {% for medicine_name in appointment_notes %}
-      <div class="note-item">
-        <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
-        <label for="medicine{{ forloop.counter }}">{{ medicine_name }}</label>
+
+        <h3>Appointment Notes</h3>
+        <div class="notes-container">
+          {% if appointment_notes %}
+          {% for medicine_name in appointment_notes %}
+          <div class="note-item">
+            <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
+            <label for="medicine{{ forloop.counter }}">{{ medicine_name }}</label>
+          </div>
+          {% endfor %}
+          {% else %}
+          <p>No notes available.</p>
+          {% endif %}
+        </div>
+
+        <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
+        <p id="medicineMatch"></p>
+
+      </div> -->
+  <div class="container" style="margin-left: 26rem; margin-top: 3rem;">
+    <h2>Appointment Details</h2>
+    <div class="appointment-details" style="width: 100%;">
+      <div>
+
+        <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
+          <!-- <div>
+            <h4>Current Details:</h4>
+
+            <div class="card" style="
+            
+            display: flex;
+            padding: 1rem;
+        ">
+              <div>
+                <p><strong style="margin-right: 3.5rem !important;">Appointment ID:</strong> {{ appointment.id }}</p>
+                <p><strong style="margin-right: 7rem !important;"> Name:</strong> {{ appointment.patient.first_name }}
+                  {{ appointment.patient.last_name }}</p>
+                <p><strong>Appointment Date:</strong> {{ appointment.appointmentDate }}</p>
+                <p><strong> Appointment Time:</strong> {{ appointment.appointmentTime }}</p>
+              </div>
+
+
+
+            </div>
+          </div> -->
+          <div class="card" style="
+        width: 98%;
+    ">
+            <h4>Current Details:</h4>
+            <table class="table table-hover" id="dev-table">
+              <tr>
+                <thead style="background-color:rgba(0, 0, 0, .05);;">
+                  <tr>
+                    <th style="
+                  width: 18rem;
+              ">Appointment ID</th>
+                    <th style="
+                  width:30rem;
+              ">Patient Name</th>
+                    <th style="
+                  width: 70rem;
+              ">Appointment Date</th>
+                    <th style="
+              width: 70rem;
+          ">Appointment Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr>
+                    <td> 1</td>
+                    <td> Prachi Dabhi</td>
+                    <td>07-04-2024</td>
+                    <td>10:30 AM</td>
+                  </tr>
+
+                </tbody>
+              </tr>
+              </tr>
+            </table>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination" id="pagination"
+                style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;">
+                <!-- Pagination links will be dynamically added by JavaScript -->
+              </ul>
+            </nav>
+          </div>
+
+
+        </div>
       </div>
-      {% endfor %}
-      {% else %}
-      <p>No notes available.</p>
-      {% endif %}
+      <div>
+
+        <h4>Appointment Notes:</h4>
+        <div class="card" style="
+        
+        display: flex;
+        padding: 1rem;
+    ">
+          <div class="note-section" style="width: 50%;">
+            <h4>Additional Notes:</h4>
+            <form method="post" action="{% url 'check-appointment' appointment.id %}">
+              {% csrf_token %}
+              <textarea
+                style="width: 100%;height: 28.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
+                id=note name="note" rows="14" placeholder="Add medicines or Write note here..."></textarea>
+              <!-- <button class="btn btn-primary" type="submit">Save Note</button> -->
+          </div>
+          <div class="notes-container">
+            {% if appointment_notes %}
+            {% for medicine_name in appointment_notes %}
+            <div class="note-item">
+              <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
+              <label for="medicine{{ forloop.counter }}">{{ medicine_name }}</label>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No notes available.</p>
+            {% endif %}
+
+          </div>
+          <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
+          <p id="medicineMatch"></p>
+          <button class="btn btn-primary">Download Invoice</button>
+        </div>
+      </div>
     </div>
-  
-    <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
-    <p id="medicineMatch"></p>
 
     <script>
       document.getElementById('barcodeInput').addEventListener('input', function () {
@@ -101,7 +340,8 @@
         document.getElementById('medicineMatch').innerText = message;
       });
     </script>
-  </div>
+
 </body>
 
 </html>
+{% endblock content %}
