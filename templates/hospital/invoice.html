@@ -9,7 +9,6 @@
 <style>
     body {
         margin: 0;
-        padding: 1rem;
     }
 
     table {
@@ -22,9 +21,9 @@
 </style>
 
 <body>
-    <table style="border-bottom: 2px solid #1b4965;">
+    <table style="border-bottom: 1px solid #d9e1e6;">
         <tr>
-            <td>
+            <td style="width: 250px;">
                 <img src="./static/images/H_logo.png" alt="Profile Pic" width="200px" height="200px">
                 <!-- <h2>Hirani Homoepathic <br/>Clinic</h2> -->
             </td>
@@ -33,30 +32,52 @@
                 margin: 0">
                 <h2 style="font-size: 20px; padding-bottom: 0.1rem; margin: 0;">Dr Manthan Hirani</h2>
 
-                <p style="font-size: 16px; margin: 0;"> V D High School Rd, Indira Nagar<br>
-                    Bhuj<br>
+                <p style="font-size: 16px; margin: 0;"> V D High School Rd, Indira Nagar,Bhuj<br>
                     Gujarat 370001<br>
                     Timings : 9:30am to 1:30pm & 4:00pm to 8:00pm<br>
-                    India<br>
-
                 </p>
             </td>
         </tr>
     </table>
+    <table style="border-bottom: 1.5px solid #1b4965; padding: 12px; ">
+        <p style="text-align: center; margin: 0; padding-top: 8px;
+            font-size: 22px; border-bottom: 1.5px solid #1b4965;">Patient Details
+        </p>
+        <tr>
+            <td>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Name:</strong>{{ appointment.patient.first_name }}
+                    {{appointment.patient.last_name }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Mobile:</strong>{{ appointment.patient.mobile }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Address:</strong>{{ appointment.patient.address }}</p>
+            </td>
+            <td>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Date:</strong>{{ appointment.appointmentDate }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Time:</strong>{{ appointment.appointmentTime }}</p>
+            </td>
+        </tr>
+    </table>
+
 
     <table>
-        <h1 style="
-        text-align: center;
-    font-size: 22px;">Summary</h1>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Name:</strong>{{ appointment.patient.first_name }}
-            {{appointment.patient.last_name }}</p>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Mobile:</strong>{{ appointment.patient.mobile }}</p>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Address:</strong>{{ appointment.patient.address }}</p>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Date:</strong>{{ appointment.appointmentDate }}</p>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Time:</strong>{{ appointment.appointmentTime }}</p>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Prescription</strong>{{ appointment.a_note }}</p>
-        <p style="margin: 0; padding: 0.4rem;"><strong>Note:</strong>{{ appointment.add_note }}</p>
+        <p style="text-align: center; margin: 0; padding-top: 8px;
+            font-size: 22px;">Additional Notes
+        </p>
+        <tr>
+            <td>
+                <p>
+                    {% for char in appointment.a_note %}
+                    {% if not char.isdigit and char != '-' %}
+                    {{ char }}
+                    {% if char == ',' %}
+                    <br> <!-- Insert a new line after each comma -->
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+
+                </p>
+            </td>
+        </tr>
     </table>
 </body>
 
