@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
 
 <head>
     <meta charset="UTF-8">
@@ -8,41 +7,56 @@
     <title>INVOICE</title>
 </head>
 <style>
+    body {
+        margin: 0;
+
+    }
+
     table {
-        width: 80%;
+        width: 100%;
     }
 
     p {
-        font-size: 16px;
+        font-size: 18px;
     }
 </style>
 
 <body>
-    <table style="border-bottom: 2px solid #1b4965;">
+    <table style="border-bottom: 1px solid #d9e1e6;">
         <tr>
-            <td>
-                <img src="/static/images/H_logo.png" alt="Profile Pic" />
+            <td style="width: 250px;">
+                <img src="./static/images/H_logo.png" alt="Profile Pic" width="200px" height="200px">
+                <!-- <h2>Hirani Homoepathic <br/>Clinic</h2> -->
             </td>
             <td style="text-align: right;
                 color: rgb(10, 10, 10);
-                padding-bottom: 25px;">
-                <p>Suryan Organic</p>
-                <p>Block No 25, Beside VRL logistics, Nr Zydus Biotach Park,</p>
-                <p>Opp. Ramdev Masala, Changodar</p>
-                <p>Ahmedabad 382213</p>
-                <p>Gujarat GJ</p>
-                <p>India</p>
+                margin: 0">
+                <h2 style="font-size: 20px; padding-bottom: 0.1rem; margin: 0;">Dr Manthan Hirani</h2>
+
+                <p style="font-size: 16px; margin: 0;"> V D High School Rd, Indira Nagar,Bhuj<br>
+                    Gujarat 370001<br>
+                    Timings : 9:30am to 1:30pm & 4:00pm to 8:00pm<br>
+                </p>
             </td>
         </tr>
     </table>
-
-    <table>
-        <p><strong>Name:</strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
-        <p><strong>Mobile:</strong>{{ appointment.patient.mobile }}</p>
-        <p><strong>Address:</strong>{{ appointment.patient.address }}</p>
-        <p><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
-        <p><strong>Date:</strong>{{ appointment.appointmentDate }}</p>
-        <p><strong>Time:</strong>{{ appointment.appointmentTime }}</p>
+    <table style="border-bottom: 1.5px solid #1b4965; ">
+        <p style="text-align: center; margin: 0; padding-top: 8px;
+            font-size: 22px; border-bottom: 1.5px solid #1b4965;">Patient Details
+        </p>
+        <tr style="text-align: center;">
+            <td>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Name:</strong>{{ appointment.patient.first_name }}
+                    {{appointment.patient.last_name }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Mobile:</strong>{{ appointment.patient.mobile }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Address:</strong>{{ appointment.patient.address }}</p>
+            </td>
+            <td>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Date:</strong>{{ appointment.appointmentDate }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Time:</strong>{{ appointment.appointmentTime }}</p>
+            </td>
+        </tr>
     </table>
 </body>
 
