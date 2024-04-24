@@ -813,11 +813,13 @@ def download_invoice_pdf(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id)
 
     # Fetch related data
+    appointments = Appointment.objects.all()
     past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
     medicines = Medicine.objects.all()
 
     # Prepare context data for rendering the invoice template
     context = {
+        'appointments' : appointments,
         'appointment': appointment,
         'past_appointments': past_appointments,
         'medicines': medicines,
@@ -1439,10 +1441,10 @@ def com_get_receipts_view(request, appointment_id):
     medicines = Medicine.objects.all()
 
     if request.method == 'POST':
-        print(request.POST.get('note'))
-        appointment.a_note = request.POST.get('note')
+        print(request.POST.get('addnote'))
+        appointment.add_note = request.POST.get('addnote')
         appointment.save()
-        return redirect('doctor-appointment')
+        return redirect('com-get-receipts', appointment_id=appointment_id)
     else:
         form = AppointmentForm(instance=appointment)
 
