@@ -1,3 +1,5 @@
+{% load custom_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,24 +63,24 @@
 
     <table>
         <p style="text-align: center; margin: 0; padding-top: 8px;
-            font-size: 22px;">Additional Notes
+            font-size: 22px;">
         </p>
         <tr>
             <td>
-                <p>
-                    {% for char in appointment.a_note %}
-                    {% if not char.isdigit and char != '-' %}
-                    {{ char }}
-                    {% if char == ',' %}
-                    <br> <!-- Insert a new line after each comma -->
-                    {% endif %}
-                    {% endif %}
-                    {% endfor %}
-
+                {% if appointment_notes %}
+                {% for medicine_name in appointment_notes %}
+                <p style="font-size: medium;">
+                    {{ medicine_name|remove_digits_after_second_dash }}
                 </p>
+                {% endfor %}
+                {% else %}
+                <p>No notes available.</p>
+                {% endif %}
             </td>
         </tr>
     </table>
+    <hr>
+    <p style="margin: 0; padding: 0.4rem;"><strong>Note: </strong>{{ appointment.add_note }}</p>
 </body>
 
 </html>

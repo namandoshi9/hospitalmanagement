@@ -39,7 +39,7 @@ class CompounderAdmin(ImportExportModelAdmin):
 
 @admin.register(Patient)
 class PatientAdmin(ImportExportModelAdmin):
-    list_display = ("id" , "first_name", "last_name", "symptoms", "admitDate",)   
+    list_display = ("id" , "first_name", "last_name", "symptoms", "admitDate", 'serial_number',)   
 
 @admin.register(Appointment)
 class AppointmentAdmin(ImportExportModelAdmin):

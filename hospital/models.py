@@ -58,12 +58,13 @@ class Doctor(models.Model):
 
 class Patient(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True, default=None)
+    serial_number = models.CharField(max_length=6, unique=True, null=True, blank=True)
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20, null=False)
     SYMPTOM_CHOICES = [
-        ('', '-------- Select symptom --------'),
+        ('', '-------- Select diagnosis --------'),
         ('Fever', 'Fever'),
         ('Cough', 'Cough'),
         ('Headache', 'Headache'),
@@ -95,8 +96,8 @@ class Appointment(models.Model):
     doctor=models.ForeignKey(Doctor,on_delete=models.CASCADE,blank=True,null=True)
     # patientName=models.CharField(max_length=40,null=True)
     # doctorName=models.CharField(max_length=40,null=True)
-    appointmentDate = models.DateField(auto_now_add=True,blank=True,null=True)  # Automatically set to current date when the object is created
-    appointmentTime = models.TimeField(auto_now_add=True,blank=True,null=True)
+    appointmentDate = models.DateField(blank=True,null=True)  # Automatically set to current date when the object is created
+    appointmentTime = models.TimeField(blank=True,null=True)
     description=models.TextField(max_length=500)
     a_note=models.TextField(max_length=500,blank=True,null=True)
     add_note=models.TextField(max_length=500,blank=True,null=True)

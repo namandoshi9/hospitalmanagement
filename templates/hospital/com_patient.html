@@ -168,7 +168,6 @@
         <tr>
           <thead>
             <tr>
-              <th>id</th>
               <th>Name</th>
               <th>Symptoms</th>
               <th>Mobile</th>
@@ -181,7 +180,6 @@
           <tbody>
             {% for p in patients %}
             <tr class="{% if p.symptoms == 'Special' %}special-row{% endif %}">
-              <td>{{ p.id }}</td>
               <td>{{ p.first_name }} {{ p.last_name }}</td>
               <td>{{ p.symptoms }}</td>
               <td>{{ p.mobile }}</td>

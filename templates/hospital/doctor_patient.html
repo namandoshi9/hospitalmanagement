@@ -168,11 +168,11 @@
         <tr>
           <thead>
             <tr>
+              <th>Sr. No</th>
               <th>Name</th>
-              <th>Symptoms</th>
+              <th>Diagnosis</th>
               <th>Mobile</th>
               <th>Address</th>
-
               <th>Action</th>
 
             </tr>
@@ -180,6 +180,7 @@
           <tbody>
             {% for p in patients %}
             <tr class="{% if p.symptoms == 'Special' %}special-row{% endif %}">
+              <td>{{ p.serial_number }}</td>
               <td>{{ p.first_name }} {{ p.last_name }}</td>
               <td>{{ p.symptoms }}</td>
               <td>{{ p.mobile }}</td>

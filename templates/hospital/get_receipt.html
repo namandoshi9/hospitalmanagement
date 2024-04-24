@@ -178,7 +178,7 @@
       <div>
 
         <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
-          
+
           <div class="card" style="
         width: 98%;
     ">
@@ -229,67 +229,69 @@
 
         <h2>Appointment Notes</h2>
 
-        
+
         <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
           <div style=" margin-right: 10px;"></div>
           <div class="note-section" style="width: 50%;">
             <h4>Additional Notes:</h4>
             <form method="post" action="{% url 'com-get-receipts' appointment_id=appointment.id %}">
               {% csrf_token %}
-              <textarea style="width: 100%;height: 28.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;" id=note name="addnote" rows="14" placeholder="Add medicines or Write note here...">{{appointment.add_note}}</textarea>
-            <button class="btn btn-primary" type="submit">Save Note</button>
-          </form>
+              <textarea
+                style="width: 100%;height: 28.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
+                id=note name="addnote" rows="14"
+                placeholder="Add medicines or Write note here...">{{appointment.add_note}}</textarea>
+              <button class="btn btn-primary" type="submit">Save Note</button>
+            </form>
           </div>
-       
 
-          
+
+
           <div class="card" style="display: flex; padding: 1rem; width: 50%; margin-top: 4rem; margin-left: 3rem;">
             <h4>Prescription</h4>
+            {% load custom_filters %}
+
             <div class="notes-container">
-                {% if appointment_notes %}
-                {% for medicine_name in appointment_notes %}
-                <div class="note-item">
-                    <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
-                    <label for="medicine{{ forloop.counter }}">
-                        {% for char in medicine_name %}
-                        {% if not char.isdigit and char != '-' %}
-                        {{ char }}
-                        {% endif %}
-                        {% endfor %}
-                    </label>
-                </div>
-                {% endfor %}
-                {% else %}
-                <p>No notes available.</p>
-                {% endif %}
+              {% if appointment_notes %}
+              {% for medicine_name in appointment_notes %}
+              <div class="note-item">
+                <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
+                <label for="medicine{{ forloop.counter }}">
+                  {{ medicine_name|remove_digits_after_second_dash }}
+                </label>
+              </div>
+              {% endfor %}
+              {% else %}
+              <p>No notes available.</p>
+              {% endif %}
             </div>
-        
-        
 
-          <!-- Barcode input field -->
-          <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
-          <p id="medicineMatch"></p>
-          <p id="matchMessage"></p>
-          <!-- get_receipt.html -->
 
-          <!-- Your existing HTML content -->
 
-          <!-- Add a link to trigger the download of the invoice PDF -->
-          <form action="{% url 'download_invoice_pdf' appointment_id=appointment.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Download Invoice</button>
-          </form>
+
+            <!-- Barcode input field -->
+            <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
+            <p id="medicineMatch"></p>
+            <p id="matchMessage"></p>
+            <!-- get_receipt.html -->
+
+            <!-- Your existing HTML content -->
+
+            <!-- Add a link to trigger the download of the invoice PDF -->
+            <form action="{% url 'download_invoice_pdf' appointment_id=appointment.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Download Invoice</button>
+            </form>
+
+
+          </div>
+
+
+
 
 
         </div>
-
-
-
-
-
       </div>
     </div>
-  </div>
 </body>
 <script>
   document.getElementById('barcodeInput').addEventListener('input', function () {

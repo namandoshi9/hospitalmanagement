@@ -83,7 +83,7 @@
     table {
       font-family: "Open Sans", sans-serif !important;
       border-collapse: collapse;
-      /* / / width: 50% !important; / / */
+      / / / width: 50% !important; / / /
     }
 
     td,
@@ -156,7 +156,7 @@
     p {
       text-align: left;
       font-size: 16px;
-      padding: 0.6rem;
+      padding: 0.2rem;
     }
 
     .note_section {
@@ -173,9 +173,9 @@
 
     .card p strong {
       min-width: 100px;
-      /* Adjust as needed */
+      / Adjust as needed /
       margin-right: 10px;
-      /* Adjust as needed */
+      / Adjust as needed /
     }
 
     .current,
@@ -199,7 +199,7 @@
 </head>
 
 <body>
-  <div class="container" style="margin-left: 26rem; margin-top: 3rem;">
+  <div class="content" style="margin-left: 26rem; margin-top: 3rem;">
     <h2>Appointment Details</h2>
     <div class="appointment-details" style="width: 100%;">
       <div style="width: 70%;">
@@ -212,6 +212,7 @@
         
         display: flex;
         padding: 1rem;
+        height: 24rem;
     ">
               <div>
                 <p><strong>Name:</strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
@@ -224,12 +225,12 @@
 
             </div>
           </div>
-          <div class="note-section" style="width: 50%;">
+          <div class="note-section" style="width: 50%; margin-right: 1.2rem;">
             <h4>Add Notes:</h4>
             <form method="post" action="{% url 'check-appointment' appointment.id %}">
               {% csrf_token %}
               <textarea
-                style="width: 100%;height: 28.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
+                style="width: 100%;height: 24rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
                 id=note name="note" rows="14" placeholder="Add medicines or Write note here..."></textarea>
               <!-- <button class="btn btn-primary" type="submit">Save Note</button> -->
           </div>
@@ -289,19 +290,19 @@
 
 
       </div>
-      <div class="right-section" style="width: 30%;">
+      <div class="right-section" style="width: 35%; margin-right: 2rem;">
         <h4>Medicine Lists</h4>
         <div class="card">
           <div style="margin-bottom: 1rem;">
-            <input type="search" style="width: 98%; border-radius: 3px;" id="medicine-search" name="medicine-search"
-              placeholder="search Medicine.." onkeyup="searchMedicine()">
+            <input type="search" style="width: 90%;border-radius: 0.8rem;border: 0.1rem solid darkgray;padding: 0.5rem;"
+              id="medicine-search" name="medicine-search" placeholder="Search Medicine.." onkeyup="searchMedicine()">
           </div>
-          <div class="medicine-list" id="medicine-list" style="max-height: 39rem;">
+          <div class="medicine-list" id="medicine-list" style="max-height: 45rem;">
             {% for medicine in medicines %}
             <div>
               <input type="checkbox" id="medicine{{ medicine.id }}" name="{{ medicine.id }}"
                 data-barcode="{{ medicine.barcode_value }}">
-              <label for="medicine{{ medicine.id }}">{{ medicine.name }} - {{ medicine.barcode_value }}</label><br>
+              <label for="medicine{{ medicine.id }}">{{ medicine.name }} - {{ medicine.description }} - {{ medicine.barcode_value }}</label><br>
             </div>
             {% endfor %}
             <!-- Add more medicines as needed -->
@@ -356,7 +357,7 @@
 </script>
 <script>
   var currentPage = 1;
-  var itemsPerPage = 6;
+  var itemsPerPage = 4;
 
   var tableRows = $('#dev-table tbody tr');
   var totalPages = Math.ceil(tableRows.length / itemsPerPage);

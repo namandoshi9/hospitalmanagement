@@ -573,6 +573,29 @@ def doctor_add_patient_view(request):
         if patientForm.is_valid():
             patient = patientForm.save(commit=False)
             patient.doctor = Doctor.objects.get(user=request.user)
+            
+            # Get the last patient to determine the next serial number
+            last_patient = Patient.objects.order_by('-id').first()
+            if last_patient:
+                last_serial_number = last_patient.serial_number
+                prefix = last_serial_number[0]
+                serial_number = int(last_serial_number[1:])
+                if prefix == 'A' and serial_number < 9999:
+                    new_serial_number = f"A{serial_number + 1:04d}"
+                elif prefix == 'A':
+                    new_serial_number = "B0001"  # Start B series if A series is maxed out
+                elif prefix == 'B' and serial_number < 9999:
+                    new_serial_number = f"B{serial_number + 1:04d}"
+                elif prefix == 'B':
+                    new_serial_number = "C0001"  # Start C series if B series is maxed out
+                else:
+                    # Handle additional series if needed
+                    new_serial_number = "Z9999"  # Placeholder for additional series
+            else:
+                # If no patient exists, start with A0001
+                new_serial_number = "A0001"
+            
+            patient.serial_number = new_serial_number
             patient.save()
 
             return HttpResponseRedirect('doctor-patient')  # Redirect after successful submission
@@ -790,7 +813,7 @@ def doctor_view_medicine_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_medicine_view(request):
-    medicine = Medicine.objects.all().order_by('-created_at')   
+    medicine = Medicine.objects.all().order_by('name')  
     medicine_count = medicine.count()
     mydict={
     'medicine':medicine,
@@ -817,12 +840,15 @@ def download_invoice_pdf(request, appointment_id):
     past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
     medicines = Medicine.objects.all()
 
+    appointment_notes = appointment.a_note.split(',') if appointment.a_note else []
+    
     # Prepare context data for rendering the invoice template
     context = {
         'appointments' : appointments,
         'appointment': appointment,
         'past_appointments': past_appointments,
         'medicines': medicines,
+        'appointment_notes' : appointment_notes,
     }
 
     # Get the HTML template for the invoice
@@ -847,7 +873,7 @@ def download_invoice_pdf(request, appointment_id):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_medicine_view(request):
-    medicine = Medicine.objects.all().order_by('-id')
+    medicine = Medicine.objects.all().order_by('name')  
     medicine_count = medicine.count()
     mydict={
     'medicine':medicine,
@@ -1216,6 +1242,7 @@ def doctor_dashboard_view(request):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def compounder_dashboard_view(request):
+    current_date = date.today()
     user = request.user
     patients = Patient.objects.all()
     patient_count = patients.count()
@@ -1223,6 +1250,8 @@ def compounder_dashboard_view(request):
     medicine_count = medicine.count()
     appointments = Appointment.objects.all()
     appointmentscount = appointments.count()
+    receipts = Appointment.objects.filter(appointmentDate=current_date)
+    receiptscount = receipts.count()
     context = {
         'first_name': user.first_name,
         'last_name': user.last_name,
@@ -1232,6 +1261,8 @@ def compounder_dashboard_view(request):
         'medicine_count': medicine_count,
         'appointments': appointments,
         'appointmentscount':appointmentscount,
+        'receipts':receipts,
+        'receiptscount':receiptscount,
     }
     return render(request,'hospital/com_dashboard.html',context)
 
@@ -1265,7 +1296,7 @@ def compounder_dashboard_card_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_patient_view(request):
-    patients = Patient.objects.all().order_by('-admitDate')
+    patients = Patient.objects.all().order_by('-id')
     patient_count = patients.count()
     mydict={
     'patients':patients,
@@ -1277,7 +1308,7 @@ def doctor_patient_view(request):
 @login_required(login_url='compounderlogin')
 @user_passes_test(is_compounder)
 def com_patient_view(request):
-    patients = Patient.objects.all().order_by('-admitDate')
+    patients = Patient.objects.all().order_by('-id')
     patient_count = patients.count()
     mydict={
     'patients':patients,
@@ -1316,7 +1347,7 @@ def com_add_prescription_view(request):
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def doctor_compounder_view(request):
-    compounder = Compounder.objects.all().order_by('-created_at')
+    compounder = Compounder.objects.all().order_by('-id')
     compounder_count = compounder.count()
     mydict={
     'compounder':compounder,
@@ -1424,7 +1455,7 @@ def com_appointment_view(request):
 @user_passes_test(is_compounder)
 def com_receipts_view(request):
     current_date = date.today()  # Get the current date
-    appointments = Appointment.objects.filter(appointmentDate=current_date)
+    appointments = Appointment.objects.filter(appointmentDate=current_date).order_by('-id')
     appointmentscount = appointments.count()
     context = {
         'appointments': appointments,
@@ -1462,13 +1493,14 @@ def com_get_receipts_view(request, appointment_id):
 
 
 
+from django.utils import timezone
 
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
 def check_appointment_view(request, appointment_id):
     appointment = get_object_or_404(Appointment, id=appointment_id)
     appointment.visited = True
-    past_appointments = Appointment.objects.filter(patient=appointment.patient, id__lt=appointment_id)
+    past_appointments = Appointment.objects.filter(patient=appointment.patient, appointmentDate__lt=timezone.now())
     medicines = Medicine.objects.all()
 
     if request.method == 'POST':
