@@ -180,4 +180,11 @@
 
 </form>
 
+{% if error_msg %}
+<p style="color: red;">{% autoescape off %}
+  {{ error_msg|safe }}
+  {% endautoescape %}
+</p>
+{% endif %}
+
 {% endblock content %}

@@ -638,7 +638,7 @@ def com_add_patient_view(request):
             
             patient.serial_number = new_serial_number
             patient.save()
-            
+
             return HttpResponseRedirect('com-patient')  # Redirect after successful submission
     else:
         patientForm = PatientForm()
@@ -1405,6 +1405,9 @@ def doctor_add_compounder(request):
             my_compounder_group.user_set.add(user)
 
             return HttpResponseRedirect('doctor-compounder')
+        else:
+            error_msg = "Invalid data. Please Enter the correct Data:<br>Ex. Username : <b>abc_123</b> <br> Password : <b>Abcd@1234</b>"
+            mydict['error_msg'] = error_msg
 
     return render(request, 'hospital/doctor_add_compounder.html', context=mydict)
 
