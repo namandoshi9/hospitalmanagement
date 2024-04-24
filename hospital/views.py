@@ -615,9 +615,30 @@ def com_add_patient_view(request):
             patient = patientForm.save(commit=False)
             compounder_username = request.user.username
             compounder = Compounder.objects.get(username=compounder_username)
-            patient.compounder = compounder
+            # Get the last patient to determine the next serial number
+            last_patient = Patient.objects.order_by('-id').first()
+            if last_patient:
+                last_serial_number = last_patient.serial_number
+                prefix = last_serial_number[0]
+                serial_number = int(last_serial_number[1:])
+                if prefix == 'A' and serial_number < 9999:
+                    new_serial_number = f"A{serial_number + 1:04d}"
+                elif prefix == 'A':
+                    new_serial_number = "B0001"  # Start B series if A series is maxed out
+                elif prefix == 'B' and serial_number < 9999:
+                    new_serial_number = f"B{serial_number + 1:04d}"
+                elif prefix == 'B':
+                    new_serial_number = "C0001"  # Start C series if B series is maxed out
+                else:
+                    # Handle additional series if needed
+                    new_serial_number = "Z9999"  # Placeholder for additional series
+            else:
+                # If no patient exists, start with A0001
+                new_serial_number = "A0001"
+            
+            patient.serial_number = new_serial_number
             patient.save()
-
+            
             return HttpResponseRedirect('com-patient')  # Redirect after successful submission
     else:
         patientForm = PatientForm()
