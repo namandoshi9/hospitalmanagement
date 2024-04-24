@@ -1393,7 +1393,7 @@ def doctor_view_discharge_patient_view(request):
 @user_passes_test(is_doctor)
 def doctor_appointment_view(request):
     doctor = request.user.doctor  # Retrieve the logged-in doctor
-    appointments = Appointment.objects.filter(doctor=doctor).order_by('-id')
+    appointments = Appointment.objects.all().order_by('-id')
     appointmentscount = appointments.count()
     context = {
         'doctor': doctor,
