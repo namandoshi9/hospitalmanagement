@@ -99,6 +99,7 @@ class Appointment(models.Model):
     appointmentTime = models.TimeField(auto_now_add=True,blank=True,null=True)
     description=models.TextField(max_length=500)
     a_note=models.TextField(max_length=500,blank=True,null=True)
+    add_note=models.TextField(max_length=500,blank=True,null=True)
     status=models.BooleanField(default=False)
 
 

@@ -171,7 +171,7 @@ urlpatterns +=[
     path('com-receipts', views.com_receipts_view,name='com-receipts'),
     path('com-get-receipts/<int:appointment_id>/', views.com_get_receipts_view,name='com-get-receipts'),
     path('download-invoice/<int:appointment_id>/', views.download_invoice_pdf, name='download_invoice_pdf'),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 

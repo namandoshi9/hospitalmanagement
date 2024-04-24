@@ -196,9 +196,15 @@
                   max-width: 40rem;
                   max-height: 25rem;
               ">{{ appointment.description }}</td>
-                <td style="text-align: center;"><a href="{% url 'check-appointment' appointment.id %}"><i
-                      class="fa fa-check"></i>
-                  </a></td>
+                <td style="text-align: center;">
+                  {% if appointment.visited %}
+                  <i class="fa fa-check"></i>
+                  {% else %}
+                  <a href="{% url 'check-appointment' appointment.id %}">Check</a>
+                  {% endif %}
+                </td>
+
+
               </tr>
               {% endfor %}
             </tbody>
