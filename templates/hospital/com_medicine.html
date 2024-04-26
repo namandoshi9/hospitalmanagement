@@ -143,8 +143,15 @@
 
         .barcode-img {
             max-width: 200px;
-            / Adjust according to your design / max-height: 50px;
-            / Adjust according to your design /
+            /* Adjust according to your design  */
+            max-height: 50px;
+            /* / Adjust according to your design / */
+        }
+
+        h6 {
+            color: white;
+            font-family: "Open Sans", sans-serif !important;
+            font-weight: 500 !important;
         }
     </style>
 
@@ -177,7 +184,7 @@
                             width: 30rem;
                         ">Name</th>
                             <th>Description</th>
-                            <th style="text-align: center;">
+                            <th style="text-align: left;">
                                 <a onclick="printAllBarcodes()">
 
                                     Barcodes
@@ -195,7 +202,8 @@
                             <td style=" text-align: center; width: 15rem;">
                                 {% if medicine.barcode %}
                                 <img src="{{ medicine.barcode.url }}" alt="{{ medicine.name }}" class="barcode-img"
-                                    data-medicine-name="{{ medicine.name }}">
+                                    data-medicine-name="{{ medicine.name }}"
+                                    data-medicine-description="{{ medicine.description }}">
                                 {% else %}
                                 No barcode available
                                 {% endif %}
@@ -214,8 +222,9 @@
                                     <button type="submit" class="btn btn-danger"><i
                                             class="fas fa-trash-alt"></i></button>
                                 </form>
+
                                 <a href="#" class="btn btn-success btn-sm"
-                                    onclick="printBarcode('{{ medicine.name }}', '{{ medicine.barcode.url }}')"><i
+                                    onclick="printBarcode('{{ medicine.name }}','{{ medicine.description }}', '{{ medicine.barcode.url }}')"><i
                                         class="fas fa-print"></i></a>
 
                             </td>
@@ -244,12 +253,14 @@
         // Loop through all barcode images and append them to the print window
         barcodes.forEach(function (barcode, index) {
             var medicineName = barcode.getAttribute('data-medicine-name'); // Get the medicine name associated with the barcode
+            var medicineDescription = barcode.getAttribute('data-medicine-description'); // Get the medicine description associated with the barcode
             if (index > 0 && index % 28 === 0) {
                 printWindow.document.write('<div style="page-break-after: always;"></div>'); // Add page break after every 10 barcodes
             }
             printWindow.document.write('<div style="float: left; width: 20%; height: 20%; margin-right: 5%; margin-bottom: 10px;">');
             printWindow.document.write('<img src="' + barcode.src + '" style="max-width: 100%;">');
-            printWindow.document.write('<h2 style="text-align: center; font-size: 14px;">' + medicineName + '</h2>'); // Set the font size of the medicine name
+            printWindow.document.write('<h2 style="text-align: center; font-size: 10px;">' + medicineName + '</h2>'); // Set the font size of the medicine name
+            printWindow.document.write('<p style="text-align: center; font-size: 8px;">' + medicineDescription + '</p>'); // Display the medicine description
             printWindow.document.write('</div>');
         });
 
@@ -261,19 +272,29 @@
 
 
 <script>
-    function printBarcode(medicineName, barcodeUrl) {
+    function printBarcode(medicineName, medicineDescription, barcodeUrl) {
         var printWindow = window.open('', '_blank');
-        printWindow.document.write('<html><head><title>Print Barcode</title></head><body style="margin: 0;">');
-        printWindow.document.write('<div style="text-align: center;">');
-        printWindow.document.write('<img src="' + barcodeUrl + '" style="max-width: 100%;">');
+        printWindow.document.write('<html><head><title>Print Barcode</title>');
+        // Add CSS styles for printing
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { margin: 0; padding: 0; font-family: Arial, sans-serif; }');
+        printWindow.document.write('img { max-width: 100%; height: auto; display: block; margin: 0 auto; }');
+        printWindow.document.write('h2 { text-align: center; margin-top: 20px; }');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+
+        printWindow.document.write('<div>');
+        printWindow.document.write('<img src="' + barcodeUrl + '">');
         printWindow.document.write('<h2>' + medicineName + '</h2>');
+        printWindow.document.write('<p style="text-align:center;">' + medicineDescription + '</p>');
         printWindow.document.write('</div>');
+
         printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.print();
     }
-</script>
 
+</script>
 
 <script>
     var currentPage = 1;

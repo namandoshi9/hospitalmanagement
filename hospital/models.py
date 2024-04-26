@@ -101,7 +101,15 @@ class Appointment(models.Model):
     description=models.TextField(max_length=500)
     a_note=models.TextField(max_length=500,blank=True,null=True)
     add_note=models.TextField(max_length=500,blank=True,null=True)
+    staff_check_medicine=models.TextField(max_length=500,blank=True,null=True)
+    APP_MODE_CHOICE = [
+        ('offline', 'offline'),
+        ('online', 'online'),
+    ]
+    staff_note=models.TextField(max_length=500,blank=True,null=True)
+    app_mode=models.CharField(max_length=10,choices=APP_MODE_CHOICE,default="offline")
     status=models.BooleanField(default=False)
+    visited = models.BooleanField(default=False)
 
 
 
@@ -132,13 +140,13 @@ class Medicine(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=500)
     barcode = models.ImageField(upload_to='barcodes/', blank=True)
-    barcode_value = models.CharField(max_length=14, blank=True)
+    barcode_value = models.CharField(max_length=13, blank=True)
     created_at = models.DateField(auto_now_add=True,blank=True,null=True)
 
     # Modify the generate_barcode method to generate a 12-digit numeric string for EAN-13
     # def generate_barcode(self):
     #     # Generate a random 12-digit numeric string for EAN-13 barcode
-    #     barcode_value = ''.join(random.choices(string.digits, k=12))
+    #     barcode_value = ''.join(random.choices(string.digits, k=13))
 
     #     # Generate barcode using python-barcode library
     #     ean = barcode.get_barcode_class('ean13')
@@ -167,8 +175,8 @@ class Medicine(models.Model):
     #         self.generate_barcode()
     #     super().save(*args, **kwargs)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
 
 

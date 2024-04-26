@@ -1,6 +1,7 @@
 {% extends 'hospital/com_base.html' %}
 {% load static %}
 {% block content %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -142,7 +143,7 @@
 
     .notes-container {
       margin-left: 2rem;
-      margin: 3rem;
+      margin: 1.5rem;
     }
 
     input {
@@ -167,6 +168,38 @@
     tr:nth-child(even) {
       background-color: rgba(0, 0, 0, .05);
     }
+
+    .matched-medicine {
+      background-color: #2ed8b6;
+      /* Change to desired background color */
+    }
+    
+  /* Hide the default checkbox */
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  /* Style the custom checkbox */
+  input[type="checkbox"] + label::before {
+    content: " "; /* Unicode for the plus icon in Font Awesome */
+    font-family: FontAwesome;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    /* border: 1px solid green; Green color for the border */
+    color: green; /* Green color for the plus icon */
+    text-align: center;
+    line-height: 18px; /* Adjust vertical alignment */
+    cursor: pointer;
+  }
+
+  /* Style for when checkbox is checked */
+  input[type="checkbox"]:checked + label::before {
+    content: "-"; /* Change the content to a minus sign when checked */
+    color: red; /* Example: Change the color to red when checked */
+    /* You can adjust the style when the checkbox is checked */
+  }
+
   </style>
 </head>
 
@@ -174,6 +207,7 @@
   <br><br>
   <div class="container" style="margin-left: 26rem; margin-top: 3rem;">
     <h2>Appointment Details</h2>
+
     <div class="appointment-details" style="width: 100%;">
       <div>
 
@@ -182,7 +216,18 @@
           <div class="card" style="
         width: 98%;
     ">
-            <h4>Current Details:</h4>
+            <div class="row">
+              <div class="col-md-8"> <!-- Adjust column width as needed -->
+                <h4 style="margin-top: 5px;">Current Details:</h4>
+              </div>
+              <div class="col-md-4 text-right"> <!-- Adjust column width as needed -->
+                <form action="{% url 'download_invoice_pdf' appointment_id=appointment.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary" style="margin-bottom: 5px;">Invoice <i
+                      class="fas fa-file-download"></i></button>
+                </form>
+              </div>
+            </div>
             <table class="table table-hover" id="dev-table">
               <tr>
                 <thead style="background-color:rgba(0, 0, 0, .05);;">
@@ -214,12 +259,12 @@
               </tr>
               </tr>
             </table>
-            <nav aria-label="Page navigation example">
+            <!-- <nav aria-label="Page navigation example">
               <ul class="pagination" id="pagination"
-                style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;">
-                <!-- Pagination links will be dynamically added by JavaScript -->
-              </ul>
-            </nav>
+                style="display: flex; padding-left: 0; margin: 20px 30px; border-radius: 4px; justify-content: end; border-radius: 8px;"> -->
+            <!-- Pagination links will be dynamically added by JavaScript -->
+            <!-- </ul>
+            </nav> -->
           </div>
 
 
@@ -228,75 +273,90 @@
       <div>
 
         <h2>Appointment Notes</h2>
-
+        <input autofocus type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
+        <p id="medicineMatch"></p>
 
         <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
+
+          <div class="note-section" style="width: 30%;">
+            <h4>Staff Notes:</h4>
+            <form method="post" action="">
+              {% csrf_token %}
+              <textarea
+                style="width: 100%;height: 29.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
+                id=note name="addnote" rows="14">{{appointment.staff_note}}</textarea>
+            
+          </div>
+
           <div style=" margin-right: 10px;"></div>
-          <div class="note-section" style="width: 50%;">
+          <div class="note-section" style="width: 40%;">
             <h4>Additional Notes:</h4>
             <form method="post" action="{% url 'com-get-receipts' appointment_id=appointment.id %}">
               {% csrf_token %}
               <textarea
-                style="width: 100%;height: 28.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
+                style="width: 100%;height: 29.9rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
                 id=note name="addnote" rows="14"
                 placeholder="Add medicines or Write note here...">{{appointment.add_note}}</textarea>
-              <button class="btn btn-primary" type="submit">Save Note</button>
-            </form>
+              <!-- <button class="btn btn-primary" type="submit" style="margin-top: 7px;">Save Note</button> -->
+            
           </div>
 
 
 
-          <div class="card" style="display: flex; padding: 1rem; width: 50%; margin-top: 4rem; margin-left: 3rem;">
-            <h4>Prescription</h4>
-            {% load custom_filters %}
 
-            <div class="notes-container">
+          <div class="card"
+            style="display: flex; padding: 1rem; width: 30%; margin-top: 4rem; margin-left: 3rem; height: 29.9rem;">
+            <h4>Prescription</h4>
+            
+
+            <div class="notes-container" style="height: 160px; overflow-y: auto;">
               {% if appointment_notes %}
               {% for medicine_name in appointment_notes %}
-              <div class="note-item">
-                <input type="checkbox" id="medicine{{ forloop.counter }}" name="medicine" value="{{ medicine_name }}">
+              <div class="note-item {% if medicine_name == matched_medicine %}matched{% endif %}">
+                <input type="checkbox"  id="medicine{{ forloop.counter }}" name="medicine_by_staff" value="{{ medicine_name }}">
                 <label for="medicine{{ forloop.counter }}">
-                  {{ medicine_name|remove_digits_after_second_dash }}
+                  {{ medicine_name|hide_digits_before_second_dash }}
                 </label>
               </div>
+
               {% endfor %}
               {% else %}
               <p>No notes available.</p>
               {% endif %}
             </div>
-
-
+            <button class="btn btn-primary" type="submit" style="margin-top: 7px;">Save</button>
+          </form>
 
 
             <!-- Barcode input field -->
-            <input type="text" id="barcodeInput" name="barcode" placeholder="Scan or Enter Barcode">
-            <p id="medicineMatch"></p>
-            <p id="matchMessage"></p>
+            <!-- <p id="matchMessage"></p> -->
+            
+            
+            
             <!-- get_receipt.html -->
 
             <!-- Your existing HTML content -->
 
             <!-- Add a link to trigger the download of the invoice PDF -->
-            <form action="{% url 'download_invoice_pdf' appointment_id=appointment.id %}" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-primary">Download Invoice</button>
-            </form>
+
 
 
           </div>
 
 
 
-
-
         </div>
+        
       </div>
     </div>
 </body>
 <script>
+  // Keep track of matched medicines
+  var matchedMedicines = [];
+
   document.getElementById('barcodeInput').addEventListener('input', function () {
     var input = this.value.trim().toLowerCase(); // Assuming input is lowercase for consistency
-    var medicineNames = document.querySelectorAll('[name="medicine"]');
+    var medicineNames = document.querySelectorAll('[name="medicine_by_staff"]');
     var matchFound = false;
 
     medicineNames.forEach(function (medicine) {
@@ -310,6 +370,16 @@
         document.getElementById('barcodeInput').value = "";
         // Check corresponding checkbox
         medicine.checked = true;
+
+        // Add medicine to the list of matched medicines
+        var index = matchedMedicines.indexOf(medicine);
+        if (index === -1) {
+          matchedMedicines.push(medicine);
+        }
+
+        // Add class to permanently highlight the matched medicine
+        medicine.parentElement.classList.add('matched-medicine');
+        
         return; // Exit forEach loop if match found
       }
     });
@@ -325,6 +395,7 @@
     }
   });
 </script>
+
 
 </html>
 {% endblock content %}

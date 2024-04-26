@@ -179,6 +179,7 @@
               <tr>
                 <!-- <th>ID</th> -->
                 <th>Patient Name</th>
+                <th>Appointment Mode</th>
                 <th>Appointment Date</th>
                 <th>Appointment Time</th>
                 <th>Description</th>
@@ -190,6 +191,7 @@
               <tr>
                 <!-- <td>{{ appointment.id }}</td> -->
                 <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.app_mode }}</td>
                 <td>{{ appointment.appointmentDate }}</td>
                 <td>{{ appointment.appointmentTime }}</td>
                 <td style="
@@ -198,9 +200,9 @@
               ">{{ appointment.description }}</td>
                 <td style="text-align: left;">
                   {% if appointment.visited %}
-                  <i class="fa fa-check"></i>
+                  <i style="color: #048221;" class="fa fa-check"></i>
                   {% else %}
-                  <a href="{% url 'check-appointment' appointment.id %}">Check</a>
+                  <a href="{% url 'check-appointment' appointment.id %}" style="color: #27b03a;">Check</a>
                   {% endif %}
                 </td>
 

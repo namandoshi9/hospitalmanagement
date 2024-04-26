@@ -195,6 +195,31 @@
     .right-section {
       width: 35rem;
     }
+     /* Hide the default checkbox */
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  /* Style the custom checkbox */
+  input[type="checkbox"] + label::before {
+    content: "\f067"; /* Unicode for the plus icon in Font Awesome */
+    font-family: FontAwesome;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    /* border: 1px solid green; Green color for the border */
+    color: green; /* Green color for the plus icon */
+    text-align: center;
+    line-height: 18px; /* Adjust vertical alignment */
+    cursor: pointer;
+  }
+
+  /* Style for when checkbox is checked */
+  input[type="checkbox"]:checked + label::before {
+    content: "-"; /* Change the content to a minus sign when checked */
+    color: red; /* Example: Change the color to red when checked */
+    /* You can adjust the style when the checkbox is checked */
+  }
   </style>
 </head>
 
@@ -205,14 +230,14 @@
       <div style="width: 70%;">
 
         <div class="current" style="display: flex; width: 100%; justify-content: space-between; ">
-          <div style="width: 46%; margin-right: 10px;">
+          <div style="width: 45%; margin-right: 10px;">
             <h4>Current Details:</h4>
 
             <div class="card" style="
         
         display: flex;
         padding: 1rem;
-        height: 24rem;
+        height: 28rem;
     ">
               <div>
                 <p><strong>Name:</strong>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
@@ -225,13 +250,22 @@
 
             </div>
           </div>
-          <div class="note-section" style="width: 50%; margin-right: 1.2rem;">
-            <h4>Add Notes:</h4>
+          <div class="note-section" style="width: 38%; margin-right: 1.2rem;">
+            <h4>Medicines:</h4>
             <form method="post" action="{% url 'check-appointment' appointment.id %}">
               {% csrf_token %}
               <textarea
-                style="width: 100%;height: 24rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
-                id=note name="note" rows="14" placeholder="Add medicines or Write note here..."></textarea>
+                style="width: 100%;height: 28rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
+                id=note name="note" rows="14" placeholder="Add medicines here..."></textarea>
+              <!-- <button class="btn btn-primary" type="submit">Save Note</button> -->
+          </div>
+          <div class="note-section" style="width: 23%; margin-right: 1.2rem;">
+            <h4>Staff Notes:</h4>
+            <form method="post" action="">
+              {% csrf_token %}
+              <textarea
+                style="width: 100%;height: 28rem;border-radius: 5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;border: none;padding: 1rem;"
+                id=note name="staffnote" rows="14" placeholder="Add notes for staff..."></textarea>
               <!-- <button class="btn btn-primary" type="submit">Save Note</button> -->
           </div>
 
@@ -302,7 +336,7 @@
             <div>
               <input type="checkbox" id="medicine{{ medicine.id }}" name="{{ medicine.id }}"
                 data-barcode="{{ medicine.barcode_value }}">
-              <label for="medicine{{ medicine.id }}">{{ medicine.name }} - {{ medicine.description }} - {{ medicine.barcode_value }}</label><br>
+              <label for="medicine{{ medicine.id }}">{{ medicine.name }} - {{medicine.barcode_value}} - {{ medicine.description }} </label><br>
             </div>
             {% endfor %}
             <!-- Add more medicines as needed -->
@@ -334,7 +368,7 @@
         if (checkbox.checked) {
           // Add medicine to note textarea without newline if it's not the first item
           if (noteTextarea.value !== '') {
-            noteTextarea.value += ', ';
+            noteTextarea.value += ', ' + '\n';
           }
           noteTextarea.value += medicineName;
         } else {

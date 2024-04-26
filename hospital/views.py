@@ -862,7 +862,8 @@ def download_invoice_pdf(request, appointment_id):
     medicines = Medicine.objects.all()
 
     appointment_notes = appointment.a_note.split(',') if appointment.a_note else []
-    
+    appointment_notes_staff = appointment.staff_check_medicine.split(',') if appointment.staff_check_medicine else []
+    appointment_notes_staff = [item.replace('\r\n', '') for item in appointment_notes_staff]
     # Prepare context data for rendering the invoice template
     context = {
         'appointments' : appointments,
@@ -870,6 +871,7 @@ def download_invoice_pdf(request, appointment_id):
         'past_appointments': past_appointments,
         'medicines': medicines,
         'appointment_notes' : appointment_notes,
+        'appointment_notes_staff' : appointment_notes_staff,
     }
 
     # Get the HTML template for the invoice
@@ -1496,8 +1498,12 @@ def com_get_receipts_view(request, appointment_id):
     medicines = Medicine.objects.all()
 
     if request.method == 'POST':
-        print(request.POST.get('addnote'))
+        # print(request.POST.get('addnote'))
         appointment.add_note = request.POST.get('addnote')
+        # print(request.POST.getlist('medicine_by_staff'),"GGGGGGGGggg")
+        extracted_data = [item.split(' - ')[0] + ' - ' + item.split(' - ')[-1] for item in request.POST.getlist('medicine_by_staff')]
+        text_data = ','.join(extracted_data)
+        appointment.staff_check_medicine = text_data
         appointment.save()
         return redirect('com-get-receipts', appointment_id=appointment_id)
     else:
@@ -1505,12 +1511,17 @@ def com_get_receipts_view(request, appointment_id):
 
     appointment_notes = appointment.a_note.split(',') if appointment.a_note else []
 
+    staff_check_medicine = appointment.staff_check_medicine.split(',') if appointment.staff_check_medicine else []
+    staff_check_medicine_list = [medicine.strip() for medicine in staff_check_medicine if medicine.strip()]
+
+
     context = {
         'appointment': appointment,
         'past_appointments': past_appointments,
         'medicines': medicines,
         'form': form,
         'appointment_notes': appointment_notes,  # e
+        'staff_check_medicine_list': staff_check_medicine_list,
     }
     return render(request, 'hospital/get_receipt.html', context)
 
@@ -1530,6 +1541,7 @@ def check_appointment_view(request, appointment_id):
     if request.method == 'POST':
         print(request.POST.get('note'))
         appointment.a_note = request.POST.get('note')
+        appointment.staff_note = request.POST.get('staffnote')
         appointment.visited = True
         appointment.save()
         return redirect('doctor-appointment')

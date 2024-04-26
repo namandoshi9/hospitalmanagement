@@ -159,6 +159,7 @@
           <thead>
             <tr style="background-color: white;">
               <th>Patient Name</th>
+              <th>Appointment Mode</th>
               <th>Appointment Date</th>
               <th>Appointment Time</th>
               <th>Description</th>
@@ -170,6 +171,7 @@
             {% for appointment in appointments %}
             <tr>
               <td>{{ appointment.patient }}</td>
+              <td>{{ appointment.app_mode }}</td>
               <td>{{ appointment.appointmentDate }}</td>
               <td>{{ appointment.appointmentTime }}</td>
               <td style="

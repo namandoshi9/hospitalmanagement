@@ -18,7 +18,7 @@
     }
 
     p {
-        font-size: 18px;
+        font-size: 14px;
     }
 </style>
 
@@ -41,36 +41,36 @@
             </td>
         </tr>
     </table>
-    <table style="border-bottom: 1.5px solid #1b4965; padding: 12px; ">
-        <p style="text-align: center; margin: 0; padding-top: 8px;
-            font-size: 22px; border-bottom: 1.5px solid #1b4965;">Patient Details
-        </p>
+    <table style="border-bottom: 1.5px solid #1b4965; padding: 12px; width: 100%;">
         <tr>
-            <td>
-                <p style="margin: 0; padding: 0.4rem;"><strong>Name:</strong>{{ appointment.patient.first_name }}
-                    {{appointment.patient.last_name }}</p>
-                <p style="margin: 0; padding: 0.4rem;"><strong>Mobile:</strong>{{ appointment.patient.mobile }}</p>
-                <p style="margin: 0; padding: 0.4rem;"><strong>Address:</strong>{{ appointment.patient.address }}</p>
+            <td colspan="2"
+                style="text-align: center; padding-top: 8px; font-size: 22px; border-bottom: 1.5px solid #1b4965;">
+                Patient Details
             </td>
-            <td>
-                <p style="margin: 0; padding: 0.4rem;"><strong>Symptoms:</strong>{{ appointment.patient.symptoms }}</p>
-                <p style="margin: 0; padding: 0.4rem;"><strong>Date:</strong>{{ appointment.appointmentDate }}</p>
-                <p style="margin: 0; padding: 0.4rem;"><strong>Time:</strong>{{ appointment.appointmentTime }}</p>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;">
+                <p style="margin: 0; padding: 0.4rem;"><strong>Name:</strong> {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Mobile:</strong> {{ appointment.patient.mobile }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Address:</strong> {{ appointment.patient.address }}</p>
+            </td>
+            <td style="vertical-align: top;">
+                <p style="margin: 0; padding: 0.4rem;"><strong>Symptoms:</strong> {{ appointment.patient.symptoms }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Date:</strong> {{ appointment.appointmentDate }}</p>
+                <p style="margin: 0; padding: 0.4rem;"><strong>Time:</strong> {{ appointment.appointmentTime }}</p>
             </td>
         </tr>
     </table>
 
-
+    <!-- 
     <table>
-        <p style="text-align: center; margin: 0; padding-top: 8px;
-            font-size: 22px;">
-        </p>
+        <div style="margin-top: 10px;"><h1>medicine Details</h1></div>
         <tr>
             <td>
                 {% if appointment_notes %}
                 {% for medicine_name in appointment_notes %}
-                <p style="font-size: medium;">
-                    {{ medicine_name|remove_digits_after_second_dash }}
+                <p style="font-size: 14px;">
+                    {{ medicine_name|hide_digits_before_second_dash }}
                 </p>
                 {% endfor %}
                 {% else %}
@@ -78,9 +78,29 @@
                 {% endif %}
             </td>
         </tr>
+    </table> -->
+
+    <table>
+        <div style="margin-top: 10px;">
+            <h1>Medicine Details</h1>
+        </div>
+        <tr>
+            <td>
+                <!-- hospital/get_receipt.html -->
+                <!-- Add this section to your template where you want to display the staff checked medicines -->
+                    {% for medicine in appointment_notes_staff %}
+                    <p style="font-size: 12px;">{{ medicine }}</p>
+                    {% endfor %}
+                </ul>
+
+            </td>
+        </tr>
     </table>
+
+
     <hr>
     <p style="margin: 0; padding: 0.4rem;"><strong>Note: </strong>{{ appointment.add_note }}</p>
+    <!-- <p style="margin: 0; padding: 0.4rem;"><strong>Note: </strong>{{ appointment.staff_check_medicine }}</p> -->
 </body>
 
 </html>

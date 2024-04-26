@@ -43,4 +43,4 @@ class PatientAdmin(ImportExportModelAdmin):
 
 @admin.register(Appointment)
 class AppointmentAdmin(ImportExportModelAdmin):
-    list_display = ("id" , "patient", "appointmentDate", "appointmentTime", "description", "a_note", "add_note",)   
+    list_display = ("patient", "appointmentDate",  "description", "a_note", "add_note", "staff_check_medicine", "staff_note", "app_mode",)   

@@ -256,10 +256,12 @@
             <tr>
               <!-- <th>ID</th> -->
               <th>Patient Name</th>
+              <th>Appointment Mode</th>
               <th>Appointment Date</th>
               <th>Appointment Time</th>
               <th>Description</th>
-              <th>Note</th>
+              <th>Medicines</th>
+              <th>After staff checkup medicine</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -268,6 +270,7 @@
             <tr>
               <!-- <td>{{ appointment.id }}</td> -->
               <td>{{ appointment.patient }}</td>
+              <td>{{ appointment.app_mode }}</td>
               <td>{{ appointment.appointmentDate }}</td>
               <td>{{ appointment.appointmentTime }}</td>
               <td style="
@@ -280,6 +283,14 @@
                 {{ appointment.a_note }}
                 {% else %}
                 No notes available.
+                {% endif %}
+              </td>
+
+              <td>
+                {% if appointment.staff_check_medicine %}
+                <p style="background-color: #2ed8b6; font-weight: bold; font-size: 14px;">{{ appointment.staff_check_medicine|linebreaksbr  }}</p>
+                {% else %}
+                -
                 {% endif %}
               </td>
 
