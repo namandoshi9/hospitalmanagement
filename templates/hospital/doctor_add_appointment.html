@@ -85,7 +85,7 @@
               {% render_field appointmentForm.doctor class="form-control" placeholder="Doctor ID" %}
             </div> -->
             <div class="form-group">
-              <select class="form-control select2" name="patient">
+              <select class="form-control select2" name="patient" autofocus>
                 {% for patient in patients %}
                 <option value="{{ patient.id }}">{{ patient }}</option>
                 {% endfor %}

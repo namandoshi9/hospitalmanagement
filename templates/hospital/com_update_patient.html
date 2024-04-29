@@ -141,15 +141,15 @@
 <div>
   <h6 class="m-b-20" style="font-size: 20px; font-weight: 300; color: black; margin-left: 26rem;">Update Patient</h6>
   <div style="padding: 1px 2rem 10px 26rem;">
-    <div class="card" style="padding: 2rem; max-width: 70%;">
-      <div class="card-block">
+    <div class="" style="padding: 2rem; max-width: 70%;">
+      <div class="">
         <!-- Update Patient form -->
         <form method="post">
           {% csrf_token %}
           <div class="form-group">
             <label for="first_name">First Name:</label>
             <!-- <input type="text" class="form-control" id="first_name" name="first_name" value="{{ patient.first_name }}"> -->
-            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ patient.first_name }}">
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ patient.first_name }}" autofocus>
           </div>
           <div class="form-group">
             <label for="last_name">Last Name:</label>
