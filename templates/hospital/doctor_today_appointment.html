@@ -288,34 +288,34 @@
     }
 
     function searchTable() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("gsearch");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("dev-table");
-      tr = table.getElementsByTagName("tr");
+    var input, filter, tr, td, i;
+    input = document.getElementById("gsearch");
+    filter = input.value.toUpperCase();
+    tr = $('#dev-table tbody tr');
 
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td");
-        var found = false;
-        for (var j = 0; j < td.length; j++) {
-          txtValue = td[j].textContent || td[j].innerText;
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td");
+      var found = false;
+      for (var j = 0; j < td.length; j++) {
+        if (td[j]) {
+          var txtValue = td[j].textContent || td[j].innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
             found = true;
             break;
           }
         }
-        if (found) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
       }
-      // After filtering, reset pagination to the first page
-      currentPage = 1;
-      displayPage(currentPage);
+      if (found) {
+        $(tr[i]).show();
+      } else {
+        $(tr[i]).hide();
+      }
     }
+
+    // Reset pagination to page 1 after search
+    currentPage = 1;
+    updatePagination();
+  }
   </script>
 
 </body>

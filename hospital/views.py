@@ -803,7 +803,7 @@ def doctor_add_medicine_view(request):
         medicine_form = MedicineForm()
 
     mydict = {'medicine_form': medicine_form, 'error_message': error_message}  # Include error_message in the context
-    return render(request, 'hospital/Doctor_Add_medicine.html', context=mydict)
+    return render(request, 'hospital/doctor_add_medicine.html', context=mydict)
 
 
 

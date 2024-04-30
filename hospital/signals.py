@@ -48,11 +48,20 @@ import string
 #         # Save barcode value to the model
 #         instance.barcode_value = barcode_value
 #         instance.save()
+
+# digits = list(range(1, 10))
+
 @receiver(post_save, sender=Medicine)
 def generate_barcode(sender, instance, created, **kwargs):
     if created and not instance.barcode:
         # Generate a random 12-digit numeric string for the barcode
         barcode_value = ''.join(random.choices(string.digits, k=12))
+
+        if barcode_value.startswith('0'):
+            barcode_value = '1' + barcode_value[1:]
+
+        # if barcode_value.startswith('0'):
+        #     barcode_value = barcode_value.lstrip('0')
 
         # Generate barcode using python-barcode library
         ean = barcode.get_barcode_class('ean13')
